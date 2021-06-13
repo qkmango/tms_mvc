@@ -1,0 +1,132 @@
+body {
+	color: #0366d6;
+	line-height: 1.5;
+}
+
+.header {
+	padding: 32px 0;
+	width: 65px;
+	position: relative;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+}
+
+.logo_img {
+	width: 100%;
+}
+
+.title {
+	font-size: 24px;
+	/*font-weight: 300;*/
+	text-align: center;
+	/*letter-spacing: -.5px;*/
+	margin: 0;
+	/*color: #000;*/
+	color: #0366d6;
+	font-weight: bold;
+}
+
+.main {
+}
+
+.form {
+	margin: 16px auto 0 auto;
+	padding: 20px;
+	border: 1px solid #eaecef;
+	border-radius: 6px;
+	background-color:#f6f8fa;
+	width: 266px;
+}
+
+.login_field {
+	margin: 0;
+	font-size: 12px;
+	font-weight: 400;
+	text-align: left;
+	color: #444d56;
+}
+
+.login_field .tip {
+	float: right;
+	color: red;
+}
+
+input[type=text],
+input[type=password],
+select{
+	border: 1px solid #eaecef;
+	width: 240px;
+	height: 20px;
+	padding: 5px 12px;
+	margin: 5px 0 15px 0;
+	border-radius: 6px;
+}
+select {
+	height: 34px;
+	width: 266px;
+}
+
+/* select>option:hover {
+	background-color: red !important;
+} */
+
+input[type=text]:focus,
+input[type=password]:focus,
+select:focus{
+	box-shadow: 0 0 0 3px rgba(3,102,214,.3);
+	border-color:#0366d6;
+	outline: none;
+}
+
+#login_btn {
+	border: 1px solid #2b9148;
+	background-color:#2ea44f;
+	color: #fff;
+	width: 100%;
+	text-align: center;
+	position: relative;
+	display: inline-block;
+	padding: 5px 16px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
+	cursor: pointer;
+	border-radius: 6px;
+	box-shadow: 0 1px 0 rgba(0,0,0,.1);
+	transition: all 0.4s;
+	outline: none;
+}
+
+#login_btn:hover {
+	background-color: #22863a;
+}
+
+
+.lable {
+	margin: 16px auto 0 auto;
+	padding: 15px 20px;
+	border: 1px solid #d1d5da;
+	border-radius: 6px;
+	width: 266px;
+	font-size: 12px;
+	text-align: center;
+}
+
+.link {
+	margin: 0 auto;
+	width: 306px;
+	font-size: 14px;
+	position: relative;
+	bottom: 0;
+	padding: 40px 0;
+}
+
+.link a {
+	text-decoration: none;
+	color: #0366d6;
+	margin-left: 15px;
+}
+.link a:hover {
+	text-decoration: underline;
+}
