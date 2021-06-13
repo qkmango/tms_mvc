@@ -26,22 +26,7 @@
 			window.top.location=window.location;
 		}
 		var $ = layui.$;
-		
 		var GLOBAL = {};
-		
-		$.ajax({
-			url:"system/getUserInfo.do",
-			type:"post",
-			dataType:"json",
-			success:function (data) {
-				console.log(data)
-				GLOBAL.user = data.user;
-				if (!data.success) {
-					window.location.href = 'page/login/';
-					return;
-				}
-			}
-		})
 	</script>
 </head>
 <body class="layui-layout-body layuimini-all">
@@ -54,19 +39,18 @@
             <a>
                 <div class="layuimini-tool"><i title="展开" class="fa fa-outdent" data-side-fold="1"></i></div>
             </a>
-
             <!--电脑端头部菜单-->
-            <!-- <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-menu-header-pc layuimini-pc-show">
-            </ul> -->
+            <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-menu-header-pc layuimini-pc-show">
+            </ul>
 
             <!--手机端头部菜单-->
-            <!-- <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-mobile-show">
+            <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-mobile-show">
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="fa fa-list-ul"></i> 选择模块</a>
                     <dl class="layui-nav-child layuimini-menu-header-mobile">
                     </dl>
                 </li>
-            </ul> -->
+            </ul>
 
             <ul class="layui-nav layui-layout-right">
 
@@ -147,26 +131,56 @@
 
     </div>
 </div>
+
+</body>
+</html>
+
 <script src="js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+<script type="text/javascript">
+	
+</script>
 <script>
     layui.use(['jquery', 'layer', 'miniAdmin','miniTongji'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             miniAdmin = layui.miniAdmin,
             miniTongji = layui.miniTongji;
+			
+			$.ajax({
+				url:"system/getUserInfo.do",
+				type:"post",
+				dataType:"json",
+				success:function (data) {
+					if (!data.success) {
+						window.location.href = 'page/login/';
+						return;
+					}
+					console.log(data);
+					let iniUrl = '';
+					GLOBAL.user = data.user;
+					switch(GLOBAL.user.userPower) {
+						case 0:iniUrl = 'api/init_student.json';break;
+						case 1:iniUrl = 'api/init_teacher.json';break;
+						case 2:iniUrl = 'api/init_admin.json';break;
+						default:iniUrl = 'api/init_student.json';break;
+					}
+					
+					miniAdmin.render({
+						iniUrl: iniUrl,    // 初始化接口
+						clearUrl: "api/clear.json", // 缓存清理接口
+						urlHashLocation: true,      // 是否打开hash定位
+						bgColorDefault: false,      // 主题默认配置
+						// multiModule: true,          // 是否开启多模块
+						menuChildOpen: false,       // 是否默认展开菜单
+						loadingTime: 0,             // 初始化加载时间
+						pageAnim: true,             // iframe窗口动画
+						maxTabNum: 20,              // 最大的tab打开数量
+					});
+				}
+			})
 
-        var options = {
-            iniUrl: "api/init.json",    // 初始化接口
-            clearUrl: "api/clear.json", // 缓存清理接口
-            urlHashLocation: true,      // 是否打开hash定位
-            bgColorDefault: false,      // 主题默认配置
-            multiModule: true,          // 是否开启多模块
-            menuChildOpen: false,       // 是否默认展开菜单
-            loadingTime: 0,             // 初始化加载时间
-            pageAnim: true,             // iframe窗口动画
-            maxTabNum: 20,              // 最大的tab打开数量
-        };
-        miniAdmin.render(options);
+        
+        
 
         // 百度统计代码，只统计指定域名
         miniTongji.render({
@@ -185,5 +199,3 @@
         });
     });
 </script>
-</body>
-</html>

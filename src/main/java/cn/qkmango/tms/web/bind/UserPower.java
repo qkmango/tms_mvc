@@ -5,10 +5,3 @@ public enum UserPower {
     teacher,
     admin
 }
-
-
-class Main{
-    public static void main(String[] args) {
-        System.out.println(UserPower.student.ordinal());
-    }
-}

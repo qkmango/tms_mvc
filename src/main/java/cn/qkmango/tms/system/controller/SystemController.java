@@ -34,17 +34,20 @@ public class SystemController {
      */
     @RequestMapping("/login.do")
     @ResponseBody
-    public Map<String, Object> login(HttpServletRequest request, User user, int userPower) throws LoginException {
+    public Map<String, Object> login(HttpServletRequest request, User user, Integer userPower) throws LoginException {
 
 
         User loginUser = null;
         ResponseMap map = new ResponseMap();
         if (UserPower.student.ordinal() == userPower) {
             loginUser = service.studentLogin(user);
+            loginUser.setUserPower(UserPower.student.ordinal());
         } else if (UserPower.teacher.ordinal() == userPower) {
             loginUser = service.teacherLogin(user);
+            loginUser.setUserPower(UserPower.teacher.ordinal());
         } else if (UserPower.admin.ordinal() == userPower) {
             // loginUser = service.adminLogin(user);
+            // loginUser.setUserPower(UserPower.admin.ordinal());
         } else {
             map.setSuccess(false);
             map.setMessage("用户类型错误！");

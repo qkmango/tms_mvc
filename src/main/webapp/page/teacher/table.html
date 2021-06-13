@@ -18,7 +18,7 @@
             <legend>搜索信息</legend>
 			
             <div style="margin: 10px 10px 10px 10px">
-                <form class="layui-form layui-form-pane" action="" lay-filter='datagride' id="datagride">
+                <form class="layui-form layui-form-pane" action="" lay-filter='queryParams' id="queryParams">
                     <div class="layui-form-item">
                         <div class="layui-inline">
                             <label class="layui-form-label">学生姓名</label>
@@ -84,12 +84,12 @@
             </div>
         </fieldset>
 
-        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+        <table class="layui-hide" id="dataGrid" lay-filter="currentTableFilter"></table>
 
-        <script type="text/html" id="currentTableBar">
+        <!-- <script type="text/html" id="currentTableBar">
             <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
-        </script>
+        </script> -->
 
     </div>
 </div>
@@ -102,10 +102,10 @@
         
         form = layui.form;
         table = layui.table;
-			getFacultyList();
+		getFacultyList();
 
         table.render({
-            elem: '#currentTableId',
+            elem: '#dataGrid',
             url: 'page/teacher/data.json',
             toolbar: true,
 			// height:'full-0',
@@ -120,11 +120,11 @@
                 {field: 'name', width: 80, title: '姓名'},
                 {field: 'course', width: 120, title: '课程'},
                 {field: 'teacher', width: 100, title: '任课老师'},
-                {field: 'class', title: '班级', width: 150},
-                {field: 'specialized', width: 150, title: '专业'},
-                {field: 'faculty', width: 200, title: '学院'},
-                {field: 'score', width: 80, title: '分数'},
-                {title: '操作', minWidth: 100, toolbar: '#currentTableBar', align: "center"}
+                {field: 'class', title: '班级'},
+                {field: 'specialized', title: '专业'},
+                {field: 'faculty',title: '学院'},
+                {field: 'score', width: 80, title: '分数',edit:true}
+                // ,{title: '操作', minWidth: 100, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [10, 15, 20, 25, 50, 100],
             limit: 15,
@@ -132,56 +132,76 @@
             skin: 'line'
         });
 
+
+		//监听单元格编辑
+		  table.on('edit(currentTableFilter)', function(obj){
+		    var value = obj.value //得到修改后的值
+		    ,data = obj.data //得到所在行所有键值
+		    ,field = obj.field; //得到字段
+			console.log("得到修改后的值:"+value)
+			console.log(data);
+		    // layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改值为：'+ util.escape(value));
+		  });
+
         // 监听搜索操作
-        form.on('submit(data-search-btn)', function (data) {
-			// console.log($("#datagride").serialize())
-            var result = JSON.stringify(data.field);
-            layer.alert(result, {
-                title: '最终的搜索信息'
-            });
-            //执行搜索重载
-            table.reload('currentTableId', {
-                page: {
-                    curr: 1
-                }
-                , where: {
-                    searchParams: result
-                }
-            }, 'data');
-            return false;
-        });
+		form.on('submit(data-search-btn)', function (data) {
+		    var queryParamsStr = JSON.stringify(data.field);
+			var queryParamsObj = eval('('+queryParamsStr+')');
+		    layer.alert(queryParamsStr, {
+		        title: '最终的搜索信息'
+		    });
+			
+		    //执行搜索重载
+		    table.reload('dataGrid', {
+		        page: {
+		            curr: 1
+		        }
+		        , where: {
+					'clazz': queryParamsObj.clazz,
+					'course': queryParamsObj.course,
+					'faculty': queryParamsObj.faculty,
+					'id': queryParamsObj.id,
+					'name': queryParamsObj.name,
+					'specialized': queryParamsObj.specialized,
+					'teacher': queryParamsObj.teacher
+		        }
+		    }, 'data');
+		
+		    return false;
+		});
+		
 		
 		//下拉框 院系 值改变时事件监听
 		form.on('select(faculty)', function(data){
 			if(data.value=='') {
 				$('#specialized').html('<option value="">全部</option>');
-				form.render('select','datagride');
+				form.render('select','queryParams');
 			} else{
 				console.log(data.value); //得到被选中的值
 				getSpecializedListByFaculty(data.value)
 			}
 			$('#clazz').html('<option value="">全部</option>');
 			$('#course').html('<option value="">全部</option>');
-			form.render('select','datagride');
+			form.render('select','queryParams');
 		});
 		
 		//下拉框 专业 值改变时事件监听
 		form.on('select(specialized)', function(data){
 			if(data.value=='') {
 				$('#clazz').html('<option value="">全部</option>');
-				form.render('select','datagride');
+				form.render('select','queryParams');
 			} else{
 				console.log(data.value); //得到被选中的值
 				getClazzListBySpecialized(data.value)
 			}
 			$('#course').html('<option value="">全部</option>');
-			form.render('select','datagride');
+			form.render('select','queryParams');
 		});
 		
 		form.on('select(clazz)', function(data){
 			if(data.value=='') {
 				$('#course').html('<option value="">全部</option>');
-				form.render('select','datagride');
+				form.render('select','queryParams');
 			} else{
 				console.log(data.value); //得到被选中的值
 				let teacher = window.parent.GLOBAL.user.id;
@@ -208,7 +228,7 @@
 				});
 				
 				$('#faculty').html(html);
-				form.render('select','datagride');
+				form.render('select','queryParams');
 			}
 		})
 	}
@@ -230,7 +250,7 @@
 				});
 				
 				$('#specialized').html(html);
-				form.render('select','datagride');
+				form.render('select','queryParams');
 			}
 		})
 	}
@@ -252,7 +272,7 @@
 				});
 				
 				$('#clazz').html(html);
-				form.render('select','datagride');
+				form.render('select','queryParams');
 			}
 		})
 	}
@@ -275,7 +295,7 @@
 				});
 				
 				$('#course').html(html);
-				form.render('select','datagride');
+				form.render('select','queryParams');
 			}
 		})
 	}

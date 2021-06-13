@@ -21,8 +21,8 @@ public class Student extends User {
 
     public Student() { }
 
-    public Student(Integer id, String password, String name, Integer sex, String birth, Integer clazz) {
-        super(id, password, name);
+    public Student(Integer id, String password, String name, Integer userPower, Integer sex, String birth, Integer clazz) {
+        super(id, password, name, userPower);
         this.sex = sex;
         this.birth = birth;
         this.clazz = clazz;

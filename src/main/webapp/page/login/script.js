@@ -55,7 +55,7 @@ function login() {
 		data:{
 			id:$.trim($("#id").val()),
 			password:$.trim($("#password").val()),
-			userType:$('#userType').val()
+			userPower:$('#userPower').val()
 		},
 		type:"post",
 		dataType:"json",
