@@ -21,6 +21,7 @@
     <![endif]-->
     <style id="layuimini-bg-color"></style>
 	<script src="lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+	<script src="lib/coco-message/coco-message.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		if (window.top!=window) {
 			window.top.location=window.location;
@@ -64,10 +65,10 @@
                     <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                 </li>
                 <li class="layui-nav-item layuimini-setting">
-                    <a href="javascript:;">admin</a>
+                    <a href="javascript:;" id="name">未登录</a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
+                            <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料</a>
                         </dd>
                         <dd>
                             <a href="javascript:;" layuimini-content-href="page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
@@ -155,13 +156,14 @@
 						window.location.href = 'page/login/';
 						return;
 					}
-					console.log(data);
-					let iniUrl = '';
+					
 					GLOBAL.user = data.user;
-					switch(GLOBAL.user.userPower) {
-						case 0:iniUrl = 'api/init_student.json';break;
-						case 1:iniUrl = 'api/init_teacher.json';break;
-						case 2:iniUrl = 'api/init_admin.json';break;
+					$('#name').text(data.user.name);
+					let iniUrl = '';
+					switch(GLOBAL.user.permissionType) {
+						case "student":iniUrl = 'api/init_student.json';break;
+						case "teacher":iniUrl = 'api/init_teacher.json';break;
+						case "admin":iniUrl = 'api/init_admin.json';break;
 						default:iniUrl = 'api/init_student.json';break;
 					}
 					
@@ -193,9 +195,20 @@
         });
 
         $('.login-out').on("click", function () {
-            layer.msg('退出登录成功', function () {
-                window.location = 'page/login-3.html';
-            });
+			$.ajax({				url:"system/logout.do",				type:"post",				dataType:"json",				success:function(data) {
+					if(data.success) {
+						cocoMessage.success(2000,data.message,function() {
+							window.location.href = 'page/login/';
+						});
+					} else {
+						cocoMessage.error(2000,data.message);
+					}
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					cocoMessage.error(2000,jqXHR.status+'');
+					window.location.href = 'page/login/';
+				}
+			})
         });
     });
 </script>

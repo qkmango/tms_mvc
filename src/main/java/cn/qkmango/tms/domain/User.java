@@ -1,19 +1,21 @@
 package cn.qkmango.tms.domain;
 
+import cn.qkmango.tms.web.bind.PermissionType;
+
 public class User {
     protected Integer id;
     protected String password;
     protected String name;
-    protected Integer userPower = 0;
+    protected PermissionType permissionType = PermissionType.student;
 
     public User() {
     }
 
-    public User(Integer id, String password, String name, Integer userPower) {
+    public User(Integer id, String password, String name, PermissionType permissionType) {
         this.id = id;
         this.password = password;
         this.name = name;
-        this.userPower = userPower;
+        this.permissionType = permissionType;
     }
 
     public String getName() {
@@ -40,12 +42,12 @@ public class User {
         this.password = password;
     }
 
-    public Integer getUserPower() {
-        return userPower;
+    public PermissionType getPermissionType() {
+        return permissionType;
     }
 
-    public void setUserPower(Integer userPower) {
-        this.userPower = userPower;
+    public void setPermissionType(PermissionType permissionType) {
+        this.permissionType = permissionType;
     }
 
     @Override
@@ -54,7 +56,7 @@ public class User {
                 "id=" + id +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
-                ", userPower=" + userPower +
+                ", permissionType=" + permissionType +
                 '}';
     }
 }

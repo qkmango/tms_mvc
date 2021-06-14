@@ -16,20 +16,11 @@ public class SystemServiceImpl implements SystemService {
     @Resource
     private SystemDao systemDao;
 
-    // @Override
-    // public User login(User user) throws LoginException {
-    //     User loginUser = systemDao.login(user);
-    //     if (loginUser == null) {
-    //         throw new LoginException();
-    //     }
-    //     return loginUser;
-    // }
-
     @Override
     public User studentLogin(User user) throws LoginException {
         User loginUser = systemDao.studentLogin(user);
         if (loginUser == null) {
-            throw new LoginException();
+            throw new LoginException("登陆失败，用户名或密码错误！");
         }
         return loginUser;
     }
@@ -38,17 +29,9 @@ public class SystemServiceImpl implements SystemService {
     public User teacherLogin(User user) throws LoginException {
         User loginUser = systemDao.teacherLogin(user);
         if (loginUser == null) {
-            throw new LoginException();
+            throw new LoginException("登陆失败，用户名或密码错误！");
         }
         return loginUser;
     }
 
-    // @Override
-    // public User adminLogin(User user) throws LoginException {
-    //     User loginUser = systemDao.adminLogin(user);
-    //     if (loginUser == null) {
-    //         throw new LoginException();
-    //     }
-    //     return loginUser;
-    // }
 }

@@ -21,7 +21,12 @@
             <!--path:需要拦截的地址，可以使用通配符 ** -->
             <mvc:mapping path="/**/*.do"/>
             <!-- 指定拦截器对象 -->
-            <bean class="cn.qkmango.tms.interceptor.LoginInterceptor" />
+            <bean class="cn.qkmango.tms.web.interceptor.LoginInterceptor" />
+        </mvc:interceptor>
+        <!-- 权限拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/update/*.do" />
+            <bean class="cn.qkmango.tms.web.interceptor.PermissionsInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

@@ -6,7 +6,9 @@ import cn.qkmango.tms.domain.Clazz;
 import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.Faculty;
 import cn.qkmango.tms.domain.Specialized;
-import cn.qkmango.tms.map.ResponseMap;
+import cn.qkmango.tms.web.anno.Permission;
+import cn.qkmango.tms.web.bind.PermissionType;
+import cn.qkmango.tms.web.map.ResponseMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +26,13 @@ public class DataBaseBasicQueryController {
     @Resource
     private DataBaseBasicQueryService dataBaseBasicQueryService;
 
+
+    @Permission({PermissionType.teacher, PermissionType.student})
+    @RequestMapping("/test.do")
+    @ResponseBody
+    public String test() {
+        return "test";
+    }
 
     /**
      * 查询院系列表

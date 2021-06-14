@@ -55,7 +55,7 @@ function login() {
 		data:{
 			id:$.trim($("#id").val()),
 			password:$.trim($("#password").val()),
-			userPower:$('#userPower').val()
+			permissionType:$('#permissionType').val()
 		},
 		type:"post",
 		dataType:"json",
@@ -64,8 +64,12 @@ function login() {
 				console.log("登陆成功");
 				window.location.href = "index.html";
 			} else{
-				cocoMessage.error(2000,"登陆失败，用户名或密码错误")
+				cocoMessage.error(2000,data.message)
 			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log(jqXHR.status);
+			cocoMessage.error(2000,jqXHR.status+'')
 		}
 	})
 }

@@ -1,6 +1,8 @@
 package cn.qkmango.tms.domain;
 
 
+import cn.qkmango.tms.web.bind.PermissionType;
+
 /**
  * 学生实体类
  *
@@ -21,8 +23,8 @@ public class Student extends User {
 
     public Student() { }
 
-    public Student(Integer id, String password, String name, Integer userPower, Integer sex, String birth, Integer clazz) {
-        super(id, password, name, userPower);
+    public Student(Integer id, String password, String name, PermissionType permissionType, Integer sex, String birth, Integer clazz) {
+        super(id, password, name, permissionType);
         this.sex = sex;
         this.birth = birth;
         this.clazz = clazz;

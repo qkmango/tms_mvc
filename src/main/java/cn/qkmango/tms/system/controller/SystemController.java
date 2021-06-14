@@ -3,9 +3,9 @@ package cn.qkmango.tms.system.controller;
 
 import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.exception.LoginException;
-import cn.qkmango.tms.map.ResponseMap;
+import cn.qkmango.tms.web.map.ResponseMap;
 import cn.qkmango.tms.system.service.SystemService;
-import cn.qkmango.tms.web.bind.UserPower;
+import cn.qkmango.tms.web.bind.PermissionType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = "/system", method = RequestMethod.POST)
+@RequestMapping("/system")
 public class SystemController {
 
 
@@ -27,37 +27,49 @@ public class SystemController {
 
     /**
      * @param request
-     * @param user      用户信息，前端传来参数：id，password
-     * @param userPower 用户类型
+     * @param user 户信息，前端传来参数：id，password
+     * @param permissionType 用户类型，枚举类型
      * @return
      * @throws LoginException
      */
-    @RequestMapping("/login.do")
+    @RequestMapping(value = "/login.do",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> login(HttpServletRequest request, User user, Integer userPower) throws LoginException {
-
+    public Map<String, Object> login(HttpServletRequest request, User user, PermissionType permissionType) throws LoginException {
 
         User loginUser = null;
         ResponseMap map = new ResponseMap();
-        if (UserPower.student.ordinal() == userPower) {
-            loginUser = service.studentLogin(user);
-            loginUser.setUserPower(UserPower.student.ordinal());
-        } else if (UserPower.teacher.ordinal() == userPower) {
-            loginUser = service.teacherLogin(user);
-            loginUser.setUserPower(UserPower.teacher.ordinal());
-        } else if (UserPower.admin.ordinal() == userPower) {
-            // loginUser = service.adminLogin(user);
-            // loginUser.setUserPower(UserPower.admin.ordinal());
-        } else {
-            map.setSuccess(false);
-            map.setMessage("用户类型错误！");
-            return map;
+
+        switch (permissionType) {
+            case student:
+                loginUser = service.studentLogin(user);
+                loginUser.setPermissionType(PermissionType.student);
+                break;
+            case teacher:
+                loginUser = service.teacherLogin(user);
+                loginUser.setPermissionType(PermissionType.teacher);
+                break;
+            case admin:
+                break;
+            default:
+                map.setSuccess(false);
+                map.setMessage("用户类型错误！");
+                return map;
         }
 
-        // loginUser = service.login(user);
+        // if (PermissionType.student == permissionType) {
+        //     loginUser = service.studentLogin(user);
+        //     loginUser.setPermissionType(PermissionType.student);
+        //
+        // } else if (PermissionType.teacher == permissionType) {
+        //     loginUser = service.teacherLogin(user);
+        //     loginUser.setPermissionType(PermissionType.teacher);
+        // } else {
+        //     map.setSuccess(false);
+        //     map.setMessage("用户类型错误！");
+        //     return map;
+        // }
+
         request.getSession(true).setAttribute("user", loginUser);
-
-
         map.setSuccess(true);
         map.setMessage("登陆成功！");
 
@@ -65,10 +77,9 @@ public class SystemController {
     }
 
 
-    @RequestMapping("/logout.do")
+    @RequestMapping(value = "/logout.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> logout(HttpServletRequest request, User user) {
-
         request.getSession().invalidate();
 
         HashMap<String, Object> map = new HashMap<>();
