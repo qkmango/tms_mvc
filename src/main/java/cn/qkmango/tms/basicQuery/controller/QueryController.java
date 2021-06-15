@@ -1,11 +1,8 @@
 package cn.qkmango.tms.basicQuery.controller;
 
 
-import cn.qkmango.tms.basicQuery.service.DataBaseBasicQueryService;
-import cn.qkmango.tms.domain.Clazz;
-import cn.qkmango.tms.domain.Course;
-import cn.qkmango.tms.domain.Faculty;
-import cn.qkmango.tms.domain.Specialized;
+import cn.qkmango.tms.basicQuery.service.QueryService;
+import cn.qkmango.tms.domain.*;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
@@ -19,12 +16,12 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/basicQuery")
-public class DataBaseBasicQueryController {
+@RequestMapping("/query")
+public class QueryController {
 
 
     @Resource
-    private DataBaseBasicQueryService dataBaseBasicQueryService;
+    private QueryService queryService;
 
 
     @Permission({PermissionType.teacher, PermissionType.student})
@@ -42,7 +39,7 @@ public class DataBaseBasicQueryController {
     @ResponseBody
     public Map<String, Object> getFacultyList() {
 
-        List<Faculty> facultyList = dataBaseBasicQueryService.getFacultyList();
+        List<Faculty> facultyList = queryService.getFacultyList();
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
@@ -60,7 +57,7 @@ public class DataBaseBasicQueryController {
     @ResponseBody
     public Map<String, Object> getSpecializedListByFaculty(Integer faculty) {
 
-        List<Specialized> SpecializedList = dataBaseBasicQueryService.getSpecializedListByFaculty(faculty);
+        List<Specialized> SpecializedList = queryService.getSpecializedListByFaculty(faculty);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
@@ -79,7 +76,7 @@ public class DataBaseBasicQueryController {
     @ResponseBody
     public Map<String, Object> getClazzListBySpecialized(Integer specialized) {
 
-        List<Clazz> ClazzList = dataBaseBasicQueryService.getClazzListBySpecialized(specialized);
+        List<Clazz> ClazzList = queryService.getClazzListBySpecialized(specialized);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
@@ -89,7 +86,7 @@ public class DataBaseBasicQueryController {
     }
 
     /**
-     *
+     * 获取指定的老师和班级的 科目列表
      * @param clazz 前端传入的 班级id
      * @param teacher 前端传入的 老师id
      * @return
@@ -101,11 +98,29 @@ public class DataBaseBasicQueryController {
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("clazz", clazz);
         paramsMap.put("teacher",teacher);
-        List<Course> CourseList = dataBaseBasicQueryService.getCourseListByTeacherAndClazz(paramsMap);
+        List<Course> CourseList = queryService.getCourseListByTeacherAndClazz(paramsMap);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
         map.setData(CourseList);
+
+        return map;
+    }
+
+    /**
+     * 获取学生成绩列表分页
+     * @return
+     */
+    @RequestMapping("/getStudentScorePagination.do")
+    @Permission({PermissionType.admin,PermissionType.teacher})
+    @ResponseBody
+    public Map<String, Object> getStudentScorePagination(StudentScorePagination pagination) {
+
+        HashMap<String,Object> map = queryService.getStudentScorePagination(pagination);
+
+        map.put("code",0);
+        map.put("success",true);
+        map.put("message","获取学生成绩分页列表成功");
 
         return map;
     }

@@ -3,8 +3,8 @@ package cn.qkmango.tms.updateQuery.controller;
 
 import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.exception.PermissionException;
-import cn.qkmango.tms.exception.UpdateUserInfoException;
-import cn.qkmango.tms.updateQuery.service.UserBasicInfoUpdateService;
+import cn.qkmango.tms.exception.UpdateException;
+import cn.qkmango.tms.updateQuery.service.UpdateService;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,20 +24,21 @@ import java.util.Map;
 /**
  * 用户基本信息修改的控制器
  */
-public class UserBasicInfoUpdateController {
+public class UpdateController {
 
     @Resource
-    private UserBasicInfoUpdateService userBasicInfoUpdateService;
+    private UpdateService updateService;
 
     @Permission
     @ResponseBody
     @RequestMapping("/updatePassword.do")
     public Map<String, Object> updatePassword(HttpServletRequest request,
                                               String oldPassword,
-                                              String newPassword) throws PermissionException, UpdateUserInfoException {
+                                              String newPassword) throws PermissionException, UpdateException {
 
         User user = (User) request.getSession().getAttribute("user");
         Integer id = user.getId();
+        //获取用户权限类型
         PermissionType thisUserPermissionType = user.getPermissionType();
 
         HashMap<String, Object> requestMap = new HashMap<>();
@@ -49,7 +49,7 @@ public class UserBasicInfoUpdateController {
         requestMap.put("newPassword",newPassword);
         requestMap.put("thisUserPermissionType",thisUserPermissionType);
 
-        userBasicInfoUpdateService.updatePassword(requestMap);
+        updateService.updatePassword(requestMap);
 
         ResponseMap map = new ResponseMap();
 

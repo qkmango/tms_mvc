@@ -10,7 +10,7 @@
 	},
 	"menuInfo": [{
 			"title": "学生成绩录入",
-			"href": "page/teacher/table.html",
+			"href": "page/teacher/edit-student-score.html",
 			"icon": "fa fa-tachometer",
 			"target": "_self"
 		},

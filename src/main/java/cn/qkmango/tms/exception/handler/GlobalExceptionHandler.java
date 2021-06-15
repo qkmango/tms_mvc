@@ -3,14 +3,13 @@ package cn.qkmango.tms.exception.handler;
 import cn.qkmango.tms.exception.LoginException;
 import cn.qkmango.tms.exception.PermissionException;
 import cn.qkmango.tms.exception.SystemException;
-import cn.qkmango.tms.exception.UpdateUserInfoException;
+import cn.qkmango.tms.exception.UpdateException;
 import cn.qkmango.tms.web.map.ResponseMap;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -32,7 +31,7 @@ public class GlobalExceptionHandler {
         return map;
     }
 
-    //处理 LoginException 的异常
+    //处理 登陆 的异常
     @ResponseBody
     @ExceptionHandler(LoginException.class)
     public Map loginExceptionHandler(LoginException e) {
@@ -43,7 +42,7 @@ public class GlobalExceptionHandler {
         return map;
     }
 
-    //处理 SystemException 的异常
+    //处理 系统 的异常
     @ResponseBody
     @ExceptionHandler(SystemException.class)
     public Map systemExceptionHandler(SystemException e) {
@@ -54,7 +53,7 @@ public class GlobalExceptionHandler {
         return map;
     }
 
-    //处理 PermissionException 的异常
+    //处理 用户权限 的异常
     @ResponseBody
     @ExceptionHandler(PermissionException.class)
     public Map permissionExceptionHandler(PermissionException e) {
@@ -65,10 +64,10 @@ public class GlobalExceptionHandler {
         return map;
     }
 
-    //处理 UpdateUserInfoException 的异常
+    //处理 更新数据 的异常
     @ResponseBody
-    @ExceptionHandler(UpdateUserInfoException.class)
-    public Map UpdateUserInfoExceptionHandler(UpdateUserInfoException e) {
+    @ExceptionHandler(UpdateException.class)
+    public Map UpdateExceptionHandler(UpdateException e) {
         e.printStackTrace();
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);

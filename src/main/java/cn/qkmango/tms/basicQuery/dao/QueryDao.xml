@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.qkmango.tms.basicQuery.dao.QueryDao">
+
+
+    <select id="getFacultyList" resultType="cn.qkmango.tms.domain.Faculty">
+        SELECT id, name
+        FROM t_faculty
+    </select>
+
+    <select id="getSpecializedListByFaculty" resultType="cn.qkmango.tms.domain.Specialized">
+        SELECT specialized.id, specialized.name
+        FROM t_specialized specialized,
+             t_faculty faculty
+        where specialized.faculty = faculty.id
+          and faculty.id = #{faculty}
+    </select>
+
+    <select id="getClazzListBySpecialized" resultType="cn.qkmango.tms.domain.Clazz">
+        SELECT clazz.id, clazz.name
+        FROM t_specialized specialized,
+             t_clazz clazz
+        where clazz.specialized = specialized.id
+
+          and specialized.id = #{specialized}
+    </select>
+
+    <select id="getCourseListByTeacherAndClazz" resultType="cn.qkmango.tms.domain.Course">
+        SELECT course.id, course.name
+        FROM t_teacher teacher,
+             t_teach teach,
+             t_course course,
+             t_specialized specialized,
+             t_clazz clazz
+
+        WHERE teacher.id = #{teacher}
+          and clazz.id = #{clazz}
+          and teach.teacher = teacher.id
+          and teach.course = course.id
+          and course.specialized = specialized.id
+          and clazz.specialized = specialized.id
+    </select>
+
+    <select id="getStudentScorePagination" resultType="hashmap">
+
+        SELECT SQL_CALC_FOUND_ROWS
+        student.id,
+        student.name,
+        course.name as course,
+        teacher.name as teacher,
+        clazz.name as clazz,
+        specialized.name as specialized,
+        faculty.name as faculty,
+        elective.score as score
+
+        FROM t_teacher teacher,
+        t_teach teach,
+        t_course course,
+        t_elective elective,
+        t_student student,
+        t_clazz clazz,
+        t_specialized specialized,
+        t_faculty faculty
+
+        <where>
+
+            <if test="name!=null and name!=''">
+                student.name like '%' #{name} '%'
+            </if>
+            <if test="id!=null and id!=''">
+                and student.id = #{id}
+            </if>
+            <if test="teacher!=null and teacher!=''">
+                and teacher.id = #{teacher}
+            </if>
+            <if test="faculty!=null and faculty!=''">
+                and faculty.id = #{faculty}
+            </if>
+            <if test="specialized!=null and specialized!=''">
+                and specialized.id = #{specialized}
+            </if>
+            <if test="clazz!=null and clazz!=''">
+                and clazz.id = #{clazz}
+            </if>
+            <if test="course!=null and course!=''">
+                and course.id = #{course}
+            </if>
+
+            AND teach.teacher = teacher.id
+            AND teach.course = course.id
+            AND elective.course = course.id
+            AND elective.student = student.id
+            AND student.clazz = clazz.id
+            AND clazz.specialized = specialized.id
+            AND specialized.faculty = faculty.id
+        </where>
+        order by student.id asc
+        LIMIT #{skipCount},#{limit}
+    </select>
+
+    <!-- 获取未分页的总记录条数 -->
+    <select id="getCount" resultType="int">
+        SELECT FOUND_ROWS()
+    </select>
+
+</mapper>

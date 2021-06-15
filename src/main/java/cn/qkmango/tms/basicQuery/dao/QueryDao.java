@@ -1,16 +1,11 @@
-package cn.qkmango.tms.basicQuery.service;
+package cn.qkmango.tms.basicQuery.dao;
 
-import cn.qkmango.tms.domain.Clazz;
-import cn.qkmango.tms.domain.Course;
-import cn.qkmango.tms.domain.Faculty;
-import cn.qkmango.tms.domain.Specialized;
-import org.apache.ibatis.annotations.Param;
+import cn.qkmango.tms.domain.*;
 
 import java.util.HashMap;
 import java.util.List;
 
-public interface DataBaseBasicQueryService {
-
+public interface QueryDao {
     List<Faculty> getFacultyList();
 
     List<Specialized> getSpecializedListByFaculty(Integer faculty);
@@ -18,4 +13,8 @@ public interface DataBaseBasicQueryService {
     List<Clazz> getClazzListBySpecialized(Integer specialized);
 
     List<Course> getCourseListByTeacherAndClazz(HashMap<String, Integer> paramsMap);
+
+    List<HashMap<String, Object>> getStudentScorePagination(StudentScorePagination pagination);
+
+    int getCount();
 }

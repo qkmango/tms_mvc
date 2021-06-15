@@ -26,6 +26,7 @@
         <!-- 权限拦截器 -->
         <mvc:interceptor>
             <mvc:mapping path="/update/*.do" />
+            <mvc:mapping path="/query/*.do" />
             <bean class="cn.qkmango.tms.web.interceptor.PermissionsInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

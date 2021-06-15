@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.qkmango.tms.updateQuery.dao.UserBasicInfoUpdateDao">
+<mapper namespace="cn.qkmango.tms.updateQuery.dao.UpdateDao">
 
 
     <update id="updateStudentPassword">
@@ -11,11 +11,14 @@
           and password = #{oldPassword}
     </update>
 
-    <update id="updateTeacherPassword" parameterType="hashmap">
-
+    <update id="updateTeacherPassword">
+        UPDATE t_teacher
+        SET password = #{newPassword}
+        WHERE id = #{id}
+          and password = #{oldPassword}
     </update>
 
-    <update id="updateAdminPassword" parameterType="hashmap">
+    <update id="updateAdminPassword">
 
     </update>
 

@@ -71,7 +71,7 @@
                             <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料</a>
                         </dd>
                         <dd>
-                            <a href="javascript:;" layuimini-content-href="page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
+                            <a href="javascript:;" layuimini-content-href="page/public/update-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
                         </dd>
                         <dd>
                             <hr>
@@ -195,7 +195,11 @@
         });
 
         $('.login-out').on("click", function () {
-			$.ajax({				url:"system/logout.do",				type:"post",				dataType:"json",				success:function(data) {
+			$.ajax({
+				url:"system/logout.do",
+				type:"post",
+				dataType:"json",
+				success:function(data) {
 					if(data.success) {
 						cocoMessage.success(2000,data.message,function() {
 							window.location.href = 'page/login/';

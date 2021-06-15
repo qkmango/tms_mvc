@@ -2,7 +2,7 @@ package cn.qkmango.tms.updateQuery.dao;
 
 import java.util.HashMap;
 
-public interface UserBasicInfoUpdateDao {
+public interface UpdateDao {
 
     int updateStudentPassword(HashMap<String, Object> map);
 
