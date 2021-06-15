@@ -22,4 +22,10 @@
 
     </update>
 
+    <update id="updateStudentScore">
+        UPDATE t_elective
+        SET score = #{score}
+        WHERE id = #{elective}
+    </update>
+
 </mapper>

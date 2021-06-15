@@ -9,4 +9,5 @@ public interface UpdateService {
 
     void updatePassword(HashMap<String, Object> map) throws PermissionException, UpdateException;
 
+    void updateStudentScore(HashMap<String, Object> map) throws UpdateException;
 }

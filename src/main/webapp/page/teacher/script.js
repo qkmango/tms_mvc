@@ -1,4 +1,5 @@
 var $ = layui.jquery;
+var cocoMessage = window.parent.cocoMessage;
 var form;
 var table;
 
@@ -15,7 +16,14 @@ layui.use(['form', 'table'], function () {
 		elem: '#dataGrid',
 		url: 'query/getStudentScorePagination.do',
 		toolbar: true,
-		// height:'full-0',
+		parseData: function(res){
+		    return {
+		      "code": res.success==true?0:-1,
+		      "msg": res.message,
+		      "count": res.count,
+		      "data": res.data
+		    };
+		},
 		defaultToolbar: ['filter', 'exports', 'print', {
 			title: '单击分数框即可编辑更改分数',
 			layEvent: 'LAYTABLE_TIPS',
@@ -30,7 +38,8 @@ layui.use(['form', 'table'], function () {
 			{field: 'clazz', title: '班级'},
 			{field: 'specialized', title: '专业'},
 			{field: 'faculty',title: '学院'},
-			{field: 'score', width: 80, title: '分数',edit:true,style:'background-color:#dddddd'}
+			{field: 'elective',title: '选课表ID',hide:true},
+			{field: 'score', width: 80, title: '分数',edit:true,style:'background-color:#5FB878'}
 			// ,{title: '操作', minWidth: 100, toolbar: '#currentTableBar', align: "center"}
 		]],
 		limits: [20, 40, 60, 80, 100, 120],
@@ -50,7 +59,25 @@ layui.use(['form', 'table'], function () {
 		,field = obj.field; //得到字段
 		console.log("得到修改后的值:"+value)
 		console.log(data);
-		// layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改值为：'+ util.escape(value));
+		$.ajax({
+			url:'update/updateStudentScore.do',
+			data:{
+				elective:data.elective,
+				score:data.score
+			},
+			type:'post',
+			dataType:'json',
+			success:function(data) {
+				if(data.success) {
+					cocoMessage.success(2000,data.message);
+				} else {
+					cocoMessage.error(2000,data.message);
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				cocoMessage.error(2000,jqXHR.status+'');
+			}
+		})
 	  });
 
 	// 监听搜索操作

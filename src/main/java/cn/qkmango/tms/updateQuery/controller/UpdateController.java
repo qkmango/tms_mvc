@@ -57,8 +57,25 @@ public class UpdateController {
         map.setMessage("密码更改成功");
 
         return map;
-
-
     }
+
+    @Permission(PermissionType.teacher)
+    @ResponseBody
+    @RequestMapping("updateStudentScore.do")
+    public Map<String, Object> updateStudentScore(Integer elective, Integer score) throws UpdateException {
+
+        HashMap<String, Object> requestMap = new HashMap<>();
+        requestMap.put("elective",elective);
+        requestMap.put("score",score);
+
+        updateService.updateStudentScore(requestMap);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("修改学生成绩成功");
+
+        return map;
+    }
+
 
 }

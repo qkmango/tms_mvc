@@ -118,7 +118,6 @@ public class QueryController {
 
         HashMap<String,Object> map = queryService.getStudentScorePagination(pagination);
 
-        map.put("code",0);
         map.put("success",true);
         map.put("message","获取学生成绩分页列表成功");
 

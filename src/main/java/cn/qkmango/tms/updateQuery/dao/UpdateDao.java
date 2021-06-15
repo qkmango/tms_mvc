@@ -9,4 +9,6 @@ public interface UpdateDao {
     int updateTeacherPassword(HashMap<String, Object> map);
 
     int updateAdminPassword(HashMap<String, Object> map);
+
+    int updateStudentScore(HashMap<String, Object> map);
 }

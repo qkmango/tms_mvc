@@ -47,6 +47,7 @@
         SELECT SQL_CALC_FOUND_ROWS
         student.id,
         student.name,
+        elective.id as elective,
         course.name as course,
         teacher.name as teacher,
         clazz.name as clazz,
