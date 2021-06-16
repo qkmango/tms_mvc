@@ -6,7 +6,7 @@ public class User {
     protected Integer id;
     protected String password;
     protected String name;
-    protected PermissionType permissionType = PermissionType.student;
+    protected PermissionType permissionType;
 
     public User() {
     }

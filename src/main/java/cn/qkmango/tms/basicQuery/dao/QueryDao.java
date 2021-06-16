@@ -17,4 +17,6 @@ public interface QueryDao {
     List<HashMap<String, Object>> getStudentScorePagination(StudentScorePagination pagination);
 
     int getCount();
+
+    List<Teacher> getTeacherList(Teacher teacher);
 }

@@ -3,24 +3,19 @@
 
 <mapper namespace="cn.qkmango.tms.system.dao.SystemDao">
 
-
-    <select id="studentLogin" resultType="cn.qkmango.tms.domain.User">
+    <select id="login" resultType="cn.qkmango.tms.domain.User">
         select id,name
-        from t_student
+        from
+         <if test="permissionType == @cn.qkmango.tms.web.bind.PermissionType@student">
+             t_student
+         </if>
+        <if test="permissionType == @cn.qkmango.tms.web.bind.PermissionType@teacher">
+            t_teacher
+        </if>
+        <if test="permissionType == @cn.qkmango.tms.web.bind.PermissionType@admin">
+            t_admin
+        </if>
         where id=#{id} and password=#{password};
     </select>
-
-    <select id="teacherLogin" resultType="cn.qkmango.tms.domain.User">
-        select id,name
-        from t_teacher
-        where id=#{id} and password=#{password};
-    </select>
-
-<!--    <select id="admintLogin" resultType="cn.qkmango.tms.domain.User">-->
-<!--        select id,name-->
-<!--        from t_student-->
-<!--        where id=#{id} and password=#{password};-->
-<!--    </select>-->
-
 
 </mapper>

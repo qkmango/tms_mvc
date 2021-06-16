@@ -17,4 +17,6 @@ public interface QueryService {
     List<Course> getCourseListByTeacherAndClazz(HashMap<String, Integer> paramsMap);
 
     HashMap<String,Object> getStudentScorePagination(StudentScorePagination pagination);
+
+    List<Teacher> getTeacherList(Teacher teacher);
 }

@@ -1,9 +1,6 @@
 package cn.qkmango.tms.exception.handler;
 
-import cn.qkmango.tms.exception.LoginException;
-import cn.qkmango.tms.exception.PermissionException;
-import cn.qkmango.tms.exception.SystemException;
-import cn.qkmango.tms.exception.UpdateException;
+import cn.qkmango.tms.exception.*;
 import cn.qkmango.tms.web.map.ResponseMap;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -71,7 +68,18 @@ public class GlobalExceptionHandler {
         e.printStackTrace();
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
-        map.setMessage("更新用户信息失败");
+        map.setMessage("更新数据失败");
+        return map;
+    }
+
+    //处理 插入数据 的异常
+    @ResponseBody
+    @ExceptionHandler(InsertException.class)
+    public Map InsertExceptionHandler(InsertException e) {
+        e.printStackTrace();
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(false);
+        map.setMessage("插入数据失败");
         return map;
     }
 

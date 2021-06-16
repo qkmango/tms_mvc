@@ -9,7 +9,6 @@
 
     <!--组件扫描器，创建controller（@controller类）的 bean-->
     <context:component-scan base-package="cn.qkmango.tms.*.controller" />
-<!--    <context:component-scan base-package="cn.qkmango.tms.basicQuery.controller" />-->
     <!-- 指定异常处理类所在的包（cn.qkmango.handler）-->
     <context:component-scan base-package="cn.qkmango.tms.exception.handler" />
 

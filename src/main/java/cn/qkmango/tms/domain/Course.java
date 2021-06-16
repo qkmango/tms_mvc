@@ -9,17 +9,19 @@ public class Course {
     private String name;
     private Integer credit;
     private String address;
-    private Integer specialized;
+    private Integer clazz;
+    private Integer teacher;
 
     public Course() {
     }
 
-    public Course(Integer id, String name, Integer credit, String address, Integer specialized) {
+    public Course(Integer id, String name, Integer credit, String address, Integer clazz, Integer teacher) {
         this.id = id;
         this.name = name;
         this.credit = credit;
         this.address = address;
-        this.specialized = specialized;
+        this.clazz = clazz;
+        this.teacher = teacher;
     }
 
     public Integer getId() {
@@ -54,12 +56,20 @@ public class Course {
         this.address = address;
     }
 
-    public Integer getSpecialized() {
-        return specialized;
+    public Integer getClazz() {
+        return clazz;
     }
 
-    public void setSpecialized(Integer specialized) {
-        this.specialized = specialized;
+    public void setClazz(Integer clazz) {
+        this.clazz = clazz;
+    }
+
+    public Integer getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Integer teacher) {
+        this.teacher = teacher;
     }
 
     @Override
@@ -69,7 +79,8 @@ public class Course {
                 ", name='" + name + '\'' +
                 ", credit=" + credit +
                 ", address='" + address + '\'' +
-                ", specialized=" + specialized +
+                ", clazz=" + clazz +
+                ", teacher=" + teacher +
                 '}';
     }
 }

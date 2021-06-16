@@ -3,16 +3,16 @@ package cn.qkmango.tms.domain;
 public class Clazz {
 
     private Integer id;
-    private Integer specialized;
     private String name;
+    private Integer clazz;
 
     public Clazz() {
     }
 
-    public Clazz(Integer id, Integer specialized, String name) {
+    public Clazz(Integer id, String name,Integer clazz) {
         this.id = id;
-        this.specialized = specialized;
         this.name = name;
+        this.clazz = clazz;
     }
 
     public Integer getId() {
@@ -23,28 +23,28 @@ public class Clazz {
         this.id = id;
     }
 
-    public Integer getSpecialized() {
-        return specialized;
-    }
-
-    public void setSpecialized(Integer specialized) {
-        this.specialized = specialized;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Integer clazz) {
+        this.clazz = clazz;
     }
 
     @Override
     public String toString() {
         return "Clazz{" +
                 "id=" + id +
-                ", specialized=" + specialized +
                 ", name='" + name + '\'' +
+                ", clazz=" + clazz +
                 '}';
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

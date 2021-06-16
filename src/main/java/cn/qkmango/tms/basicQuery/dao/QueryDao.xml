@@ -29,16 +29,16 @@
     <select id="getCourseListByTeacherAndClazz" resultType="cn.qkmango.tms.domain.Course">
         SELECT course.id, course.name
         FROM t_teacher teacher,
-             t_teach teach,
+#              t_teach teach,
              t_course course,
              t_specialized specialized,
              t_clazz clazz
 
         WHERE teacher.id = #{teacher}
           and clazz.id = #{clazz}
-          and teach.teacher = teacher.id
-          and teach.course = course.id
-          and course.specialized = specialized.id
+          and course.teacher = teacher.id
+#           and teach.course = course.id
+          and course.clazz = clazz.id
           and clazz.specialized = specialized.id
     </select>
 
@@ -56,7 +56,7 @@
         elective.score as score
 
         FROM t_teacher teacher,
-        t_teach teach,
+#         t_teach teach,
         t_course course,
         t_elective elective,
         t_student student,
@@ -88,8 +88,8 @@
                 and course.id = #{course}
             </if>
 
-            AND teach.teacher = teacher.id
-            AND teach.course = course.id
+            AND course.teacher = teacher.id
+#             AND teach.course = course.id
             AND elective.course = course.id
             AND elective.student = student.id
             AND student.clazz = clazz.id
@@ -103,6 +103,23 @@
     <!-- 获取未分页的总记录条数 -->
     <select id="getCount" resultType="int">
         SELECT FOUND_ROWS()
+    </select>
+
+
+    <select id="getTeacherList" resultType="cn.qkmango.tms.domain.Teacher">
+        select id,name
+        FROM t_teacher
+        <where>
+            <if test="faculty!=null and faculty!=''">
+                faculty = #{faculty}
+            </if>
+            <if test="profes!=null and profes!=''">
+                and profes = #{profes}
+            </if>
+            <if test="sex!=null">
+                and sex = #{sex}
+            </if>
+        </where>
     </select>
 
 </mapper>

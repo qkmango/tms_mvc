@@ -3,6 +3,7 @@ package cn.qkmango.tms.system.controller;
 
 import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.exception.LoginException;
+import cn.qkmango.tms.exception.PermissionException;
 import cn.qkmango.tms.web.map.ResponseMap;
 import cn.qkmango.tms.system.service.SystemService;
 import cn.qkmango.tms.web.bind.PermissionType;
@@ -28,46 +29,16 @@ public class SystemController {
     /**
      * @param request
      * @param user 户信息，前端传来参数：id，password
-     * @param permissionType 用户类型，枚举类型
      * @return
      * @throws LoginException
      */
     @RequestMapping(value = "/login.do",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> login(HttpServletRequest request, User user, PermissionType permissionType) throws LoginException {
+    public Map<String, Object> login(HttpServletRequest request, User user) throws LoginException, PermissionException {
 
-        User loginUser = null;
         ResponseMap map = new ResponseMap();
 
-        switch (permissionType) {
-            case student:
-                loginUser = service.studentLogin(user);
-                loginUser.setPermissionType(PermissionType.student);
-                break;
-            case teacher:
-                loginUser = service.teacherLogin(user);
-                loginUser.setPermissionType(PermissionType.teacher);
-                break;
-            case admin:
-                break;
-            default:
-                map.setSuccess(false);
-                map.setMessage("用户类型错误！");
-                return map;
-        }
-
-        // if (PermissionType.student == permissionType) {
-        //     loginUser = service.studentLogin(user);
-        //     loginUser.setPermissionType(PermissionType.student);
-        //
-        // } else if (PermissionType.teacher == permissionType) {
-        //     loginUser = service.teacherLogin(user);
-        //     loginUser.setPermissionType(PermissionType.teacher);
-        // } else {
-        //     map.setSuccess(false);
-        //     map.setMessage("用户类型错误！");
-        //     return map;
-        // }
+        User loginUser = service.login(user);
 
         request.getSession(true).setAttribute("user", loginUser);
         map.setSuccess(true);

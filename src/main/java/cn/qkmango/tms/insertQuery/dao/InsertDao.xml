@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.qkmango.tms.insertQuery.dao.InsertDao">
+
+
+    <insert id="insertCourse" >
+        insert into t_course(name,credit,address,clazz,teacher)
+        values(#{name},#{credit},#{address},#{clazz},#{teacher})
+    </insert>
+
+<!--    <insert id="insertTeach" >-->
+<!--        insert into t_teach(course,teacher)-->
+<!--        values(#{course},#{teacher})-->
+<!--    </insert>-->
+
+    <select id="lastInsertId" resultType="int">
+        SELECT LAST_INSERT_ID()
+    </select>
+
+</mapper>

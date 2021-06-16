@@ -124,4 +124,20 @@ public class QueryController {
         return map;
     }
 
+
+    @RequestMapping("/getTeacherList.do")
+    @ResponseBody
+    public Map<String, Object> getTeacherList(Teacher teacher) {
+
+        List<Teacher> data = queryService.getTeacherList(teacher);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("获取老师列表成功");
+        map.setData(data);
+
+        return map;
+    }
+
+
 }

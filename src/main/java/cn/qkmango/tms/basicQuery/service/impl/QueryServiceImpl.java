@@ -64,4 +64,12 @@ public class QueryServiceImpl implements QueryService {
 
         return map;
     }
+
+    @Override
+    public List<Teacher> getTeacherList(Teacher teacher) {
+
+        System.out.println(teacher);
+        List<Teacher> list = queryDao.getTeacherList(teacher);
+        return list;
+    }
 }
