@@ -8,18 +8,16 @@ public class Course {
     private Integer id;
     private String name;
     private Integer credit;
-    private String address;
     private Integer clazz;
     private Integer teacher;
 
     public Course() {
     }
 
-    public Course(Integer id, String name, Integer credit, String address, Integer clazz, Integer teacher) {
+    public Course(Integer id, String name, Integer credit, Integer clazz, Integer teacher) {
         this.id = id;
         this.name = name;
         this.credit = credit;
-        this.address = address;
         this.clazz = clazz;
         this.teacher = teacher;
     }
@@ -48,14 +46,6 @@ public class Course {
         this.credit = credit;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public Integer getClazz() {
         return clazz;
     }
@@ -78,7 +68,6 @@ public class Course {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", credit=" + credit +
-                ", address='" + address + '\'' +
                 ", clazz=" + clazz +
                 ", teacher=" + teacher +
                 '}';

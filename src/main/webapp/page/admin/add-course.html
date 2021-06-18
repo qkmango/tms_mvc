@@ -14,10 +14,10 @@
 	<div class="layuimini-container">
 		<div class="layuimini-main">
 			<div style="margin: 10px 10px 10px 10px">
-				<form class="layui-form layui-form-pane" action="" lay-filter='queryParams' id="queryParams">
+				<form class="layui-form layui-form-pane" action="" lay-filter='addCourse' id="addCourse">
 					
 					<fieldset class="table-search-fieldset">
-						<legend>搜索信息</legend>
+						<legend>课程信息</legend>
 						<div class="layui-form-item">
 							<div class="layui-inline">
 								<label class="layui-form-label">课程名</label>
@@ -31,21 +31,12 @@
 								<div class="layui-input-inline">
 									<select name="credit" id="credit" lay-filter="credit" lay-verify="required">
 										<option value="1" selected>1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
-										<option value="1">4</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
 									</select>
 								</div>
 							</div>
-							
-							<div class="layui-inline">
-								<label class="layui-form-label">上课地点</label>
-								<div class="layui-input-inline">
-									<input type="text" name="address" autocomplete="off" class="layui-input" lay-verify="required">
-								</div>
-							</div>
-							
-							
 							<div class="layui-inline">
 								<label class="layui-form-label">院系</label>
 								<div class="layui-input-inline">
@@ -82,7 +73,7 @@
 							<div class="layui-inline">
 								<label class="layui-form-label">院系</label>
 								<div class="layui-input-inline">
-									<select name="teacher_faculty" id="teacher_faculty" lay-filter="teacher_faculty">
+									<select id="teacher_faculty" lay-filter="teacher_faculty">
 										<option value="">全部</option>
 									</select>
 								</div>
@@ -90,7 +81,7 @@
 							<div class="layui-inline">
 								<label class="layui-form-label">性别</label>
 								<div class="layui-input-inline">
-									<select name="teacher_sex" id="teacher_sex" lay-filter="teacher_sex">
+									<select id="teacher_sex" lay-filter="teacher_sex">
 										<option value="">全部</option>
 										<option value="1">男</option>
 										<option value="0">女</option>
@@ -105,23 +96,96 @@
 									</select>
 								</div>
 							</div>
-							<div class="layui-inline">
-							    <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn">
-									<i class="layui-icon">&#xe605;</i> 提 交
-								</button>
-							</div>
 						</div>
 						
 					</fieldset>
+					
+					
+					<fieldset class="table-search-fieldset courseInfoItem">
+						<legend>节次0</legend>
+						<div class="layui-form-item">
+							<div  class="layui-inline">
+							    <label class="layui-form-label">类型</label>
+							    <div class="layui-input-inline">
+							    	<select name="courseInfos[0].courseType" lay-verify="required">
+							    		<option value="">全部</option>
+							    		<option value="theory">理论课</option>
+							    		<option value="practice">实践课</option>
+							    	</select>
+							    </div>
+							</div>
+							<div  class="layui-inline">
+							    <label class="layui-form-label">单双周</label>
+							    <div class="layui-input-inline">
+							    	<select name="courseInfos[0].weekType" lay-verify="required">
+							    		<option value="all">不限</option>
+							    		<option value="sgl">单周</option>
+							    		<option value="dbl">双周</option>
+							    	</select>
+							    </div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">起始周</label>
+								<div class="layui-input-inline">
+									<input type="number" name="courseInfos[0].startWeek" autocomplete="off" class="layui-input" lay-verify="required">
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">结束周</label>
+								<div class="layui-input-inline">
+									<input type="number" name="courseInfos[0].endWeek" autocomplete="off" class="layui-input" lay-verify="required">
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">星期</label>
+								<div class="layui-input-inline">
+									<select name="courseInfos[0].weekDay" lay-verify="required">
+										<option value="">全部</option>
+										<option value="Monday">周一</option>
+										<option value="Tuesday">周二</option>
+										<option value="Wednesday">周三</option>
+										<option value="Thursday">周四</option>
+										<option value="Friday">周五</option>
+										<option value="Saturday">周六</option>
+										<option value="Sunday">周日</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">起始节</label>
+								<div class="layui-input-inline">
+									<input type="number" name="courseInfos[0].begin" autocomplete="off" class="layui-input" lay-verify="required">
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">持续节</label>
+								<div class="layui-input-inline">
+									<input type="number" name="courseInfos[0].length" autocomplete="off" class="layui-input" lay-verify="required">
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">上课地点</label>
+								<div class="layui-input-inline">
+									<input type="text" name="courseInfos[0].address" autocomplete="off" class="layui-input" lay-verify="required">
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<div class="layui-inline" id="btnArea">
+						<button type="button" class="layui-btn" id="add">添加节次</button>
+						<button type="button" class="layui-btn layui-btn-danger" id="del">删除节次</button>
+						<button type="submit" class="layui-btn layui-btn-normal" form="addCourse" lay-submit lay-filter="data-submit-btn">
+							<i class="layui-icon">&#xe605;</i> 提 交
+						</button>
+					</div>
 				</form>
 			</div>
-
-
-			<!-- <table class="layui-hide" id="dataGrid" lay-filter="currentTableFilter"></table> -->
+			
 
 		</div>
 	</div>
 	<script type="text/javascript" src="lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+	<script type="text/javascript" src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="page/admin/script.js" charset="utf-8"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import cn.qkmango.tms.domain.*;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
+import cn.qkmango.tms.web.model.CourseInfoModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,11 +25,19 @@ public class QueryController {
     private QueryService queryService;
 
 
-    @Permission({PermissionType.teacher, PermissionType.student})
     @RequestMapping("/test.do")
     @ResponseBody
-    public String test() {
-        return "test";
+    public String test(Course course, CourseInfoModel courseInfos) {
+
+        System.out.println(course);
+
+        System.out.println("size "+courseInfos.size());
+        List<CourseInfo> courseInfoList = courseInfos.getCourseInfos();
+        for (int i = 0; i < 2; i++) {
+            System.out.println(courseInfoList.get(i));
+        }
+
+        return null;
     }
 
     /**

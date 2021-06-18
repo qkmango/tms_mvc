@@ -1,8 +1,8 @@
-var $ = layui.jquery;
+// var $ = layui.jquery;
 var cocoMessage = window.parent.cocoMessage;
 var form;
 var table;
-
+var layer;
 
 $('input[name=teacher]').val(window.parent.GLOBAL.user.id);
 
@@ -10,95 +10,76 @@ layui.use(['form', 'table'], function () {
 	
 	form = layui.form;
 	table = layui.table;
+	layer = layui.layer;
+	
 	getFacultyList();
-
-	// table.render({
-	// 	elem: '#dataGrid',
-	// 	url: 'query/getStudentScorePagination.do',
-	// 	toolbar: true,
-	// 	parseData: function(res){
-	// 	    return {
-	// 	      "code": res.success==true?0:-1,
-	// 	      "msg": res.message,
-	// 	      "count": res.count,
-	// 	      "data": res.data
-	// 	    };
-	// 	},
-	// 	defaultToolbar: ['filter', 'exports', 'print', {
-	// 		title: '单击分数框即可编辑更改分数',
-	// 		layEvent: 'LAYTABLE_TIPS',
-	// 		icon: 'layui-icon-tips'
-	// 	}],
-	// 	cols: [[
-	// 		{type: "checkbox", width: 50},
-	// 		{field: 'id', width: 80, title: 'ID', sort: true},
-	// 		{field: 'name', width: 120, title: '姓名'},
-	// 		{field: 'course', width: 140, title: '课程'},
-	// 		{field: 'teacher', width: 100, title: '任课老师'},
-	// 		{field: 'clazz', title: '班级'},
-	// 		{field: 'specialized', title: '专业'},
-	// 		{field: 'faculty',title: '学院'},
-	// 		{field: 'elective',title: '选课表ID',hide:true},
-	// 		{field: 'score', width: 80, title: '分数',edit:true,style:'background-color:#5FB878'}
-	// 		// ,{title: '操作', minWidth: 100, toolbar: '#currentTableBar', align: "center"}
-	// 	]],
-	// 	limits: [20, 40, 60, 80, 100, 120],
-	// 	limit: 20,
-	// 	page: true,
-	// 	skin: 'line',
-	// 	where:{
-	// 		teacher:window.parent.GLOBAL.user.id
-	// 	}
-	// });
-
-
-	//监听单元格编辑
-	 //  table.on('edit(currentTableFilter)', function(obj){
-		// var value = obj.value //得到修改后的值
-		// ,data = obj.data //得到所在行所有键值
-		// ,field = obj.field; //得到字段
-		// console.log("得到修改后的值:"+value)
-		// console.log(data);
-		// $.ajax({
-		// 	url:'update/updateStudentScore.do',
-		// 	data:{
-		// 		elective:data.elective,
-		// 		score:data.score
-		// 	},
-		// 	type:'post',
-		// 	dataType:'json',
-		// 	success:function(data) {
-		// 		if(data.success) {
-		// 			cocoMessage.success(2000,data.message);
-		// 		} else {
-		// 			cocoMessage.error(2000,data.message);
-		// 		}
-		// 	},
-		// 	error: function (jqXHR, textStatus, errorThrown) {
-		// 		cocoMessage.error(2000,jqXHR.status+'');
-		// 	}
-		// })
-	 //  });
-
-	// 监听搜索操作
-	form.on('submit(data-search-btn)', function (data) {
-		console.log(data.field);
-		$.ajax({
-			url:'insert/addCourse.do',
-			data:data.field,
-			type:'post',
-			dataType:'json',
-			success:function(data) {
-				if(data.success) {
-					cocoMessage.success(2000,data.message);
-				} else {
-					cocoMessage.error(2000,data.message);
-				}
+	
+	//添加节次按钮事件
+	$('#add').click(function() {
+		let len = $(".courseInfoItem").length;
+		$("#btnArea").before(getHTML(len));
+		form.render(null, 'addCourse');
+	})
+	
+	
+	//删除节次按钮事件
+	$('#del').click(function() {
+		
+		let len = $(".courseInfoItem").length;
+		if(len<=1){
+			layer.msg('至少保留一个节次');
+			return;
+		}
+		
+		layer.msg('确认删除最后一个节次吗？', {
+			icon: 3,
+			time: 0,
+			btn: ['取消', '确定'],
+			yes: function(index) {
+				layer.close(index);
 			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				cocoMessage.error(2000,jqXHR.status+'');
+			btn2: function(index) {
+				layer.close(index);
+				$(".courseInfoItem").get(len-1).remove();
+				form.render(null, 'addCourse');
 			}
-		})
+		});
+		
+	})
+	
+	// 监听搜索操作
+	form.on('submit(data-submit-btn)', function (data) {
+		console.log(data.field);
+		
+		layer.msg('确认提交吗？', {
+			icon: 3,
+			time: 0,
+			btn: ['取消', '确定'],
+			yes: function(index) {
+				layer.close(index);
+			},
+			btn2: function(index) {
+				layer.close(index);
+				$.ajax({
+					url:'insert/addCourse.do',
+					data:data.field,
+					type:'post',
+					dataType:'json',
+					success:function(data) {
+						if(data.success) {
+							cocoMessage.success(2000,data.message);
+						} else {
+							cocoMessage.error(2000,data.message);
+						}
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						cocoMessage.error(2000,jqXHR.status+'');
+					}
+				})
+			}
+		});
+		
+		
 	
 		return false;
 	});
@@ -108,33 +89,33 @@ layui.use(['form', 'table'], function () {
 	form.on('select(faculty)', function(data){
 		if(data.value=='') {
 			$('#specialized').html('<option value="">全部</option>');
-			form.render('select','queryParams');
+			form.render('select','addCourse');
 		} else{
 			console.log(data.value); //得到被选中的值
 			getSpecializedListByFaculty(data.value)
 		}
 		$('#clazz').html('<option value="">全部</option>');
 		$('#course').html('<option value="">全部</option>');
-		form.render('select','queryParams');
+		form.render('select','addCourse');
 	});
 	
 	//下拉框 专业 值改变时事件监听
 	form.on('select(specialized)', function(data){
 		if(data.value=='') {
 			$('#clazz').html('<option value="">全部</option>');
-			form.render('select','queryParams');
+			form.render('select','addCourse');
 		} else{
 			console.log(data.value); //得到被选中的值
 			getClazzListBySpecialized(data.value)
 		}
 		$('#course').html('<option value="">全部</option>');
-		form.render('select','queryParams');
+		form.render('select','addCourse');
 	});
 	
 	form.on('select(clazz)', function(data){
 		if(data.value=='') {
 			$('#course').html('<option value="">全部</option>');
-			form.render('select','queryParams');
+			form.render('select','addCourse');
 		} else{
 			console.log(data.value); //得到被选中的值
 			let teacher = window.parent.GLOBAL.user.id;
@@ -147,7 +128,7 @@ layui.use(['form', 'table'], function () {
 	form.on('select(teacher_faculty)', function(data){
 		if(data.value=='') {
 			$('#teacher').html('<option value="">全部</option>');
-			form.render('select','queryParams');
+			form.render('select','addCourse');
 		} else{
 			console.log(data.value); //得到被选中的值
 			getTeacherList(data.value,$('#teacher_sex').val());
@@ -159,13 +140,21 @@ layui.use(['form', 'table'], function () {
 		console.log('data='+data.value)
 		if(data.value=='') {
 			$('#teacher').html('<option value="">全部</option>');
-			form.render('select','queryParams');
+			form.render('select','addCourse');
 		} else{
 			console.log(data.value); //得到被选中的值
 			getTeacherList($('#teacher_faculty').val(),data.value);
 		}
 	});
 });
+
+
+//获取节次的HTML
+function getHTML(index) {
+	return '<fieldset class="table-search-fieldset courseInfoItem"><legend>节次'+index+'</legend><div class="layui-form-item"><div  class="layui-inline"><label class="layui-form-label">类型</label><div class="layui-input-inline"><select name="courseInfos['+index+'].courseType" lay-verify="required"><option value="">全部</option><option value="theory">理论课</option><option value="practice">实践课</option></select></div></div><div  class="layui-inline"><label class="layui-form-label">单双周</label><div class="layui-input-inline"><select name="courseInfos['+index+'].weekType" lay-verify="required"><option value="all">不限</option><option value="sgl">单周</option><option value="dbl">双周</option></select></div></div><div class="layui-inline"><label class="layui-form-label">起始周</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].startWeek" autocomplete="off" class="layui-input" lay-verify="required"></div></div><div class="layui-inline"><label class="layui-form-label">结束周</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].endWeek" autocomplete="off" class="layui-input" lay-verify="required"></div></div><div class="layui-inline"><label class="layui-form-label">星期</label><div class="layui-input-inline"><select name="courseInfos['+index+'].weekDay" lay-verify="required"><option value="">全部</option><option value="Monday">周一</option><option value="Tuesday">周二</option><option value="Wednesday">周三</option><option value="Thursday">周四</option><option value="Friday">周五</option><option value="Saturday">周六</option><option value="Sunday">周日</option></select></div></div><div class="layui-inline"><label class="layui-form-label">起始节</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].begin" autocomplete="off" class="layui-input" lay-verify="required"></div></div><div class="layui-inline"><label class="layui-form-label">持续节</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].length" autocomplete="off" class="layui-input" lay-verify="required"></div></div><div class="layui-inline"><label class="layui-form-label">上课地点</label><div class="layui-input-inline"><input type="text" name="courseInfos['+index+'].address" autocomplete="off" class="layui-input" lay-verify="required"></div></div></div></fieldset>';
+}
+
+
 
 //获取院系列表并渲染
 function getFacultyList() {
@@ -181,7 +170,7 @@ function getFacultyList() {
 			
 			$('#faculty').html(html);
 			$('#teacher_faculty').html(html);
-			form.render('select','queryParams');
+			form.render('select','addCourse');
 		}
 	})
 }
@@ -202,7 +191,7 @@ function getSpecializedListByFaculty(faculty) {
 			});
 			
 			$('#specialized').html(html);
-			form.render('select','queryParams');
+			form.render('select','addCourse');
 		}
 	})
 }
@@ -224,7 +213,7 @@ function getClazzListBySpecialized(specialized) {
 			});
 			
 			$('#clazz').html(html);
-			form.render('select','queryParams');
+			form.render('select','addCourse');
 		}
 	})
 }
@@ -246,7 +235,7 @@ function getCourseListByTeacherAndClazz(teacher,clazz) {
 			});
 			
 			$('#course').html(html);
-			form.render('select','queryParams');
+			form.render('select','addCourse');
 		}
 	})
 }
@@ -268,7 +257,7 @@ function getTeacherList(faculty,sex) {
 			});
 			
 			$('#teacher').html(html);
-			form.render('select','queryParams');
+			form.render('select','addCourse');
 		}
 	})
 }
