@@ -17,6 +17,11 @@
         </foreach>
     </insert>
 
+    <insert id="insertBuilding">
+        insert into t_building (number, name, buildingType)
+        values (#{number},#{name},#{buildingType});
+    </insert>
+
 
     <select id="lastInsertId" resultType="int">
         SELECT LAST_INSERT_ID()

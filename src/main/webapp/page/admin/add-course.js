@@ -61,7 +61,7 @@ layui.use(['form', 'table'], function () {
 			btn2: function(index) {
 				layer.close(index);
 				$.ajax({
-					url:'insert/addCourse.do',
+					url:'insert/insertCourse.do',
 					data:data.field,
 					type:'post',
 					dataType:'json',

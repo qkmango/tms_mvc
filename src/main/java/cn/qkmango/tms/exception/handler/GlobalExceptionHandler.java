@@ -83,4 +83,15 @@ public class GlobalExceptionHandler {
         return map;
     }
 
+    //处理 删除数据 的异常
+    @ResponseBody
+    @ExceptionHandler(DeleteException.class)
+    public Map DeleteExceptionHandler(DeleteException e) {
+        e.printStackTrace();
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(false);
+        map.setMessage("删除数据失败");
+        return map;
+    }
+
 }

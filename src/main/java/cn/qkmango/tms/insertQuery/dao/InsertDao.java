@@ -1,5 +1,6 @@
 package cn.qkmango.tms.insertQuery.dao;
 
+import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.CourseInfo;
 import org.apache.ibatis.annotations.Param;
@@ -14,5 +15,5 @@ public interface InsertDao {
 
     int insertCourseInfo(List<CourseInfo> courseInfoList);
 
-
+    int insertBuilding(Building building);
 }

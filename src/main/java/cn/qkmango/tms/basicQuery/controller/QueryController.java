@@ -25,8 +25,8 @@ public class QueryController {
     private QueryService queryService;
 
 
-    @RequestMapping("/test.do")
     @ResponseBody
+    @RequestMapping("/test.do")
     public String test(Course course, CourseInfoModel courseInfos) {
 
         System.out.println(course);
@@ -44,8 +44,8 @@ public class QueryController {
      * 查询院系列表
      * @return
      */
-    @RequestMapping("/getFacultyList.do")
     @ResponseBody
+    @RequestMapping("/getFacultyList.do")
     public Map<String, Object> getFacultyList() {
 
         List<Faculty> facultyList = queryService.getFacultyList();
@@ -62,8 +62,8 @@ public class QueryController {
      * faculty 表示院系的id，数据库中存储的为 int类型，但是前端请求的是 String类型
      * @return
      */
-    @RequestMapping("/getSpecializedListByFaculty.do")
     @ResponseBody
+    @RequestMapping("/getSpecializedListByFaculty.do")
     public Map<String, Object> getSpecializedListByFaculty(Integer faculty) {
 
         List<Specialized> SpecializedList = queryService.getSpecializedListByFaculty(faculty);
@@ -81,8 +81,8 @@ public class QueryController {
      * faculty 表示院系的id，数据库中存储的为 int类型，但是前端请求的是 String类型
      * @return
      */
-    @RequestMapping("/getClazzListBySpecialized.do")
     @ResponseBody
+    @RequestMapping("/getClazzListBySpecialized.do")
     public Map<String, Object> getClazzListBySpecialized(Integer specialized) {
 
         List<Clazz> ClazzList = queryService.getClazzListBySpecialized(specialized);
@@ -100,8 +100,8 @@ public class QueryController {
      * @param teacher 前端传入的 老师id
      * @return
      */
-    @RequestMapping("/getCourseListByTeacherAndClazz.do")
     @ResponseBody
+    @RequestMapping("/getCourseListByTeacherAndClazz.do")
     public Map<String, Object> getCourseListByTeacherAndClazz(Integer clazz,Integer teacher) {
 
         HashMap<String, Integer> paramsMap = new HashMap<>();
@@ -111,6 +111,7 @@ public class QueryController {
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
+        map.setMessage("条件(TeacherAndClazz)获取学科列表成功");
         map.setData(CourseList);
 
         return map;
@@ -120,9 +121,9 @@ public class QueryController {
      * 获取学生成绩列表分页
      * @return
      */
-    @RequestMapping("/getStudentScorePagination.do")
-    @Permission({PermissionType.admin,PermissionType.teacher})
     @ResponseBody
+    @Permission({PermissionType.admin,PermissionType.teacher})
+    @RequestMapping("/getStudentScorePagination.do")
     public Map<String, Object> getStudentScorePagination(StudentScorePagination pagination) {
 
         HashMap<String,Object> map = queryService.getStudentScorePagination(pagination);
@@ -134,8 +135,8 @@ public class QueryController {
     }
 
 
-    @RequestMapping("/getTeacherList.do")
     @ResponseBody
+    @RequestMapping("/getTeacherList.do")
     public Map<String, Object> getTeacherList(Teacher teacher) {
 
         List<Teacher> data = queryService.getTeacherList(teacher);
@@ -143,6 +144,26 @@ public class QueryController {
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
         map.setMessage("获取老师列表成功");
+        map.setData(data);
+
+        return map;
+    }
+
+    /**
+     * 条件获取 楼 列表（不分页）
+     * @param building
+     * @return
+     */
+    @ResponseBody
+    @Permission(PermissionType.admin)
+    @RequestMapping("/getBuildingList.do")
+    public Map<String, Object> getBuildingList(Building building) {
+
+        List<Building> data = queryService.getBuildingList(building);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("获取教学楼列表成功");
         map.setData(data);
 
         return map;

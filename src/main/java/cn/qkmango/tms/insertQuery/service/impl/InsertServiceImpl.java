@@ -1,5 +1,6 @@
 package cn.qkmango.tms.insertQuery.service.impl;
 
+import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.CourseInfo;
 import cn.qkmango.tms.exception.InsertException;
@@ -42,6 +43,16 @@ public class InsertServiceImpl implements InsertService {
         }
 
         insertCourseInfo(courseInfoList);
+    }
+
+    @Override
+    public void insertBuilding(Building building) throws InsertException {
+
+        int affectedRows = insertDao.insertBuilding(building);
+
+        if (affectedRows != 1) {
+            throw new InsertException("插入Course异常，因为影响行数不为1，实际影响行数为：" + affectedRows);
+        }
     }
 
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.qkmango.tms.basicQuery.dao.QueryDao">
 
+<mapper namespace="cn.qkmango.tms.basicQuery.dao.QueryDao">
 
     <select id="getFacultyList" resultType="cn.qkmango.tms.domain.Faculty">
         SELECT id, name
@@ -29,7 +29,6 @@
     <select id="getCourseListByTeacherAndClazz" resultType="cn.qkmango.tms.domain.Course">
         SELECT course.id, course.name
         FROM t_teacher teacher,
-#              t_teach teach,
              t_course course,
              t_specialized specialized,
              t_clazz clazz
@@ -37,7 +36,6 @@
         WHERE teacher.id = #{teacher}
           and clazz.id = #{clazz}
           and course.teacher = teacher.id
-#           and teach.course = course.id
           and course.clazz = clazz.id
           and clazz.specialized = specialized.id
     </select>
@@ -56,7 +54,6 @@
         elective.score as score
 
         FROM t_teacher teacher,
-#         t_teach teach,
         t_course course,
         t_elective elective,
         t_student student,
@@ -89,7 +86,6 @@
             </if>
 
             AND course.teacher = teacher.id
-#             AND teach.course = course.id
             AND elective.course = course.id
             AND elective.student = student.id
             AND student.clazz = clazz.id
@@ -120,6 +116,34 @@
                 and sex = #{sex}
             </if>
         </where>
+    </select>
+
+    <select id="getBuildingList" resultType="cn.qkmango.tms.domain.Building">
+        select id, number, name, buildingType
+        from t_building
+        <where>
+            <if test="id!=null">
+                id = #{id}
+            </if>
+            <if test="number!=null">
+                and number = #{number}
+            </if>
+            <if test="buildingType!=null">
+                <if test="buildingType == @cn.qkmango.tms.web.bind.building.BuildingType@pedagogical">
+                    and buildingType = 'pedagogical'
+                </if>
+                <if test="buildingType == @cn.qkmango.tms.web.bind.building.BuildingType@experimental">
+                    and buildingType = 'experimental'
+                </if>
+                <if test="buildingType == @cn.qkmango.tms.web.bind.building.BuildingType@other">
+                    and buildingType = 'other'
+                </if>
+            </if>
+            <if test="name!=null and name!=''">
+                and name like '%' #{name} '%'
+            </if>
+        </where>
+        order by number asc
     </select>
 
 </mapper>

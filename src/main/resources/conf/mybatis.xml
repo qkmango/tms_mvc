@@ -17,4 +17,5 @@
     <mappers>
         <package name="cn.qkmango.tms.system.dao"/>
     </mappers>
+
 </configuration>

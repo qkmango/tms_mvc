@@ -19,4 +19,6 @@ public interface QueryDao {
     int getCount();
 
     List<Teacher> getTeacherList(Teacher teacher);
+
+    List<Building> getBuildingList(Building building);
 }

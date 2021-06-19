@@ -15,6 +15,12 @@
 			"target": "_self"
 		},
 		{
+			"title": "教学楼管理",
+			"href": "page/admin/building/building.html",
+			"icon": "fa fa-tachometer",
+			"target": "_self"
+		},
+		{
 			"title": "菜单管理",
 			"href": "page/menu.html",
 			"icon": "fa fa-window-maximize",

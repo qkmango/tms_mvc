@@ -28,4 +28,10 @@
         WHERE id = #{elective}
     </update>
 
+    <update id="updateBuilding">
+        UPDATE t_building
+        SET number=#{number},name=#{name},buildingType=#{buildingType}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

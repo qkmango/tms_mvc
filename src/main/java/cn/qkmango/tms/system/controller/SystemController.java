@@ -36,11 +36,11 @@ public class SystemController {
     @ResponseBody
     public Map<String, Object> login(HttpServletRequest request, User user) throws LoginException, PermissionException {
 
-        ResponseMap map = new ResponseMap();
-
         User loginUser = service.login(user);
 
         request.getSession(true).setAttribute("user", loginUser);
+
+        ResponseMap map = new ResponseMap();
         map.setSuccess(true);
         map.setMessage("登陆成功！");
 

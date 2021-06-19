@@ -19,4 +19,6 @@ public interface QueryService {
     HashMap<String,Object> getStudentScorePagination(StudentScorePagination pagination);
 
     List<Teacher> getTeacherList(Teacher teacher);
+
+    List<Building> getBuildingList(Building building);
 }

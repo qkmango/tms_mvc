@@ -1,6 +1,7 @@
 package cn.qkmango.tms.updateQuery.controller;
 
 
+import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.exception.PermissionException;
 import cn.qkmango.tms.exception.UpdateException;
@@ -29,8 +30,8 @@ public class UpdateController {
     @Resource
     private UpdateService updateService;
 
-    @Permission
     @ResponseBody
+    @Permission
     @RequestMapping("/updatePassword.do")
     public Map<String, Object> updatePassword(HttpServletRequest request,
                                               String oldPassword,
@@ -59,8 +60,8 @@ public class UpdateController {
         return map;
     }
 
-    @Permission(PermissionType.teacher)
     @ResponseBody
+    @Permission(PermissionType.teacher)
     @RequestMapping("updateStudentScore.do")
     public Map<String, Object> updateStudentScore(Integer elective, Integer score) throws UpdateException {
 
@@ -76,6 +77,22 @@ public class UpdateController {
 
         return map;
     }
+
+    @ResponseBody
+    @Permission(PermissionType.admin)
+    @RequestMapping("updateBuilding.do")
+    public Map<String, Object> updateBuilding(Building building) throws UpdateException {
+
+        updateService.updateBuilding(building);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("修改教学楼信息成功");
+
+        return map;
+    }
+
+
 
 
 }

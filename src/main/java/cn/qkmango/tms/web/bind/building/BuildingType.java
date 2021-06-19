@@ -9,5 +9,7 @@ public enum BuildingType {
     //教学楼（教学性）
     pedagogical,
     //实验楼（实验性）
-    experimental
+    experimental,
+    //其他
+    other
 }

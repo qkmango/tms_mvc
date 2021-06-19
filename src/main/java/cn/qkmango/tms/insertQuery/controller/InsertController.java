@@ -1,6 +1,7 @@
 package cn.qkmango.tms.insertQuery.controller;
 
 
+import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.CourseInfo;
 import cn.qkmango.tms.exception.InsertException;
@@ -26,19 +27,29 @@ public class InsertController {
 
     @ResponseBody
     @Permission(PermissionType.admin)
-    @RequestMapping("addCourse.do")
-    public Map<String, Object> addCourse(Course course, CourseInfoModel courseInfoModel) throws InsertException {
-        // System.out.println(course);
-        //
-        // for (CourseInfo courseInfo : courseInfoModel.getCourseInfos()) {
-        //     System.out.println(courseInfo);
-        // }
+    @RequestMapping("/insertCourse.do")
+    public Map<String, Object> insertCourse(Course course, CourseInfoModel courseInfoModel) throws InsertException {
 
         service.insertCourse(course,courseInfoModel);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
         map.setMessage("添加课程成功");
+
+        return map;
+    }
+
+
+    @ResponseBody
+    @Permission(PermissionType.admin)
+    @RequestMapping("insertBuilding.do")
+    public Map<String, Object> insertBuilding(Building building) throws InsertException {
+
+        service.insertBuilding(building);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("添加楼成功");
 
         return map;
     }

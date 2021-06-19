@@ -68,8 +68,15 @@ public class QueryServiceImpl implements QueryService {
     @Override
     public List<Teacher> getTeacherList(Teacher teacher) {
 
-        System.out.println(teacher);
         List<Teacher> list = queryDao.getTeacherList(teacher);
+        return list;
+    }
+
+    @Override
+    public List<Building> getBuildingList(Building building) {
+
+        List<Building> list = queryDao.getBuildingList(building);
+
         return list;
     }
 }
