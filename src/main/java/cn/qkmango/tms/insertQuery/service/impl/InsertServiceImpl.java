@@ -3,6 +3,7 @@ package cn.qkmango.tms.insertQuery.service.impl;
 import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.CourseInfo;
+import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.exception.InsertException;
 import cn.qkmango.tms.insertQuery.dao.InsertDao;
 import cn.qkmango.tms.insertQuery.service.InsertService;
@@ -12,7 +13,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,7 +30,6 @@ public class InsertServiceImpl implements InsertService {
     public void insertCourse(Course course, CourseInfoModel courseInfoModel) throws InsertException {
 
         int affectedRows = insertDao.insertCourse(course);
-        System.out.println("====");
         if (affectedRows != 1) {
             throw new InsertException("插入Course异常，因为影响行数不为1，实际影响行数为：" + affectedRows);
         }
@@ -46,12 +45,26 @@ public class InsertServiceImpl implements InsertService {
     }
 
     @Override
+    @Transactional(
+            propagation = Propagation.REQUIRED,
+            rollbackFor = Exception.class
+    )
     public void insertBuilding(Building building) throws InsertException {
-
         int affectedRows = insertDao.insertBuilding(building);
-
         if (affectedRows != 1) {
-            throw new InsertException("插入Course异常，因为影响行数不为1，实际影响行数为：" + affectedRows);
+            throw new InsertException("插入楼宇信息异常，因为影响行数不为1，实际影响行数为：" + affectedRows);
+        }
+    }
+
+    @Override
+    @Transactional(
+            propagation = Propagation.REQUIRED,
+            rollbackFor = Exception.class
+    )
+    public void insertRoom(Room room) throws InsertException {
+        int affectedRows = insertDao.insertRoom(room);
+        if (affectedRows != 1) {
+            throw new InsertException("插入教室信息异常，因为影响行数不为1，实际影响行数为：" + affectedRows);
         }
     }
 
@@ -66,9 +79,7 @@ public class InsertServiceImpl implements InsertService {
             rollbackFor = Exception.class
     )
     protected void insertCourseInfo(List<CourseInfo> courseInfoList) throws InsertException {
-
         int affectedRows = insertDao.insertCourseInfo(courseInfoList);
-
         if (affectedRows != courseInfoList.size()) {
             throw new InsertException("插入course_info异常，因为影响行数应为"+courseInfoList.size()+"，实际影响行数为：" + affectedRows);
         }

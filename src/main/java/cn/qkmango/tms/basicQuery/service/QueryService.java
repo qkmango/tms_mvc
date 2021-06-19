@@ -1,7 +1,8 @@
 package cn.qkmango.tms.basicQuery.service;
 
 import cn.qkmango.tms.domain.*;
-import org.apache.ibatis.annotations.Param;
+import cn.qkmango.tms.domain.paginstion.RoomPagination;
+import cn.qkmango.tms.domain.paginstion.StudentScorePagination;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,4 +22,6 @@ public interface QueryService {
     List<Teacher> getTeacherList(Teacher teacher);
 
     List<Building> getBuildingList(Building building);
+
+    HashMap<String, Object> getRoomPagination(RoomPagination pagination);
 }

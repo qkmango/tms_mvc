@@ -22,6 +22,11 @@
         values (#{number},#{name},#{buildingType});
     </insert>
 
+    <insert id="insertRoom">
+        insert into t_room (number, name, building)
+        values (#{number},#{name},#{building});
+    </insert>
+
 
     <select id="lastInsertId" resultType="int">
         SELECT LAST_INSERT_ID()

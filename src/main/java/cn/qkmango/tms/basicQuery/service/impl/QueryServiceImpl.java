@@ -3,6 +3,8 @@ package cn.qkmango.tms.basicQuery.service.impl;
 import cn.qkmango.tms.basicQuery.dao.QueryDao;
 import cn.qkmango.tms.basicQuery.service.QueryService;
 import cn.qkmango.tms.domain.*;
+import cn.qkmango.tms.domain.paginstion.RoomPagination;
+import cn.qkmango.tms.domain.paginstion.StudentScorePagination;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,5 +80,17 @@ public class QueryServiceImpl implements QueryService {
         List<Building> list = queryDao.getBuildingList(building);
 
         return list;
+    }
+
+    @Override
+    public HashMap<String, Object> getRoomPagination(RoomPagination pagination) {
+
+        List<HashMap<String, Object>> data = queryDao.getRoomPagination(pagination);
+        int count = queryDao.getCount();
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("count",count);
+        map.put("data",data);
+
+        return map;
     }
 }

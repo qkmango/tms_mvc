@@ -10,15 +10,28 @@
 	},
 	"menuInfo": [{
 			"title": "课程发布",
-			"href": "page/admin/add-course.html",
+			"href": "page/admin/course/add-course.html",
 			"icon": "fa fa-tachometer",
 			"target": "_self"
 		},
 		{
 			"title": "教学楼管理",
-			"href": "page/admin/building/building.html",
+			"href": "",
 			"icon": "fa fa-tachometer",
-			"target": "_self"
+			"target": "_self",
+			"child": [
+				{
+					"title": "楼宇管理",
+					"href": "page/admin/building/building.html",
+					"icon": "fa fa-tachometer",
+					"target": "_self"
+				},{
+					"title": "教室管理",
+					"href": "page/admin/building/room.html",
+					"icon": "fa fa-tachometer",
+					"target": "_self"
+				}
+			]
 		},
 		{
 			"title": "菜单管理",

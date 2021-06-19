@@ -12,10 +12,10 @@ layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function 
         element = layui.element ,
         miniTab = layui.miniTab;
 
-    if (!/http(s*):\/\//.test(location.href)) {
-        var tips = "请先将项目部署至web容器（Apache/Tomcat/Nginx/IIS/等），否则部分数据将无法显示";
-        return layer.alert(tips);
-    }
+    // if (!/http(s*):\/\//.test(location.href)) {
+    //     var tips = "请先将项目部署至web容器（Apache/Tomcat/Nginx/IIS/等），否则部分数据将无法显示";
+    //     return layer.alert(tips);
+    // }
 
     var miniAdmin = {
 

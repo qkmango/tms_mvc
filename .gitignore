@@ -1,4 +1,6 @@
 target/
 .idea/
 src/main/webapp/page/*.html
+src/main/webapp/test/
+src/main/webapp/lib/layui-v2.6.3/layui - 副本.js
 src/test/

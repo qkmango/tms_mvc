@@ -3,6 +3,8 @@ package cn.qkmango.tms.basicQuery.controller;
 
 import cn.qkmango.tms.basicQuery.service.QueryService;
 import cn.qkmango.tms.domain.*;
+import cn.qkmango.tms.domain.paginstion.RoomPagination;
+import cn.qkmango.tms.domain.paginstion.StudentScorePagination;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
@@ -27,17 +29,13 @@ public class QueryController {
 
     @ResponseBody
     @RequestMapping("/test.do")
-    public String test(Course course, CourseInfoModel courseInfos) {
+    public Map test() {
 
-        System.out.println(course);
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.put("user",new User(1,null,"admin",PermissionType.admin));
 
-        System.out.println("size "+courseInfos.size());
-        List<CourseInfo> courseInfoList = courseInfos.getCourseInfos();
-        for (int i = 0; i < 2; i++) {
-            System.out.println(courseInfoList.get(i));
-        }
-
-        return null;
+        return map;
     }
 
     /**
@@ -165,6 +163,25 @@ public class QueryController {
         map.setSuccess(true);
         map.setMessage("获取教学楼列表成功");
         map.setData(data);
+
+        return map;
+    }
+
+    /**
+     * 条件获取房间列表 分页
+     * @param pagination
+     * @return
+     */
+    @ResponseBody
+    @Permission(PermissionType.admin)
+    @RequestMapping("/getRoomPagination.do")
+    public Map<String, Object> getRoomPagination(RoomPagination pagination) {
+
+        HashMap<String,Object> map = queryService.getRoomPagination(pagination);
+
+        // ResponseMap map = new ResponseMap();
+        map.put("success",true);
+        map.put("message","获取教室列表成功");
 
         return map;
     }

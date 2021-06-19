@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 18/06/2021 23:34:47
+ Date: 19/06/2021 23:52:11
 */
 
 SET NAMES utf8mb4;
@@ -42,13 +42,21 @@ CREATE TABLE `t_building`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '楼id',
   `number` int(10) UNSIGNED NOT NULL COMMENT '楼号',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '楼名称',
+  `buildingType` enum('pedagogical','experimental','other') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '楼类型， pedagogical教学楼，experimental实验楼,other其他',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_building
 -- ----------------------------
-INSERT INTO `t_building` VALUES (1, 13, '大数据与人工智能学院');
+INSERT INTO `t_building` VALUES (1, 13, '大数据与人工智能学院', 'pedagogical');
+INSERT INTO `t_building` VALUES (2, 11, '艺术学院', 'pedagogical');
+INSERT INTO `t_building` VALUES (3, 12, '财会与金融学院', 'pedagogical');
+INSERT INTO `t_building` VALUES (5, 14, '电子工程学院', 'pedagogical');
+INSERT INTO `t_building` VALUES (6, 1, '土木与环境工程学院-A', 'pedagogical');
+INSERT INTO `t_building` VALUES (7, 2, '土木与环境工程学院-B', 'pedagogical');
+INSERT INTO `t_building` VALUES (8, 7, '国际教育学院', 'pedagogical');
+INSERT INTO `t_building` VALUES (9, 7, '文化与新闻传播学院', 'pedagogical');
 
 -- ----------------------------
 -- Table structure for t_clazz
@@ -59,8 +67,8 @@ CREATE TABLE `t_clazz`  (
   `specialized` int(11) UNSIGNED NOT NULL COMMENT '所属院系',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_specialized`(`specialized`) USING BTREE,
-  CONSTRAINT `fk_specialized` FOREIGN KEY (`specialized`) REFERENCES `t_specialized` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  INDEX `FK_clazz_REF_specialized`(`specialized`) USING BTREE,
+  CONSTRAINT `FK_clazz_REF_specialized` FOREIGN KEY (`specialized`) REFERENCES `t_specialized` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -78,25 +86,6 @@ INSERT INTO `t_clazz` VALUES (9, 1, 'test');
 INSERT INTO `t_clazz` VALUES (10, 1, 'test');
 
 -- ----------------------------
--- Table structure for t_clazzroom
--- ----------------------------
-DROP TABLE IF EXISTS `t_clazzroom`;
-CREATE TABLE `t_clazzroom`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '房间id',
-  `building` int(11) UNSIGNED NOT NULL COMMENT '所属楼id',
-  `number` int(11) UNSIGNED NOT NULL COMMENT '房间号',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '房间名称，可以不指定',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_building`(`building`) USING BTREE,
-  CONSTRAINT `fk_building` FOREIGN KEY (`building`) REFERENCES `t_building` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of t_clazzroom
--- ----------------------------
-INSERT INTO `t_clazzroom` VALUES (1, 1, 401, '计算机应用技术实验基地');
-
--- ----------------------------
 -- Table structure for t_course
 -- ----------------------------
 DROP TABLE IF EXISTS `t_course`;
@@ -107,11 +96,11 @@ CREATE TABLE `t_course`  (
   `clazz` int(11) UNSIGNED NOT NULL COMMENT '所属班级',
   `teacher` int(11) UNSIGNED NOT NULL COMMENT '授课老师',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_teacher2`(`teacher`) USING BTREE,
-  INDEX `fk_clazz`(`clazz`) USING BTREE,
-  CONSTRAINT `fk_clazz` FOREIGN KEY (`clazz`) REFERENCES `t_clazz` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_teacher2` FOREIGN KEY (`teacher`) REFERENCES `t_teacher` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+  INDEX `FK_course_REF_clazz`(`clazz`) USING BTREE,
+  INDEX `FK_course_REF_teacher`(`teacher`) USING BTREE,
+  CONSTRAINT `FK_course_REF_clazz` FOREIGN KEY (`clazz`) REFERENCES `t_clazz` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_course_REF_teacher` FOREIGN KEY (`teacher`) REFERENCES `t_teacher` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_course
@@ -124,6 +113,7 @@ INSERT INTO `t_course` VALUES (13, 'HTML', '1', 1, 3);
 INSERT INTO `t_course` VALUES (25, 'AAA', '2', 1, 1);
 INSERT INTO `t_course` VALUES (33, '1', '1', 1, 3);
 INSERT INTO `t_course` VALUES (34, '1', '1', 1, 3);
+INSERT INTO `t_course` VALUES (35, 'XX', '2', 1, 1);
 
 -- ----------------------------
 -- Table structure for t_course_info
@@ -141,11 +131,11 @@ CREATE TABLE `t_course_info`  (
   `length` tinyint(4) UNSIGNED NOT NULL COMMENT '持续节',
   `address` int(11) UNSIGNED NOT NULL COMMENT '上课地点',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_course1`(`course`) USING BTREE,
-  INDEX `fk_clazzroom`(`address`) USING BTREE,
-  CONSTRAINT `fk_course1` FOREIGN KEY (`course`) REFERENCES `t_course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_clazzroom` FOREIGN KEY (`address`) REFERENCES `t_clazzroom` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+  INDEX `FK_course_info_REF_course`(`course`) USING BTREE,
+  INDEX `FK_course_info_REF_room`(`address`) USING BTREE,
+  CONSTRAINT `FK_course_info_REF_course` FOREIGN KEY (`course`) REFERENCES `t_course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_course_info_REF_room` FOREIGN KEY (`address`) REFERENCES `t_room` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_course_info
@@ -155,6 +145,7 @@ INSERT INTO `t_course_info` VALUES (2, 25, 'theory', 'all', 1, 1, 'Saturday', 1,
 INSERT INTO `t_course_info` VALUES (7, 34, 'theory', 'sgl', 1, 1, 'Saturday', 1, 1, 1);
 INSERT INTO `t_course_info` VALUES (8, 34, 'theory', 'all', 1, 1, 'Saturday', 1, 1, 1);
 INSERT INTO `t_course_info` VALUES (9, 33, 'theory', 'sgl', 1, 1, 'Saturday', 1, 1, 1);
+INSERT INTO `t_course_info` VALUES (10, 35, 'theory', 'sgl', 1, 1, 'Friday', 1, 1, 1);
 
 -- ----------------------------
 -- Table structure for t_elective
@@ -166,10 +157,10 @@ CREATE TABLE `t_elective`  (
   `course` int(11) UNSIGNED NOT NULL,
   `score` int(11) NULL DEFAULT NULL COMMENT '成绩',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `un_student_course`(`student`, `course`) USING BTREE,
-  INDEX `fk_course`(`course`) USING BTREE,
-  CONSTRAINT `fk_student` FOREIGN KEY (`student`) REFERENCES `t_student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_course` FOREIGN KEY (`course`) REFERENCES `t_course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  INDEX `FK_elective_REF_course`(`course`) USING BTREE,
+  UNIQUE INDEX `UI_student_course`(`student`, `course`) USING BTREE,
+  CONSTRAINT `FK_elective_REF_course` FOREIGN KEY (`course`) REFERENCES `t_course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_elective_REF_student` FOREIGN KEY (`student`) REFERENCES `t_student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 70 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -182,7 +173,7 @@ INSERT INTO `t_elective` VALUES (4, 4, 2, NULL);
 INSERT INTO `t_elective` VALUES (5, 5, 2, NULL);
 INSERT INTO `t_elective` VALUES (6, 4, 3, NULL);
 INSERT INTO `t_elective` VALUES (7, 5, 3, NULL);
-INSERT INTO `t_elective` VALUES (8, 3, 4, NULL);
+INSERT INTO `t_elective` VALUES (8, 3, 4, 88);
 INSERT INTO `t_elective` VALUES (9, 4, 4, NULL);
 INSERT INTO `t_elective` VALUES (10, 5, 4, NULL);
 INSERT INTO `t_elective` VALUES (11, 6, 4, NULL);
@@ -262,6 +253,27 @@ INSERT INTO `t_faculty` VALUES (1, '大数据与人工智能学院');
 INSERT INTO `t_faculty` VALUES (2, '电子通信学院');
 
 -- ----------------------------
+-- Table structure for t_room
+-- ----------------------------
+DROP TABLE IF EXISTS `t_room`;
+CREATE TABLE `t_room`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '房间id',
+  `building` int(11) UNSIGNED NOT NULL COMMENT '所属楼id',
+  `number` int(11) UNSIGNED NOT NULL COMMENT '房间号',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '房间名称，可以不指定',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `UI_number_building`(`building`, `number`) USING BTREE,
+  CONSTRAINT `FK_room_REF_building` FOREIGN KEY (`building`) REFERENCES `t_building` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_room
+-- ----------------------------
+INSERT INTO `t_room` VALUES (1, 1, 401, '计算机应用技术实验基地');
+INSERT INTO `t_room` VALUES (2, 1, 402, '计算机网络实训基地');
+INSERT INTO `t_room` VALUES (3, 2, 308, '动漫设计');
+
+-- ----------------------------
 -- Table structure for t_specialized
 -- ----------------------------
 DROP TABLE IF EXISTS `t_specialized`;
@@ -270,8 +282,8 @@ CREATE TABLE `t_specialized`  (
   `faculty` int(11) UNSIGNED NOT NULL COMMENT '所属院系',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '专业名称',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_faculty`(`faculty`) USING BTREE,
-  CONSTRAINT `fk_faculty` FOREIGN KEY (`faculty`) REFERENCES `t_faculty` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  INDEX `FK_specialized_REF_faculty`(`faculty`) USING BTREE,
+  CONSTRAINT `FK_specialized_REF_faculty` FOREIGN KEY (`faculty`) REFERENCES `t_faculty` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -292,8 +304,8 @@ CREATE TABLE `t_student`  (
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
   `clazz` int(11) UNSIGNED NOT NULL COMMENT '所属班级',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_clazz`(`clazz`) USING BTREE,
-  CONSTRAINT `fk_clazz2` FOREIGN KEY (`clazz`) REFERENCES `t_clazz` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  INDEX `FK_student_REF_clazz`(`clazz`) USING BTREE,
+  CONSTRAINT `FK_student_REF_clazz` FOREIGN KEY (`clazz`) REFERENCES `t_clazz` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 66 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -377,8 +389,8 @@ CREATE TABLE `t_teacher`  (
   `faculty` int(11) UNSIGNED NOT NULL COMMENT '所属院系',
   `profes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '职称',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_faculty2`(`faculty`) USING BTREE,
-  CONSTRAINT `fk_faculty2` FOREIGN KEY (`faculty`) REFERENCES `t_faculty` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  INDEX `FK_teacher_REF_faculty`(`faculty`) USING BTREE,
+  CONSTRAINT `FK_teacher_REF_faculty` FOREIGN KEY (`faculty`) REFERENCES `t_faculty` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------

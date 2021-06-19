@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>layuimini-iframe版 v2 - 基于Layui的后台管理系统前端模板</title>
+    <title>教务管理系统</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -144,7 +144,7 @@
 	
 	//cocoMessage全局配置参数
 	cocoMessage.config({
-	    duration: 2000,
+		duration:2000,
 	});
 	
     layui.use(['jquery', 'layer', 'miniAdmin','miniTongji'], function () {
@@ -154,7 +154,8 @@
             miniTongji = layui.miniTongji;
 			
 			$.ajax({
-				url:"system/getUserInfo.do",
+				// url:"system/getUserInfo.do",
+				url:"query/test.do",
 				type:"post",
 				dataType:"json",
 				success:function (data) {

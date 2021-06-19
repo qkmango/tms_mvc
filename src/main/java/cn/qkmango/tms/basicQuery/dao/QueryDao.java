@@ -1,6 +1,8 @@
 package cn.qkmango.tms.basicQuery.dao;
 
 import cn.qkmango.tms.domain.*;
+import cn.qkmango.tms.domain.paginstion.RoomPagination;
+import cn.qkmango.tms.domain.paginstion.StudentScorePagination;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,4 +23,6 @@ public interface QueryDao {
     List<Teacher> getTeacherList(Teacher teacher);
 
     List<Building> getBuildingList(Building building);
+
+    List<HashMap<String, Object>> getRoomPagination(RoomPagination pagination);
 }

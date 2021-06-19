@@ -4,6 +4,7 @@ package cn.qkmango.tms.insertQuery.controller;
 import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.CourseInfo;
+import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.exception.InsertException;
 import cn.qkmango.tms.insertQuery.service.InsertService;
 import cn.qkmango.tms.web.anno.Permission;
@@ -50,6 +51,20 @@ public class InsertController {
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
         map.setMessage("添加楼成功");
+
+        return map;
+    }
+
+    @ResponseBody
+    @Permission(PermissionType.admin)
+    @RequestMapping("insertRoom.do")
+    public Map<String, Object> insertRoom(Room room) throws InsertException {
+
+        service.insertRoom(room);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("添加教室成功");
 
         return map;
     }

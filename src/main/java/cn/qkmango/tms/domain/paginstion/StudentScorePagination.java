@@ -1,4 +1,4 @@
-package cn.qkmango.tms.domain;
+package cn.qkmango.tms.domain.paginstion;
 
 public class StudentScorePagination extends Pagination {
 

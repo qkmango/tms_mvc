@@ -15,19 +15,20 @@
     <mvc:annotation-driven />
 
     <!--声明拦截器-->
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <!--path:需要拦截的地址，可以使用通配符 ** -->
-            <mvc:mapping path="/**/*.do"/>
-            <!-- 指定拦截器对象 -->
-            <bean class="cn.qkmango.tms.web.interceptor.LoginInterceptor" />
-        </mvc:interceptor>
-        <!-- 权限拦截器 -->
-        <mvc:interceptor>
-            <mvc:mapping path="/update/*.do" />
-            <mvc:mapping path="/query/*.do" />
-            <bean class="cn.qkmango.tms.web.interceptor.PermissionsInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+
+<!--    <mvc:interceptors>-->
+<!--        <mvc:interceptor>-->
+<!--            &lt;!&ndash;path:需要拦截的地址，可以使用通配符 ** &ndash;&gt;-->
+<!--            <mvc:mapping path="/**/*.do"/>-->
+<!--            &lt;!&ndash; 指定拦截器对象 &ndash;&gt;-->
+<!--            <bean class="cn.qkmango.tms.web.interceptor.LoginInterceptor" />-->
+<!--        </mvc:interceptor>-->
+<!--        &lt;!&ndash; 权限拦截器 &ndash;&gt;-->
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/update/*.do" />-->
+<!--            <mvc:mapping path="/query/*.do" />-->
+<!--            <bean class="cn.qkmango.tms.web.interceptor.PermissionsInterceptor"/>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
 
 </beans>

@@ -146,4 +146,31 @@
         order by number asc
     </select>
 
+    <select id="getRoomPagination" resultType="hashmap">
+        SELECT SQL_CALC_FOUND_ROWS
+            room.id,
+            room.number,
+            room.name,
+            building.number buildingNumber,
+            building.name buildingName,
+            building.buildingType
+        FROM
+            t_room room,
+            t_building building
+        <where>
+            room.building=building.id
+            <if test="number != null">
+                and room.number = #{number}
+            </if>
+            <if test="name != null and name != ''">
+                and room.name like '%' #{name} '%'
+            </if>
+            <if test="building != null">
+                and room.building = #{building}
+            </if>
+        </where>
+        order by room.number asc
+        LIMIT #{skipCount},#{limit}
+    </select>
+
 </mapper>
