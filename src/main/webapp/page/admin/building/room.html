@@ -74,6 +74,7 @@
 	var $;
 	var form;
 	var table;
+	var cocoMessage = window.top.cocoMessage;
 	
     layui.use(['form', 'table'], function () {
         $ = layui.jquery;
@@ -149,20 +150,12 @@
                     area: ['620px', '300px'],
                     content: 'page/admin/building/room-add.html',
                 });
-                $(window).on("resize", function () {
-                    layer.full(index);
-                });
             } else if (obj.event === 'delete') {  // 监听删除操作
                 var checkStatus = table.checkStatus('currentTableId')
                     , data = checkStatus.data;
                 layer.alert(JSON.stringify(data));
             }
         });
-
-        // //监听表格复选框选择
-        // table.on('checkbox(currentTableFilter)', function (obj) {
-        //     console.log(obj)
-        // });
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
@@ -175,14 +168,30 @@
                     maxmin:true,
                     shadeClose: true,
                     area: ['620px', '300px'],
-                    content: 'page/admin/building/room-add.html',
+                    content: 'page/admin/building/room-edit.html?id='+data.id,
                 });
-				
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
+                	$.ajax({
+                		url:'delete/deleteRoom.do',
+                		data:{id:obj.data.id},
+                		type:'post',
+                		dataType:'json',
+                		success:function(data) {
+                			if(data.success) {
+                				obj.del();
+                				cocoMessage.success(2000,data.message);
+                			} else {
+                				cocoMessage.error(2000,data.message);
+                			}
+                			layer.close(index);
+                		},
+                		error: function (jqXHR, textStatus, errorThrown) {
+                			layer.close(index);
+                			cocoMessage.error(2000,jqXHR.status+'');
+                		}
+                	})
                 });
             }
         });

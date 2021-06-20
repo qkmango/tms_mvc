@@ -52,7 +52,6 @@
 	
 	var cocoMessage = window.top.cocoMessage;
 	
-	
     layui.use(['form'], function () {
         var form = layui.form,
             layer = layui.layer,
@@ -79,7 +78,7 @@
 				cocoMessage.error(2000,jqXHR.status+'');
 			}
 		})
-
+		
         //监听提交
         form.on('submit(saveBtn)', function (data) {
 			console.log(data.field);

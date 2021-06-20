@@ -26,7 +26,7 @@
           and specialized.id = #{specialized}
     </select>
 
-    <select id="getCourseListByTeacherAndClazz" resultType="cn.qkmango.tms.domain.Course">
+    <select id="getCoursePagination" resultType="cn.qkmango.tms.domain.Course">
         SELECT course.id, course.name
         FROM t_teacher teacher,
              t_course course,
@@ -93,7 +93,9 @@
             AND specialized.faculty = faculty.id
         </where>
         order by student.id asc
-        LIMIT #{skipCount},#{limit}
+        <if test="pagination != false">
+            LIMIT #{skipCount},#{limit}
+        </if>
     </select>
 
     <!-- 获取未分页的总记录条数 -->
@@ -151,6 +153,7 @@
             room.id,
             room.number,
             room.name,
+            building.id building,
             building.number buildingNumber,
             building.name buildingName,
             building.buildingType
@@ -159,6 +162,9 @@
             t_building building
         <where>
             room.building=building.id
+            <if test="id != null">
+                and room.id = #{id}
+            </if>
             <if test="number != null">
                 and room.number = #{number}
             </if>
@@ -170,7 +176,9 @@
             </if>
         </where>
         order by room.number asc
-        LIMIT #{skipCount},#{limit}
+        <if test="pagination != false">
+            LIMIT #{skipCount},#{limit}
+        </if>
     </select>
 
 </mapper>

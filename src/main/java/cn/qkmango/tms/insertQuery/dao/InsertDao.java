@@ -19,4 +19,6 @@ public interface InsertDao {
     int insertBuilding(Building building);
 
     int insertRoom(Room room);
+
+    int insertYear(Integer id);
 }

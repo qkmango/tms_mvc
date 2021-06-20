@@ -8,26 +8,17 @@
 		"image": "images/logo.png",
 		"href": ""
 	},
-	"menuInfo": [{
-		"title": "教师",
-		"icon": "fa fa-address-book",
-		"href": "",
-		"target": "_self",
-		"child": [
-			{
-				"title": "学生成绩录入",
-				"href": "page/teacher/table.html",
-				"icon": "fa fa-tachometer",
-				"target": "_self"
-			},
-			{
-				"title": "菜单管理",
-				"href": "page/menu.html",
-				"icon": "fa fa-window-maximize",
-				"target": "_self"
-			}
-			
-			
-		]
-	}]
+	"menuInfo": [
+		{
+			"title": "成绩查询",
+			"icon": "fa fa-address-book",
+			"href": "",
+			"target": "_self"
+		},{
+			"title": "课表",
+			"icon": "fa fa-address-book",
+			"href": "",
+			"target": "_self"
+		}
+	]
 }

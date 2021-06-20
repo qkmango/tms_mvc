@@ -16,26 +16,26 @@
     </style>
 </head>
 <body>
-<div class="layui-form layuimini-form" lay-filter="editBuildingForm">
+<div class="layui-form layuimini-form" id="editRoomForm" lay-filter="editRoomForm">
 	
 	<div class="layui-form-item">
-	    <label class="layui-form-label">楼类型</label>
-	    <div class="layui-input-block">
-	        <input type="radio" name="buildingType" value="pedagogical" title="教学楼">
-	        <input type="radio" name="buildingType" value="experimental" title="实验楼">
-	        <input type="radio" name="buildingType" value="other" title="其他">
-	    </div>
+	    <label class="layui-form-label">所属楼宇</label>
+		<div class="layui-input-block">
+		  <select name="building" id="building" lay-filter="building">
+			  <option value="">全部</option>
+		  </select>
+		</div>
 	</div>
 	
     <div class="layui-form-item">
-        <label class="layui-form-label">楼号</label>
+        <label class="layui-form-label">房间号</label>
         <div class="layui-input-block">
             <input type="number" name="number" lay-verify="required" class="layui-input">
         </div>
     </div>
     
     <div class="layui-form-item">
-        <label class="layui-form-label">楼名称</label>
+        <label class="layui-form-label">房间名</label>
         <div class="layui-input-block">
             <input type="text" name="name" class="layui-input" lay-verify="required">
         </div>
@@ -49,6 +49,7 @@
 </div>
 <script src="lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script src="lib/util/utils.js" charset="utf-8"></script>
+
 <script>
 	
 	var cocoMessage = window.top.cocoMessage;
@@ -58,29 +59,26 @@
         var layer = layui.layer;
         var $ = layui.$;
 			
-		const id = getUrlParam('id');
-		if(id==null) {
-			cocoMessage.error('获取楼ID失败');
+		const roomId = getUrlParam('id');
+		if(roomId == null) {
+			cocoMessage.error('获取教室ID失败');
 			return;
 		}
-		
-		//获取楼宇 by id
+			
+		//获取楼列表并渲染
 		$.ajax({
 			url:'query/getBuildingList.do',
 			async:false,
-			data:{
-				id:id
-			},
 			type:'get',
 			dataType:'json',
 			success:function(res) {
 				if(res.success) {
-					var building = res.data[0];
-					form.val("editBuildingForm", {
-					  "buildingType": building.buildingType,
-					  "number": building.number,
-					  "name": building.name
-					});
+					let html = '<option value="">全部</option>';
+					$.each(res.data,function(index,item){
+						html += '<option value='+item.id+'>'+item.number+'号楼 '+item.name+'</option>';
+					})
+					$('#building').html(html);
+					form.render('select','editRoomForm');
 				} else {
 					cocoMessage.error(2000,res.message);
 				}
@@ -90,15 +88,43 @@
 			}
 		})
 		
+		//获取楼列表并渲染
+		$.ajax({
+			url:'query/getRoomPagination.do',
+			data:{
+				pagination:false,
+				id:roomId
+			},
+			type:'get',
+			dataType:'json',
+			success:function(res) {
+				if(res.success) {
+					var room = res.data[0];
+					form.val("editRoomForm", {
+					  "number": room.number,
+					  "name": room.name,
+					  "building":room.building
+					});
+				} else {
+					cocoMessage.error(res.message);
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				cocoMessage.error(jqXHR.status+'');
+			}
+		})
 		
 		
-
+		
+		
+		
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-			data.field.id=id;
 			console.log(data.field);
+			data.field.id = roomId,
+			
 			$.ajax({
-				url:'update/updateBuilding.do',
+				url:'update/updateRoom.do',
 				data:data.field,
 				type:'post',
 				dataType:'json',
@@ -106,8 +132,7 @@
 					if(data.success) {
 						var iframeIndex = parent.layer.getFrameIndex(window.name);
 						parent.layer.close(iframeIndex);
-						cocoMessage.success(2000,data.message,function() {
-						});
+						cocoMessage.success(2000,data.message);
 					} else {
 						cocoMessage.error(2000,data.message);
 					}
@@ -120,6 +145,12 @@
 
         return false;
     });
+	
+	
+	
+	
+	
 </script>
+
 </body>
 </html>

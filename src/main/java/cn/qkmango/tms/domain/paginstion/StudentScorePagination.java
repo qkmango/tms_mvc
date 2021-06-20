@@ -20,6 +20,17 @@ public class StudentScorePagination extends Pagination {
     public StudentScorePagination() {
     }
 
+    public StudentScorePagination(Integer page, Integer limit, Boolean pagination, Integer id, String name, Integer teacher, Integer faculty, Integer specialized, Integer clazz, Integer course) {
+        super(page, limit, pagination);
+        this.id = id;
+        this.name = name;
+        this.teacher = teacher;
+        this.faculty = faculty;
+        this.specialized = specialized;
+        this.clazz = clazz;
+        this.course = course;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -82,8 +93,9 @@ public class StudentScorePagination extends Pagination {
                 "page=" + page +
                 ", limit=" + limit +
                 ", skipCount=" + skipCount +
+                ", pagination=" + pagination +
                 ", id=" + id +
-                ", name=" + name +
+                ", name='" + name + '\'' +
                 ", teacher=" + teacher +
                 ", faculty=" + faculty +
                 ", specialized=" + specialized +

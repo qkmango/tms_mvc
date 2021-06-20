@@ -42,9 +42,9 @@ public class QueryServiceImpl implements QueryService {
     }
 
     @Override
-    public List<Course> getCourseListByTeacherAndClazz(HashMap<String, Integer> paramsMap) {
+    public List<Course> getCoursePagination(HashMap<String, Integer> paramsMap) {
 
-        List<Course> courseList = queryDao.getCourseListByTeacherAndClazz(paramsMap);
+        List<Course> courseList = queryDao.getCoursePagination(paramsMap);
 
         return courseList;
     }
@@ -58,11 +58,16 @@ public class QueryServiceImpl implements QueryService {
     public HashMap<String,Object> getStudentScorePagination(StudentScorePagination pagination) {
 
         List<HashMap<String, Object>> data = queryDao.getStudentScorePagination(pagination);
-        int count = queryDao.getCount();
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("count",count);
+
+        if (pagination.getPagination() != false) {
+            int count = queryDao.getCount();
+            map.put("count",count);
+        }
+
         map.put("data",data);
+        map.put("pagination",pagination.getPagination());
 
         return map;
     }
@@ -86,10 +91,16 @@ public class QueryServiceImpl implements QueryService {
     public HashMap<String, Object> getRoomPagination(RoomPagination pagination) {
 
         List<HashMap<String, Object>> data = queryDao.getRoomPagination(pagination);
-        int count = queryDao.getCount();
+
         HashMap<String, Object> map = new HashMap<>();
-        map.put("count",count);
+
+        if (pagination.getPagination() != false) {
+            int count = queryDao.getCount();
+            map.put("count",count);
+        }
+
         map.put("data",data);
+        map.put("pagination",pagination.getPagination());
 
         return map;
     }

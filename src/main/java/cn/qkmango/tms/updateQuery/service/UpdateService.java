@@ -1,6 +1,7 @@
 package cn.qkmango.tms.updateQuery.service;
 
 import cn.qkmango.tms.domain.Building;
+import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.exception.PermissionException;
 import cn.qkmango.tms.exception.UpdateException;
 
@@ -13,4 +14,6 @@ public interface UpdateService {
     void updateStudentScore(HashMap<String, Object> map) throws UpdateException;
 
     void updateBuilding(Building building) throws UpdateException;
+
+    void updateRoom(Room room) throws UpdateException;
 }

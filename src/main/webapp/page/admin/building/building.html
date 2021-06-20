@@ -78,6 +78,7 @@
                     maxmin:true,
                     shadeClose: true,
                     area: ['620px', '300px'],
+					// area: ['100%', '100%'],
                     content: 'page/admin/building/building-add.html',
                 });
 				return;
@@ -97,8 +98,8 @@
                     area: ['620px', '300px'],
                     content: 'page/admin/building/building-edit.html?id='+obj.data.id,
                 });
-				
                 return false;
+				
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
 					$.ajax({

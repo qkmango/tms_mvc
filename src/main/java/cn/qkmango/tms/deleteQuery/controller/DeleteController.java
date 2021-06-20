@@ -35,5 +35,19 @@ public class DeleteController {
         return map;
     }
 
+    @ResponseBody
+    @Permission(PermissionType.admin)
+    @RequestMapping("/deleteRoom.do")
+    public Map<String, Object> deleteRoom(Integer id) throws DeleteException {
+
+        service.deleteRoom(id);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("删除教室成功");
+
+        return map;
+    }
+
 
 }

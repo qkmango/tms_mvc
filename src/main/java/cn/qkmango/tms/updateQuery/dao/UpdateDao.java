@@ -1,6 +1,7 @@
 package cn.qkmango.tms.updateQuery.dao;
 
 import cn.qkmango.tms.domain.Building;
+import cn.qkmango.tms.domain.Room;
 
 import java.util.HashMap;
 
@@ -15,4 +16,6 @@ public interface UpdateDao {
     int updateStudentScore(HashMap<String, Object> map);
 
     int updateBuilding(Building building);
+
+    int updateRoom(Room room);
 }

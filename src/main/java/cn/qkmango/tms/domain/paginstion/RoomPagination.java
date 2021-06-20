@@ -5,6 +5,7 @@ package cn.qkmango.tms.domain.paginstion;
  */
 public class RoomPagination extends Pagination{
 
+    private Integer id;
     private Integer number;
     private String name;
     private Integer building;
@@ -12,10 +13,11 @@ public class RoomPagination extends Pagination{
     public RoomPagination() {
     }
 
-    public RoomPagination(Integer page, Integer limit, String name, Integer number, Integer building) {
-        super(page, limit);
-        this.name = name;
+    public RoomPagination(Integer page, Integer limit, Boolean pagination, Integer id, Integer number, String name, Integer building) {
+        super(page, limit, pagination);
+        this.id = id;
         this.number = number;
+        this.name = name;
         this.building = building;
     }
 
@@ -43,14 +45,23 @@ public class RoomPagination extends Pagination{
         this.building = building;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "RoomPagination{" +
                 "page=" + page +
                 ", limit=" + limit +
                 ", skipCount=" + skipCount +
-                ", name='" + name + '\'' +
+                ", id=" + id +
                 ", number=" + number +
+                ", name='" + name + '\'' +
                 ", building=" + building +
                 '}';
     }

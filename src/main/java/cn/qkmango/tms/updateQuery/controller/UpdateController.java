@@ -2,6 +2,7 @@ package cn.qkmango.tms.updateQuery.controller;
 
 
 import cn.qkmango.tms.domain.Building;
+import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.exception.PermissionException;
 import cn.qkmango.tms.exception.UpdateException;
@@ -92,6 +93,25 @@ public class UpdateController {
         return map;
     }
 
+    /**
+     * 更新修改 教室信息
+     * @param room
+     * @return
+     * @throws UpdateException
+     */
+    @ResponseBody
+    @Permission(PermissionType.admin)
+    @RequestMapping("updateRoom.do")
+    public Map<String, Object> updateRoom(Room room) throws UpdateException {
+
+        updateService.updateRoom(room);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("修改教室信息成功");
+
+        return map;
+    }
 
 
 

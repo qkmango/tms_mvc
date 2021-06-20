@@ -69,4 +69,18 @@ public class InsertController {
         return map;
     }
 
+    @ResponseBody
+    @Permission(PermissionType.admin)
+    @RequestMapping("insertYear.do")
+    public Map<String, Object> insertYear(Integer id) throws InsertException {
+
+        service.insertYear(id);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("添加年度成功");
+
+        return map;
+    }
+
 }

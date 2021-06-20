@@ -12,4 +12,6 @@ public interface InsertService {
     void insertBuilding(Building building) throws InsertException;
 
     void insertRoom(Room room) throws InsertException;
+
+    void insertYear(Integer id) throws InsertException;
 }

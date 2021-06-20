@@ -4,4 +4,6 @@ import cn.qkmango.tms.exception.DeleteException;
 
 public interface DeleteService {
     void deleteBuilding(Integer id) throws DeleteException;
+
+    void deleteRoom(Integer id) throws DeleteException;
 }

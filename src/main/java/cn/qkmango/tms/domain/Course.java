@@ -10,16 +10,21 @@ public class Course {
     private Integer credit;
     private Integer clazz;
     private Integer teacher;
+    private Integer year;
+    //false 0：表示第一学期；true 1：表示第二学期
+    private Boolean term;
 
     public Course() {
     }
 
-    public Course(Integer id, String name, Integer credit, Integer clazz, Integer teacher) {
+    public Course(Integer id, String name, Integer credit, Integer clazz, Integer teacher, Integer year, Boolean term) {
         this.id = id;
         this.name = name;
         this.credit = credit;
         this.clazz = clazz;
         this.teacher = teacher;
+        this.year = year;
+        this.term = term;
     }
 
     public Integer getId() {
@@ -62,6 +67,22 @@ public class Course {
         this.teacher = teacher;
     }
 
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Boolean getTerm() {
+        return term;
+    }
+
+    public void setTerm(Boolean term) {
+        this.term = term;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -70,6 +91,8 @@ public class Course {
                 ", credit=" + credit +
                 ", clazz=" + clazz +
                 ", teacher=" + teacher +
+                ", year=" + year +
+                ", term=" + term +
                 '}';
     }
 }

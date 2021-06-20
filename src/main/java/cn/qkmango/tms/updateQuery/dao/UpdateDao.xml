@@ -34,4 +34,10 @@
         WHERE id = #{id}
     </update>
 
+    <update id="updateRoom">
+        UPDATE t_room
+        SET number=#{number},name=#{name},building=#{building}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

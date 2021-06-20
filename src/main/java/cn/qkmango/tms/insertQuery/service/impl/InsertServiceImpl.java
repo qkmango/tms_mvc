@@ -31,7 +31,7 @@ public class InsertServiceImpl implements InsertService {
 
         int affectedRows = insertDao.insertCourse(course);
         if (affectedRows != 1) {
-            throw new InsertException("插入Course异常，因为影响行数不为1，实际影响行数为：" + affectedRows);
+            throw new InsertException("插入记录异常，应影响行数：1，实际影响行数：" + affectedRows);
         }
 
         int courseId = insertDao.lastInsertId();
@@ -52,19 +52,25 @@ public class InsertServiceImpl implements InsertService {
     public void insertBuilding(Building building) throws InsertException {
         int affectedRows = insertDao.insertBuilding(building);
         if (affectedRows != 1) {
-            throw new InsertException("插入楼宇信息异常，因为影响行数不为1，实际影响行数为：" + affectedRows);
+            throw new InsertException("插入记录异常，应影响行数：1，实际影响行数：" + affectedRows);
         }
     }
 
     @Override
-    @Transactional(
-            propagation = Propagation.REQUIRED,
-            rollbackFor = Exception.class
-    )
+    @Transactional(rollbackFor = Exception.class)
     public void insertRoom(Room room) throws InsertException {
         int affectedRows = insertDao.insertRoom(room);
         if (affectedRows != 1) {
-            throw new InsertException("插入教室信息异常，因为影响行数不为1，实际影响行数为：" + affectedRows);
+            throw new InsertException("插入记录异常，应影响行数：1，实际影响行数：" + affectedRows);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insertYear(Integer id) throws InsertException {
+        int affectedRows = insertDao.insertYear(id);
+        if (affectedRows != 1) {
+            throw new InsertException("插入记录异常，应影响行数：1，实际影响行数：" + affectedRows);
         }
     }
 
@@ -81,7 +87,7 @@ public class InsertServiceImpl implements InsertService {
     protected void insertCourseInfo(List<CourseInfo> courseInfoList) throws InsertException {
         int affectedRows = insertDao.insertCourseInfo(courseInfoList);
         if (affectedRows != courseInfoList.size()) {
-            throw new InsertException("插入course_info异常，因为影响行数应为"+courseInfoList.size()+"，实际影响行数为：" + affectedRows);
+            throw new InsertException("插入记录异常，应影响行数："+courseInfoList.size()+"，实际影响行数：" + affectedRows);
         }
     }
 

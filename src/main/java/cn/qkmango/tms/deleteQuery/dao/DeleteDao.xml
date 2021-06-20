@@ -8,4 +8,8 @@
         delete from t_building where id = #{id}
     </delete>
 
+    <delete id="deleteRoom">
+        delete from t_room where id = #{id}
+    </delete>
+
 </mapper>

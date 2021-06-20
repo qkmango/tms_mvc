@@ -8,12 +8,13 @@ import cn.qkmango.tms.domain.paginstion.StudentScorePagination;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
-import cn.qkmango.tms.web.model.CourseInfoModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +30,20 @@ public class QueryController {
 
     @ResponseBody
     @RequestMapping("/test.do")
-    public Map test() {
+    public Map test(HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        User user;
+        if (session == null) {
+            user = new User(1,null,"admin",PermissionType.admin);
+            request.getSession(true).setAttribute("user",user);
+        } else {
+            user = (User)request.getSession().getAttribute("user");
+        }
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.put("user",new User(1,null,"admin",PermissionType.admin));
+        map.put("user",user);
 
         return map;
     }
@@ -99,13 +109,14 @@ public class QueryController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/getCourseListByTeacherAndClazz.do")
-    public Map<String, Object> getCourseListByTeacherAndClazz(Integer clazz,Integer teacher) {
+    // @RequestMapping("/getCourseListByTeacherAndClazz.do")
+    @RequestMapping("/getCoursePagination.do")
+    public Map<String, Object> getCoursePagination(Integer clazz,Integer teacher) {
 
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("clazz", clazz);
         paramsMap.put("teacher",teacher);
-        List<Course> CourseList = queryService.getCourseListByTeacherAndClazz(paramsMap);
+        List<Course> CourseList = queryService.getCoursePagination(paramsMap);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);

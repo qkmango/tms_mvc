@@ -32,5 +32,10 @@
         SELECT LAST_INSERT_ID()
     </select>
 
+    <insert id="insertYear">
+        insert into t_year(id,name)
+        values (#{id},CONCAT_WS('-',#{id},#{id}+1))
+    </insert>
+
 
 </mapper>
