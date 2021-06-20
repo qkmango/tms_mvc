@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class QueryServiceImpl implements QueryService {
@@ -35,16 +36,16 @@ public class QueryServiceImpl implements QueryService {
     }
 
     @Override
-    public List<Clazz> getClazzListBySpecialized(Integer specialized) {
-        List<Clazz> clazzList = queryDao.getClazzListBySpecialized(specialized);
+    public List<Clazz> getClazzListBySpecializedAndClazzYear(Map<String, Object> requestMap) {
+        List<Clazz> clazzList = queryDao.getClazzListBySpecializedAndClazzYear(requestMap);
 
         return clazzList;
     }
 
     @Override
-    public List<Course> getCoursePagination(HashMap<String, Integer> paramsMap) {
+    public List<Course> getCourseListByTeacherAndClazz(HashMap<String, Integer> paramsMap) {
 
-        List<Course> courseList = queryDao.getCoursePagination(paramsMap);
+        List<Course> courseList = queryDao.getCourseListByTeacherAndClazz(paramsMap);
 
         return courseList;
     }

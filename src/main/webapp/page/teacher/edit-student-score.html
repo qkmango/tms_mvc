@@ -40,6 +40,31 @@
                         </div>
 						
 						<div class="layui-inline">
+						    <label class="layui-form-label">班级年级</label>
+							<div class="layui-input-inline">
+							  <input type="text" name="clazzYear" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						
+						<div class="layui-inline">
+							<label class="layui-form-label">课程年度</label>
+							<div class="layui-input-inline">
+							    <input type="text" name="courseYear" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						
+						<div class="layui-inline">
+							<label class="layui-form-label">学期</label>
+							<div class="layui-input-inline">
+							  <select name="term" id="term" lay-filter="term">
+								  <option value="">全部</option>
+								  <option value="false">第1学期</option>
+								  <option value="true">第2学期</option>
+							  </select>
+							</div>
+						</div>
+						
+						<div class="layui-inline">
 							<label class="layui-form-label">院系</label>
 							<div class="layui-input-inline">
 							  <select name="faculty" id="faculty" lay-filter="faculty">

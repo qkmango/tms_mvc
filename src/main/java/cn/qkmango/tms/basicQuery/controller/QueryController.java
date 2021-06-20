@@ -10,6 +10,7 @@ import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -47,6 +48,17 @@ public class QueryController {
 
         return map;
     }
+
+    @ResponseBody
+    @RequestMapping("/test2.do")
+    public Map test2(@RequestParam Map<String, Object> map) {
+
+        System.out.println(map);
+
+
+        return map;
+    }
+
 
     /**
      * 查询院系列表
@@ -86,14 +98,20 @@ public class QueryController {
 
     /**
      * 查询指定专业的所有班级
-     * faculty 表示院系的id，数据库中存储的为 int类型，但是前端请求的是 String类型
+     * teacher 角色 在使用学生成绩修改模块时，条件查询时获取下拉列表使用的
+     * Map接收的参数有
+     *      faculty     表示院系的id，数据库中存储的为 int类型，但是前端请求的是 String类型
+     *      courseYear  学科开设的年份
+     *      term        学科开设的学期
+     *      clazzYear   班级年级（如2020级）
      * @return
      */
     @ResponseBody
-    @RequestMapping("/getClazzListBySpecialized.do")
-    public Map<String, Object> getClazzListBySpecialized(Integer specialized) {
+    @Permission(PermissionType.teacher)
+    @RequestMapping("/getClazzListBySpecializedAndClazzYear.do")
+    public Map<String, Object> getClazzListBySpecializedAndClazzYear(@RequestParam Map<String, Object> requestMap) {
 
-        List<Clazz> ClazzList = queryService.getClazzListBySpecialized(specialized);
+        List<Clazz> ClazzList = queryService.getClazzListBySpecializedAndClazzYear(requestMap);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
@@ -109,14 +127,14 @@ public class QueryController {
      * @return
      */
     @ResponseBody
-    // @RequestMapping("/getCourseListByTeacherAndClazz.do")
-    @RequestMapping("/getCoursePagination.do")
-    public Map<String, Object> getCoursePagination(Integer clazz,Integer teacher) {
+    @Permission(PermissionType.teacher)
+    @RequestMapping("/getCourseListByTeacherAndClazz.do")
+    public Map<String, Object> getCourseListByTeacherAndClazz(Integer clazz, Integer teacher) {
 
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("clazz", clazz);
         paramsMap.put("teacher",teacher);
-        List<Course> CourseList = queryService.getCoursePagination(paramsMap);
+        List<Course> CourseList = queryService.getCourseListByTeacherAndClazz(paramsMap);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);

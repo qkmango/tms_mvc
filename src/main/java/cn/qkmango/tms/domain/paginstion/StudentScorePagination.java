@@ -16,11 +16,17 @@ public class StudentScorePagination extends Pagination {
     private Integer clazz;
     //学科（专业课）ID
     private Integer course;
+    //学科 开设年份
+    private Integer courseYear;
+    //班级 年级（如 2020级）
+    private Integer clazzYear;
+    //学期，false 上学期，true 下学期
+    private Boolean term;
 
     public StudentScorePagination() {
     }
 
-    public StudentScorePagination(Integer page, Integer limit, Boolean pagination, Integer id, String name, Integer teacher, Integer faculty, Integer specialized, Integer clazz, Integer course) {
+    public StudentScorePagination(Integer page, Integer limit, Boolean pagination, Integer id, String name, Integer teacher, Integer faculty, Integer specialized, Integer clazz, Integer course, Integer courseYear, Integer clazzYear, Boolean term) {
         super(page, limit, pagination);
         this.id = id;
         this.name = name;
@@ -29,6 +35,9 @@ public class StudentScorePagination extends Pagination {
         this.specialized = specialized;
         this.clazz = clazz;
         this.course = course;
+        this.courseYear = courseYear;
+        this.clazzYear = clazzYear;
+        this.term = term;
     }
 
     public Integer getId() {
@@ -87,6 +96,30 @@ public class StudentScorePagination extends Pagination {
         this.course = course;
     }
 
+    public Integer getCourseYear() {
+        return courseYear;
+    }
+
+    public void setCourseYear(Integer courseYear) {
+        this.courseYear = courseYear;
+    }
+
+    public Integer getClazzYear() {
+        return clazzYear;
+    }
+
+    public void setClazzYear(Integer clazzYear) {
+        this.clazzYear = clazzYear;
+    }
+
+    public Boolean getTerm() {
+        return term;
+    }
+
+    public void setTerm(Boolean term) {
+        this.term = term;
+    }
+
     @Override
     public String toString() {
         return "StudentScorePagination{" +
@@ -101,6 +134,9 @@ public class StudentScorePagination extends Pagination {
                 ", specialized=" + specialized +
                 ", clazz=" + clazz +
                 ", course=" + course +
+                ", courseYear=" + courseYear +
+                ", clazzYear=" + clazzYear +
+                ", term=" + term +
                 '}';
     }
 }

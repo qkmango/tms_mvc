@@ -6,6 +6,7 @@ import cn.qkmango.tms.domain.paginstion.StudentScorePagination;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface QueryService {
 
@@ -13,9 +14,9 @@ public interface QueryService {
 
     List<Specialized> getSpecializedListByFaculty(Integer faculty);
 
-    List<Clazz> getClazzListBySpecialized(Integer specialized);
+    List<Clazz> getClazzListBySpecializedAndClazzYear(Map<String, Object> requestMap);
 
-    List<Course> getCoursePagination(HashMap<String, Integer> paramsMap);
+    List<Course> getCourseListByTeacherAndClazz(HashMap<String, Integer> paramsMap);
 
     HashMap<String,Object> getStudentScorePagination(StudentScorePagination pagination);
 

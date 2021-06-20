@@ -5,6 +5,7 @@ var table;
 
 
 $('input[name=teacher]').val(window.parent.GLOBAL.user.id);
+$('input[name=courseYear]').val(new Date().getFullYear());
 
 layui.use(['form', 'table'], function () {
 	
@@ -47,7 +48,8 @@ layui.use(['form', 'table'], function () {
 		page: true,
 		skin: 'line',
 		where:{
-			teacher:window.parent.GLOBAL.user.id
+			teacher:window.parent.GLOBAL.user.id,
+			courseYear:$("input[type='courseYear']").val()
 		}
 	});
 
@@ -116,7 +118,8 @@ layui.use(['form', 'table'], function () {
 			form.render('select','queryParams');
 		} else{
 			console.log(data.value); //得到被选中的值
-			getClazzListBySpecialized(data.value)
+			let clazzYear =  $("input[name='clazzYear']").val();
+			getClazzListBySpecializedAndClazzYear(data.value,clazzYear);
 		}
 		$('#course').html('<option value="">全部</option>');
 		form.render('select','queryParams');
@@ -175,12 +178,13 @@ function getSpecializedListByFaculty(faculty) {
 }
 
 // 获取指定专业的所有班级列表并渲染
-function getClazzListBySpecialized(specialized) {
+function getClazzListBySpecializedAndClazzYear(specialized,clazzYear) {
 	$.ajax({
 		// url:'data/specialized.json',
-		url:'query/getClazzListBySpecialized.do',
+		url:'query/getClazzListBySpecializedAndClazzYear.do',
 		data:{
-			'specialized':specialized
+			'specialized':specialized,
+			'clazzYear':clazzYear,
 		},
 		type:'get',
 		dataType:'json',

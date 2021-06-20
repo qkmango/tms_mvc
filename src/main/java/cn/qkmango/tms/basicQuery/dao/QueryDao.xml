@@ -17,16 +17,21 @@
           and faculty.id = #{faculty}
     </select>
 
-    <select id="getClazzListBySpecialized" resultType="cn.qkmango.tms.domain.Clazz">
-        SELECT clazz.id, clazz.name
-        FROM t_specialized specialized,
-             t_clazz clazz
-        where clazz.specialized = specialized.id
-
-          and specialized.id = #{specialized}
+    <select id="getClazzListBySpecializedAndClazzYear" resultType="cn.qkmango.tms.domain.Clazz">
+        SELECT id,name
+        FROM
+            t_clazz
+        <where>
+            <if test="specialized != null and specialized != ''">
+                specialized = #{specialized}
+            </if>
+            <if test="clazzYear != null and clazzYear != ''">
+                and year = #{clazzYear}
+            </if>
+        </where>
     </select>
 
-    <select id="getCoursePagination" resultType="cn.qkmango.tms.domain.Course">
+    <select id="getCourseListByTeacherAndClazz" resultType="cn.qkmango.tms.domain.Course">
         SELECT course.id, course.name
         FROM t_teacher teacher,
              t_course course,
@@ -83,6 +88,15 @@
             </if>
             <if test="course!=null and course!=''">
                 and course.id = #{course}
+            </if>
+            <if test="courseYear!=null and courseYear!=''">
+                and course.year = #{courseYear}
+            </if>
+            <if test="term!=null">
+                and course.term = #{term}
+            </if>
+            <if test="clazzYear!=null">
+                and clazz.year = #{clazzYear}
             </if>
 
             AND course.teacher = teacher.id
