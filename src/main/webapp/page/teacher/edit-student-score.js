@@ -15,7 +15,7 @@ layui.use(['form', 'table'], function () {
 
 	table.render({
 		elem: '#dataGrid',
-		url: 'query/getStudentScorePagination.do',
+		url: 'query/pagination/getStudentScorePagination.do',
 		toolbar: true,
 		parseData: function(res){
 		    return {
@@ -104,7 +104,7 @@ layui.use(['form', 'table'], function () {
 			form.render('select','queryParams');
 		} else{
 			console.log(data.value); //得到被选中的值
-			getSpecializedListByFaculty(data.value)
+			getSpecializedList(data.value)
 		}
 		$('#clazz').html('<option value="">全部</option>');
 		$('#course').html('<option value="">全部</option>');
@@ -119,7 +119,7 @@ layui.use(['form', 'table'], function () {
 		} else{
 			console.log(data.value); //得到被选中的值
 			let clazzYear =  $("input[name='clazzYear']").val();
-			getClazzListBySpecializedAndClazzYear(data.value,clazzYear);
+			getClazzList(data.value,clazzYear);
 		}
 		$('#course').html('<option value="">全部</option>');
 		form.render('select','queryParams');
@@ -156,10 +156,10 @@ function getFacultyList() {
 }
 
 // 获取某个院系的专业列表并渲染
-function getSpecializedListByFaculty(faculty) {
+function getSpecializedList(faculty) {
 	$.ajax({
 		// url:'data/specialized.json',
-		url:'query/getSpecializedListByFaculty.do',
+		url:'query/getSpecializedList.do',
 		data:{
 			'faculty':faculty
 		},
@@ -178,13 +178,13 @@ function getSpecializedListByFaculty(faculty) {
 }
 
 // 获取指定专业的所有班级列表并渲染
-function getClazzListBySpecializedAndClazzYear(specialized,clazzYear) {
+function getClazzList(specialized,clazzYear) {
 	$.ajax({
 		// url:'data/specialized.json',
-		url:'query/getClazzListBySpecializedAndClazzYear.do',
+		url:'query/getClazzList.do',
 		data:{
 			'specialized':specialized,
-			'clazzYear':clazzYear,
+			'clazzYear':clazzYear
 		},
 		type:'get',
 		dataType:'json',

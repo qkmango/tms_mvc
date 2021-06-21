@@ -1,4 +1,4 @@
-package cn.qkmango.tms.domain.paginstion;
+package cn.qkmango.tms.domain.pagination;
 
 /**
  * room分页对象

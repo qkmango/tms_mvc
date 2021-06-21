@@ -32,6 +32,7 @@
 <script src="lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script>
 	var cocoMessage = window.top.cocoMessage;
+	
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
             form = layui.form,
@@ -78,11 +79,13 @@
                     maxmin:true,
                     shadeClose: true,
                     area: ['620px', '300px'],
-					// area: ['100%', '100%'],
                     content: 'page/admin/building/building-add.html',
+					end:function() {
+						table.reload("currentTableId");
+					}
                 });
 				return;
-            } 
+            }
         });
 
         table.on('tool(currentTableFilter)', function (obj) {

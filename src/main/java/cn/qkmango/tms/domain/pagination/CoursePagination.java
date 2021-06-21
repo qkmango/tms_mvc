@@ -1,4 +1,4 @@
-package cn.qkmango.tms.domain.paginstion;
+package cn.qkmango.tms.domain.pagination;
 
 import cn.qkmango.tms.domain.Course;
 
@@ -48,11 +48,11 @@ public class CoursePagination extends Pagination {
     }
 
     public Integer getYear() {
-        return course.getYear();
+        return course.getCourseYear();
     }
 
     public void setYear(Integer year) {
-        this.course.setYear(year);
+        this.course.setCourseYear(year);
     }
 
     public Boolean getTerm() {

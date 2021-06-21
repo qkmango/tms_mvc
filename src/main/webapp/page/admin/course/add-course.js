@@ -4,7 +4,6 @@ var form;
 var table;
 var layer;
 
-$('input[name=teacher]').val(window.parent.GLOBAL.user.id);
 
 layui.use(['form', 'table'], function () {
 	
@@ -13,6 +12,37 @@ layui.use(['form', 'table'], function () {
 	layer = layui.layer;
 	
 	getFacultyList();
+	
+	form.verify({
+		//年份验证
+		int:function(value,item) {
+			return value%1===0?false:"取值为整数"
+		},
+		year:function(value,item){
+			return /^\d{4}$/.test(value)?false:'年份格式有误';
+		},
+		//持续节验证
+		length:function(value,item){
+			if(value>=1 && value<=4) {
+				return false;
+			}
+			return "取值范围在1-4";
+		},
+		//验证起始节
+		begin:function(value,item){
+			if(value>=1&&value<=11) {
+				return false;
+			}
+			return "取值范围在1-11";
+		},
+		//周验证
+		week:function(value,item){
+			if(value>=1) {
+				return false;
+			}
+			return "取值为>0";
+		},
+	});
 	
 	//添加节次按钮事件
 	$('#add').click(function() {
@@ -92,7 +122,7 @@ layui.use(['form', 'table'], function () {
 			form.render('select','addCourse');
 		} else{
 			console.log(data.value); //得到被选中的值
-			getSpecializedListByFaculty(data.value)
+			getSpecializedList(data.value)
 		}
 		$('#clazz').html('<option value="">全部</option>');
 		$('#course').html('<option value="">全部</option>');
@@ -106,22 +136,13 @@ layui.use(['form', 'table'], function () {
 			form.render('select','addCourse');
 		} else{
 			console.log(data.value); //得到被选中的值
-			getClazzListBySpecialized(data.value)
+			let clazzYear = $("input[name='clazzYear']").val();
+			getClazzList(data.value,clazzYear);
 		}
 		$('#course').html('<option value="">全部</option>');
 		form.render('select','addCourse');
 	});
-	
-	form.on('select(clazz)', function(data){
-		if(data.value=='') {
-			$('#course').html('<option value="">全部</option>');
-			form.render('select','addCourse');
-		} else{
-			console.log(data.value); //得到被选中的值
-			let teacher = window.parent.GLOBAL.user.id;
-			getCourseListByTeacherAndClazz(teacher,data.value)
-		}
-	});
+
 	
 	// 授课老师下拉监听
 	//下拉框 院系 值改变时事件监听
@@ -151,7 +172,7 @@ layui.use(['form', 'table'], function () {
 
 //获取节次的HTML
 function getHTML(index) {
-	return '<fieldset class="table-search-fieldset courseInfoItem"><legend>节次'+index+'</legend><div class="layui-form-item"><div  class="layui-inline"><label class="layui-form-label">类型</label><div class="layui-input-inline"><select name="courseInfos['+index+'].courseType" lay-verify="required"><option value="">全部</option><option value="theory">理论课</option><option value="practice">实践课</option></select></div></div><div  class="layui-inline"><label class="layui-form-label">单双周</label><div class="layui-input-inline"><select name="courseInfos['+index+'].weekType" lay-verify="required"><option value="all">不限</option><option value="sgl">单周</option><option value="dbl">双周</option></select></div></div><div class="layui-inline"><label class="layui-form-label">起始周</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].startWeek" autocomplete="off" class="layui-input" lay-verify="required"></div></div><div class="layui-inline"><label class="layui-form-label">结束周</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].endWeek" autocomplete="off" class="layui-input" lay-verify="required"></div></div><div class="layui-inline"><label class="layui-form-label">星期</label><div class="layui-input-inline"><select name="courseInfos['+index+'].weekDay" lay-verify="required"><option value="">全部</option><option value="Monday">周一</option><option value="Tuesday">周二</option><option value="Wednesday">周三</option><option value="Thursday">周四</option><option value="Friday">周五</option><option value="Saturday">周六</option><option value="Sunday">周日</option></select></div></div><div class="layui-inline"><label class="layui-form-label">起始节</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].begin" autocomplete="off" class="layui-input" lay-verify="required"></div></div><div class="layui-inline"><label class="layui-form-label">持续节</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].length" autocomplete="off" class="layui-input" lay-verify="required"></div></div><div class="layui-inline"><label class="layui-form-label">上课地点</label><div class="layui-input-inline"><input type="text" name="courseInfos['+index+'].address" autocomplete="off" class="layui-input" lay-verify="required"></div></div></div></fieldset>';
+	return '<fieldset class="table-search-fieldset courseInfoItem"><legend>节次'+index+'</legend><div class="layui-form-item"><div  class="layui-inline"><label class="layui-form-label">类型</label><div class="layui-input-inline"><select name="courseInfos['+index+'].courseType" lay-verify="required"><option value="">全部</option><option value="theory">理论课</option><option value="practice">实践课</option></select></div></div><div  class="layui-inline"><label class="layui-form-label">单双周</label><div class="layui-input-inline"><select name="courseInfos['+index+'].weekType" lay-verify="required"><option value="all">不限</option><option value="sgl">单周</option><option value="dbl">双周</option></select></div></div><div class="layui-inline"><label class="layui-form-label">起始周</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].startWeek" autocomplete="off" class="layui-input" lay-verify="required|int|week"></div></div><div class="layui-inline"><label class="layui-form-label">结束周</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].endWeek" autocomplete="off" class="layui-input" lay-verify="required|int|week"></div></div><div class="layui-inline"><label class="layui-form-label">星期</label><div class="layui-input-inline"><select name="courseInfos['+index+'].weekDay" lay-verify="required"><option value="">全部</option><option value="Monday">周一</option><option value="Tuesday">周二</option><option value="Wednesday">周三</option><option value="Thursday">周四</option><option value="Friday">周五</option><option value="Saturday">周六</option><option value="Sunday">周日</option></select></div></div><div class="layui-inline"><label class="layui-form-label">起始节</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].begin" autocomplete="off" class="layui-input" lay-verify="required|int|begin"></div></div><div class="layui-inline"><label class="layui-form-label">持续节</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].length" autocomplete="off" class="layui-input" lay-verify="required|int|length" placeholder="1-4"></div></div><div class="layui-inline"><label class="layui-form-label">上课教室</label><div class="layui-input-inline"><input type="number" name="courseInfos['+index+'].address" autocomplete="off" class="layui-input" lay-verify="required"></div></div></div></fieldset>';
 }
 
 
@@ -176,9 +197,9 @@ function getFacultyList() {
 }
 
 // 获取某个院系的专业列表并渲染
-function getSpecializedListByFaculty(faculty) {
+function getSpecializedList(faculty) {
 	$.ajax({
-		url:'query/getSpecializedListByFaculty.do',
+		url:'query/getSpecializedList.do',
 		data:{
 			'faculty':faculty
 		},
@@ -197,12 +218,12 @@ function getSpecializedListByFaculty(faculty) {
 }
 
 // 获取指定专业的所有班级列表并渲染
-function getClazzListBySpecialized(specialized) {
+function getClazzList(specialized,clazzYear) {
 	$.ajax({
-		// url:'data/specialized.json',
-		url:'query/getClazzListBySpecialized.do',
+		url:'query/getClazzList.do',
 		data:{
-			'specialized':specialized
+			'specialized':specialized,
+			'clazzYear':clazzYear
 		},
 		type:'get',
 		dataType:'json',

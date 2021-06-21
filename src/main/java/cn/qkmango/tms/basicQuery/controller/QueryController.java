@@ -3,8 +3,8 @@ package cn.qkmango.tms.basicQuery.controller;
 
 import cn.qkmango.tms.basicQuery.service.QueryService;
 import cn.qkmango.tms.domain.*;
-import cn.qkmango.tms.domain.paginstion.RoomPagination;
-import cn.qkmango.tms.domain.paginstion.StudentScorePagination;
+import cn.qkmango.tms.domain.pagination.RoomPagination;
+import cn.qkmango.tms.domain.pagination.StudentScorePagination;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
@@ -78,15 +78,14 @@ public class QueryController {
     }
 
     /**
-     * 查询指定院系的所有专业
-     * faculty 表示院系的id，数据库中存储的为 int类型，但是前端请求的是 String类型
+     * 条件查询专业列表
      * @return
      */
     @ResponseBody
-    @RequestMapping("/getSpecializedListByFaculty.do")
-    public Map<String, Object> getSpecializedListByFaculty(Integer faculty) {
+    @RequestMapping("/getSpecializedList.do")
+    public Map<String, Object> getSpecializedList(Specialized specialized) {
 
-        List<Specialized> SpecializedList = queryService.getSpecializedListByFaculty(faculty);
+        List<Specialized> SpecializedList = queryService.getSpecializedList(specialized);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
@@ -108,10 +107,10 @@ public class QueryController {
      */
     @ResponseBody
     @Permission(PermissionType.teacher)
-    @RequestMapping("/getClazzListBySpecializedAndClazzYear.do")
-    public Map<String, Object> getClazzListBySpecializedAndClazzYear(@RequestParam Map<String, Object> requestMap) {
+    @RequestMapping("/getClazzList.do")
+    public Map<String, Object> getClazzList(Clazz clazz) {
 
-        List<Clazz> ClazzList = queryService.getClazzListBySpecializedAndClazzYear(requestMap);
+        List<Clazz> ClazzList = queryService.getClazzList(clazz);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
@@ -143,24 +142,6 @@ public class QueryController {
 
         return map;
     }
-
-    /**
-     * 获取学生成绩列表分页
-     * @return
-     */
-    @ResponseBody
-    @Permission({PermissionType.admin,PermissionType.teacher})
-    @RequestMapping("/getStudentScorePagination.do")
-    public Map<String, Object> getStudentScorePagination(StudentScorePagination pagination) {
-
-        HashMap<String,Object> map = queryService.getStudentScorePagination(pagination);
-
-        map.put("success",true);
-        map.put("message","获取学生成绩分页列表成功");
-
-        return map;
-    }
-
 
     @ResponseBody
     @RequestMapping("/getTeacherList.do")
@@ -196,24 +177,6 @@ public class QueryController {
         return map;
     }
 
-    /**
-     * 条件获取房间列表 分页
-     * @param pagination
-     * @return
-     */
-    @ResponseBody
-    @Permission(PermissionType.admin)
-    @RequestMapping("/getRoomPagination.do")
-    public Map<String, Object> getRoomPagination(RoomPagination pagination) {
-
-        HashMap<String,Object> map = queryService.getRoomPagination(pagination);
-
-        // ResponseMap map = new ResponseMap();
-        map.put("success",true);
-        map.put("message","获取教室列表成功");
-
-        return map;
-    }
 
 
 }

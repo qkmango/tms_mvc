@@ -5,8 +5,8 @@
 
 
     <insert id="insertCourse">
-        insert into t_course(name, credit, clazz, teacher)
-        values (#{name}, #{credit}, #{clazz}, #{teacher})
+        insert into t_course(name, credit, clazz, teacher,courseYear,term)
+        values (#{name}, #{credit}, #{clazz}, #{teacher}, #{courseYear}, #{term})
     </insert>
 
     <insert id="insertCourseInfo" parameterType="list">
@@ -33,8 +33,8 @@
     </select>
 
     <insert id="insertYear">
-        insert into t_year(id,name)
-        values (#{id},CONCAT_WS('-',#{id},#{id}+1))
+        insert into t_year(year,name)
+        values (#{year},CONCAT_WS('-',#{year},#{year}+1))
     </insert>
 
 

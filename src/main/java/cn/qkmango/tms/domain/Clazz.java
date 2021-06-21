@@ -4,17 +4,17 @@ public class Clazz {
 
     private Integer id;
     private String name;
-    private Integer clazz;
-    private Integer year;
+    private Integer specialized;
+    private Integer clazzYear;
 
     public Clazz() {
     }
 
-    public Clazz(Integer id, String name, Integer clazz, Integer year) {
+    public Clazz(Integer id, String name, Integer specialized, Integer clazzYear) {
         this.id = id;
         this.name = name;
-        this.clazz = clazz;
-        this.year = year;
+        this.specialized = specialized;
+        this.clazzYear = clazzYear;
     }
 
     public Integer getId() {
@@ -33,20 +33,20 @@ public class Clazz {
         this.name = name;
     }
 
-    public Integer getClazz() {
-        return clazz;
+    public Integer getSpecialized() {
+        return specialized;
     }
 
-    public void setClazz(Integer clazz) {
-        this.clazz = clazz;
+    public void setSpecialized(Integer specialized) {
+        this.specialized = specialized;
     }
 
-    public Integer getYear() {
-        return year;
+    public Integer getClazzYear() {
+        return clazzYear;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setClazzYear(Integer clazzYear) {
+        this.clazzYear = clazzYear;
     }
 
     @Override
@@ -54,8 +54,8 @@ public class Clazz {
         return "Clazz{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", clazz=" + clazz +
-                ", year=" + year +
+                ", clazz=" + specialized +
+                ", year=" + clazzYear +
                 '}';
     }
 }

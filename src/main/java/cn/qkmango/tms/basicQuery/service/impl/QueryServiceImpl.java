@@ -3,8 +3,8 @@ package cn.qkmango.tms.basicQuery.service.impl;
 import cn.qkmango.tms.basicQuery.dao.QueryDao;
 import cn.qkmango.tms.basicQuery.service.QueryService;
 import cn.qkmango.tms.domain.*;
-import cn.qkmango.tms.domain.paginstion.RoomPagination;
-import cn.qkmango.tms.domain.paginstion.StudentScorePagination;
+import cn.qkmango.tms.domain.pagination.RoomPagination;
+import cn.qkmango.tms.domain.pagination.StudentScorePagination;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class QueryServiceImpl implements QueryService {
@@ -28,16 +27,16 @@ public class QueryServiceImpl implements QueryService {
     }
 
     @Override
-    public List<Specialized> getSpecializedListByFaculty(Integer faculty) {
+    public List<Specialized> getSpecializedList(Specialized specialized) {
 
-        List<Specialized> specializedList = queryDao.getSpecializedListByFaculty(faculty);
+        List<Specialized> specializedList = queryDao.getSpecializedList(specialized);
 
         return specializedList;
     }
 
     @Override
-    public List<Clazz> getClazzListBySpecializedAndClazzYear(Map<String, Object> requestMap) {
-        List<Clazz> clazzList = queryDao.getClazzListBySpecializedAndClazzYear(requestMap);
+    public List<Clazz> getClazzList(Clazz clazz) {
+        List<Clazz> clazzList = queryDao.getClazzList(clazz);
 
         return clazzList;
     }
@@ -48,29 +47,6 @@ public class QueryServiceImpl implements QueryService {
         List<Course> courseList = queryDao.getCourseListByTeacherAndClazz(paramsMap);
 
         return courseList;
-    }
-
-
-    @Override
-    @Transactional(
-            propagation = Propagation.SUPPORTS,
-            readOnly = true
-    )
-    public HashMap<String,Object> getStudentScorePagination(StudentScorePagination pagination) {
-
-        List<HashMap<String, Object>> data = queryDao.getStudentScorePagination(pagination);
-
-        HashMap<String, Object> map = new HashMap<>();
-
-        if (pagination.getPagination() != false) {
-            int count = queryDao.getCount();
-            map.put("count",count);
-        }
-
-        map.put("data",data);
-        map.put("pagination",pagination.getPagination());
-
-        return map;
     }
 
     @Override
@@ -88,21 +64,5 @@ public class QueryServiceImpl implements QueryService {
         return list;
     }
 
-    @Override
-    public HashMap<String, Object> getRoomPagination(RoomPagination pagination) {
 
-        List<HashMap<String, Object>> data = queryDao.getRoomPagination(pagination);
-
-        HashMap<String, Object> map = new HashMap<>();
-
-        if (pagination.getPagination() != false) {
-            int count = queryDao.getCount();
-            map.put("count",count);
-        }
-
-        map.put("data",data);
-        map.put("pagination",pagination.getPagination());
-
-        return map;
-    }
 }

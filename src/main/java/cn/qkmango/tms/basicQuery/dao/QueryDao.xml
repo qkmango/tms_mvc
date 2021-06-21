@@ -9,24 +9,40 @@
         FROM t_faculty
     </select>
 
-    <select id="getSpecializedListByFaculty" resultType="cn.qkmango.tms.domain.Specialized">
-        SELECT specialized.id, specialized.name
-        FROM t_specialized specialized,
-             t_faculty faculty
-        where specialized.faculty = faculty.id
-          and faculty.id = #{faculty}
+    <select id="getSpecializedList" resultType="cn.qkmango.tms.domain.Specialized">
+        SELECT
+            id,name,faculty
+        FROM
+            t_specialized
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="faculty != null and faculty != ''">
+                and faculty = #{faculty}
+            </if>
+            <if test="name != null and name != ''">
+                and name like '%' #{name} '%'
+            </if>
+        </where>
     </select>
 
-    <select id="getClazzListBySpecializedAndClazzYear" resultType="cn.qkmango.tms.domain.Clazz">
-        SELECT id,name
+    <select id="getClazzList" resultType="cn.qkmango.tms.domain.Clazz">
+        SELECT id,name,specialized,clazzYear
         FROM
             t_clazz
         <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name like '%' #{name} '%'
+            </if>
             <if test="specialized != null and specialized != ''">
-                specialized = #{specialized}
+                and specialized = #{specialized}
             </if>
             <if test="clazzYear != null and clazzYear != ''">
-                and year = #{clazzYear}
+                and clazzYear = #{clazzYear}
             </if>
         </where>
     </select>
@@ -43,73 +59,6 @@
           and course.teacher = teacher.id
           and course.clazz = clazz.id
           and clazz.specialized = specialized.id
-    </select>
-
-    <select id="getStudentScorePagination" resultType="hashmap">
-
-        SELECT SQL_CALC_FOUND_ROWS
-        student.id,
-        student.name,
-        elective.id as elective,
-        course.name as course,
-        teacher.name as teacher,
-        clazz.name as clazz,
-        specialized.name as specialized,
-        faculty.name as faculty,
-        elective.score as score
-
-        FROM t_teacher teacher,
-        t_course course,
-        t_elective elective,
-        t_student student,
-        t_clazz clazz,
-        t_specialized specialized,
-        t_faculty faculty
-
-        <where>
-
-            <if test="name!=null and name!=''">
-                student.name like '%' #{name} '%'
-            </if>
-            <if test="id!=null and id!=''">
-                and student.id = #{id}
-            </if>
-            <if test="teacher!=null and teacher!=''">
-                and teacher.id = #{teacher}
-            </if>
-            <if test="faculty!=null and faculty!=''">
-                and faculty.id = #{faculty}
-            </if>
-            <if test="specialized!=null and specialized!=''">
-                and specialized.id = #{specialized}
-            </if>
-            <if test="clazz!=null and clazz!=''">
-                and clazz.id = #{clazz}
-            </if>
-            <if test="course!=null and course!=''">
-                and course.id = #{course}
-            </if>
-            <if test="courseYear!=null and courseYear!=''">
-                and course.year = #{courseYear}
-            </if>
-            <if test="term!=null">
-                and course.term = #{term}
-            </if>
-            <if test="clazzYear!=null">
-                and clazz.year = #{clazzYear}
-            </if>
-
-            AND course.teacher = teacher.id
-            AND elective.course = course.id
-            AND elective.student = student.id
-            AND student.clazz = clazz.id
-            AND clazz.specialized = specialized.id
-            AND specialized.faculty = faculty.id
-        </where>
-        order by student.id asc
-        <if test="pagination != false">
-            LIMIT #{skipCount},#{limit}
-        </if>
     </select>
 
     <!-- 获取未分页的总记录条数 -->
@@ -162,37 +111,5 @@
         order by number asc
     </select>
 
-    <select id="getRoomPagination" resultType="hashmap">
-        SELECT SQL_CALC_FOUND_ROWS
-            room.id,
-            room.number,
-            room.name,
-            building.id building,
-            building.number buildingNumber,
-            building.name buildingName,
-            building.buildingType
-        FROM
-            t_room room,
-            t_building building
-        <where>
-            room.building=building.id
-            <if test="id != null">
-                and room.id = #{id}
-            </if>
-            <if test="number != null">
-                and room.number = #{number}
-            </if>
-            <if test="name != null and name != ''">
-                and room.name like '%' #{name} '%'
-            </if>
-            <if test="building != null">
-                and room.building = #{building}
-            </if>
-        </where>
-        order by room.number asc
-        <if test="pagination != false">
-            LIMIT #{skipCount},#{limit}
-        </if>
-    </select>
 
 </mapper>

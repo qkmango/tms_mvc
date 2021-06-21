@@ -4,7 +4,6 @@ import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.CourseInfo;
 import cn.qkmango.tms.domain.Room;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
