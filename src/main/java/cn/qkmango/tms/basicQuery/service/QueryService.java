@@ -21,4 +21,5 @@ public interface QueryService {
 
     List<Building> getBuildingList(Building building);
 
+    List<Year> getYearList(Year year);
 }

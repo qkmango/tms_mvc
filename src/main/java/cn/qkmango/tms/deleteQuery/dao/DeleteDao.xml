@@ -12,4 +12,8 @@
         delete from t_room where id = #{id}
     </delete>
 
+    <delete id="deleteYear">
+        delete from t_year where year = #{year}
+    </delete>
+
 </mapper>

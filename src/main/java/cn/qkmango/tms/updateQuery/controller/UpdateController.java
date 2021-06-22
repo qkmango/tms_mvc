@@ -114,5 +114,25 @@ public class UpdateController {
     }
 
 
+    /**
+     * 更新修改 年份
+     * @param year
+     * @return
+     * @throws UpdateException
+     */
+    @ResponseBody
+    @Permission(PermissionType.admin)
+    @RequestMapping("updateYear.do")
+    public Map<String, Object> updateYear(Integer year,Integer newYear) throws UpdateException {
+
+        updateService.updateYear(year,newYear);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("修改年份信息成功");
+
+        return map;
+    }
+
 
 }

@@ -30,7 +30,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">房间号</label>
         <div class="layui-input-block">
-            <input type="number" name="number" lay-verify="required" class="layui-input">
+            <input type="number" name="number" lay-verify="required|roomNumber|int" class="layui-input">
         </div>
     </div>
     
@@ -56,6 +56,15 @@
         var form = layui.form,
             layer = layui.layer,
             $ = layui.$;
+			
+		form.verify({
+			roomNumber:function(value,item){
+				return value.toString().length<=4&&value>0?false:'楼号长度在4以内';
+			},
+			int:function(value,item) {
+				return value%1===0?false:"取值为整数"
+			}
+		})
 			
 		//获取楼列表并渲染
 		$.ajax({

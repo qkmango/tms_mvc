@@ -45,10 +45,8 @@ public class UpdateServiceImpl implements UpdateService {
 
         //判断影行数
         if (affectedRows != 1) {
-            throw new UpdateException("更改数据异常，应影响行数：1，实际影响行数：" + affectedRows);
+            throw new UpdateException(1,affectedRows);
         }
-
-
     }
 
     @Override
@@ -56,7 +54,7 @@ public class UpdateServiceImpl implements UpdateService {
     public void updateStudentScore(HashMap<String, Object> map) throws UpdateException {
         int affectedRows = updateDao.updateStudentScore(map);
         if (affectedRows != 1) {
-            throw new UpdateException("更改数据异常，应影响行数：1，实际影响行数：" + affectedRows);
+            throw new UpdateException(1,affectedRows);
         }
     }
 
@@ -65,7 +63,7 @@ public class UpdateServiceImpl implements UpdateService {
     public void updateBuilding(Building building) throws UpdateException {
         int affectedRows = updateDao.updateBuilding(building);
         if (affectedRows != 1) {
-            throw new UpdateException("更改数据异常，应影响行数：1，实际影响行数：" + affectedRows);
+            throw new UpdateException(1,affectedRows);
         }
     }
 
@@ -74,8 +72,16 @@ public class UpdateServiceImpl implements UpdateService {
     public void updateRoom(Room room) throws UpdateException {
         int affectedRows = updateDao.updateRoom(room);
         if (affectedRows != 1) {
-            throw new UpdateException("更改数据异常，应影响行数：1，实际影响行数：" + affectedRows);
+            throw new UpdateException(1,affectedRows);
         }
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateYear(Integer year,Integer newYear) throws UpdateException {
+        int affectedRows = updateDao.updateYear(year,newYear);
+        if (affectedRows != 1) {
+            throw new UpdateException(1,affectedRows);
+        }
+    }
 }

@@ -21,16 +21,16 @@
 	<div class="layui-form-item">
 	    <label class="layui-form-label">楼类型</label>
 	    <div class="layui-input-block">
-	        <input type="radio" name="buildingType" value="pedagogical" title="教学楼" checked>
-	        <input type="radio" name="buildingType" value="experimental" title="实验楼">
-	        <input type="radio" name="buildingType" value="other" title="其他">
+	        <input type="radio" name="buildingType" value="j" title="教学楼" checked>
+	        <input type="radio" name="buildingType" value="s" title="实验楼">
+	        <input type="radio" name="buildingType" value="q" title="其他">
 	    </div>
 	</div>
 	
     <div class="layui-form-item">
         <label class="layui-form-label">楼号</label>
         <div class="layui-input-block">
-            <input type="number" name="number" lay-verify="required" class="layui-input">
+            <input type="text" name="number" lay-verify="required|buildingNumber" class="layui-input">
         </div>
     </div>
     
@@ -56,6 +56,16 @@
         var form = layui.form,
             layer = layui.layer,
             $ = layui.$;
+			
+		form.verify({
+			//楼栋号验证
+			buildingNumber:function(value,item){
+				if((/^\d+[A-Z]*$/.test(value))&&(value.length<=4)) {
+					return false;
+				}
+				return '楼号长度在4以内';
+			}
+		})
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {

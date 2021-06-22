@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/query")
-public class QueryController {
+public class ListQueryController {
 
 
     @Resource
@@ -172,6 +172,26 @@ public class QueryController {
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
         map.setMessage("获取教学楼列表成功");
+        map.setData(data);
+
+        return map;
+    }
+
+
+    /**
+     * 条件获取 年份 列表
+     * @param year
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getYearList.do")
+    public Map<String, Object> getYearList(Year year) {
+
+        List<Year> data = queryService.getYearList(year);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("获取年份列表成功");
         map.setData(data);
 
         return map;

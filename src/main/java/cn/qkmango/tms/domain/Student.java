@@ -20,14 +20,17 @@ public class Student extends User {
     private String birth;
     //所属班级
     private Integer clazz;
+    //所属专业
+    private Integer specialized;
 
     public Student() { }
 
-    public Student(Integer id, String password, String name, PermissionType permissionType, Integer sex, String birth, Integer clazz) {
+    public Student(Integer id, String password, String name, PermissionType permissionType, Integer sex, String birth, Integer clazz, Integer specialized) {
         super(id, password, name, permissionType);
         this.sex = sex;
         this.birth = birth;
         this.clazz = clazz;
+        this.specialized = specialized;
     }
 
     public Integer getSex() {
@@ -54,15 +57,25 @@ public class Student extends User {
         this.clazz = clazz;
     }
 
+    public Integer getSpecialized() {
+        return specialized;
+    }
+
+    public void setSpecialized(Integer specialized) {
+        this.specialized = specialized;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
                 "sex=" + sex +
                 ", birth='" + birth + '\'' +
                 ", clazz=" + clazz +
+                ", specialized=" + specialized +
                 ", id=" + id +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
+                ", permissionType=" + permissionType +
                 '}';
     }
 }

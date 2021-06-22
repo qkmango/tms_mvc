@@ -6,10 +6,14 @@ package cn.qkmango.tms.web.bind.building;
  */
 public enum BuildingType {
 
-    //教学楼（教学性）
-    pedagogical,
-    //实验楼（实验性）
-    experimental,
-    //其他
-    other
+    // //教学楼（教学性）
+    // pedagogical,
+    // //实验楼（实验性）
+    // experimental,
+    // //其他
+    // other
+
+    j,//教学楼
+    s,//实验楼
+    q//其他
 }

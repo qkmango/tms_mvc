@@ -25,3 +25,173 @@
 - [x] 课程发布
 - [x] 教学楼增删改查
 - [x] 教室的增删改查（分页）
+- [x] 年份的增删改查
+
+
+
+
+
+
+
+## 参数校验
+
+
+
+### `/insert/insertCourse.do`
+
+> 所属前端页面：page/admin/course/add-course.html
+
+所属数据库表：t_course
+
+所属Java实体对象：Course
+
+| 字段       | 输入类型 | 前端校验 | 后端校验 |
+| ---------- | -------- | -------- | -------- |
+| ~~id~~     |          |          |          |
+| name       | input    |          |          |
+| credit     | select   |          |          |
+| clazz      | select   |          |          |
+| teacher    | select   |          |          |
+| courseYear | input    | √        |          |
+| term       | select   |          |          |
+
+所属数据库表：t_course_info
+
+所属Java实体对象：CourseInfo
+
+| 字段       | 输入类型 | 前端校验 | 后端校验 |
+| ---------- | -------- | -------- | -------- |
+| ~~id~~     |          |          |          |
+| ~~course~~ |          |          |          |
+| courseType | select   |          |          |
+| weekType   | select   |          |          |
+| startWeek  | input    | √        |          |
+| endWeek    | input    | √        |          |
+| weekDay    | select   |          |          |
+| begin      | input    | √        |          |
+| length     | input    | √        |          |
+| address    | input    |          |          |
+
+
+
+### `/insert/insertBuilding.do`
+
+> 所属前端页面：page/admin/building/building-add.html
+
+所属数据库表：t_building
+
+所属Java实体对象：Building
+
+| 字段         | 输入类型 | 前端校验 | 后端校验 |
+| ------------ | -------- | -------- | -------- |
+| ~~id~~       |          |          |          |
+| number       | input    | √        |          |
+| name         | input    |          |          |
+| buildingType | radio    |          |          |
+
+### `/update/updateBuilding.do`
+
+> 所属前端页面：page/admin/building/building-edit.html
+
+所属数据库表：t_building
+
+所属Java实体对象：Building
+
+| 字段         | 输入类型 | 前端校验 | 后端校验 |
+| ------------ | -------- | -------- | -------- |
+| ~~id~~       |          |          |          |
+| number       | input    | √        |          |
+| name         | input    |          |          |
+| buildingType | radio    |          |          |
+
+
+
+
+
+### `/insert/insertRoom.do`
+
+> 所属前端页面：page/admin/building/room-add.html
+
+所属数据库表：t_room
+
+所属Java实体对象：Room
+
+| 字段     | 输入类型 | 前端校验 | 后端校验 |
+| -------- | -------- | -------- | -------- |
+| ~~id~~   |          |          |          |
+| number   | input    |          |          |
+| name     | input    |          |          |
+| building | select   |          |          |
+
+### `/insert/updateRoom.do`
+
+> 所属前端页面：page/admin/building/room-edit.html
+
+所属数据库表：t_room
+
+所属Java实体对象：Room
+
+| 字段     | 输入类型 | 前端校验 | 后端校验 |
+| -------- | -------- | -------- | -------- |
+| ~~id~~   |          |          |          |
+| number   | input    | √        |          |
+| name     | input    |          |          |
+| building | select   |          |          |
+
+
+
+### `/insert/insertYear.do`
+
+> 所属前端页面：page/admin/year/year-add.html
+
+所属数据库表：t_year
+
+所属Java实体对象：Year
+
+| 字段     | 输入类型 | 前端校验 | 后端校验 |
+| -------- | -------- | -------- | -------- |
+| year     | input    | √        |          |
+| ~~name~~ |          |          |          |
+
+### `/insert/updateYear.do`
+
+> 所属前端页面：page/admin/year/year-edit.html
+
+所属数据库表：t_year
+
+所属Java实体对象：
+
+| 字段     | 输入类型          | 前端校验 | 后端校验 |
+| -------- | ----------------- | -------- | -------- |
+| ~~year~~ | input（readonly） |          |          |
+| newYear  | input             | √        |          |
+
+
+
+### `/update/updatePassword.do`
+
+> 所属前端页面：page/public/update-password.html
+
+所属数据库表：t_student/t_teacher/t_admin
+
+所属Java实体对象：
+
+| 字段          | 输入类型 | 前端校验   | 后端校验 |
+| ------------- | -------- | ---------- | -------- |
+| oldPassword   | input    | 一致性校验 |          |
+| againPassword | input    | 一致性校验 |          |
+
+
+
+### `/update/updateStudentScore.do`
+
+> 所属前端页面：page/teacher/edit-student-score.html
+
+所属数据库表：t_elective
+
+所属Java实体对象：
+
+| 字段   | 输入类型 | 前端校验 | 后端校验 |
+| ------ | -------- | -------- | -------- |
+| course | input    |          |          |
+

@@ -97,9 +97,9 @@
                 {field: 'buildingName', title: '所属教学楼名'},
                 {field: 'buildingType', width: 150, title: '所属教学楼类型',templet: function (data){
 					switch(data.buildingType) {
-						case 'pedagogical': return '教学楼';
-						case 'experimental': return '实验楼';
-						case 'other': return '其他';
+						case 'j': return '教学楼';
+						case 's': return '实验楼';
+						case 'q': return '其他';
 					}
 				}},
 				{title: '操作',  width: 150, toolbar: '#currentTableBar', align: "center"}
@@ -121,9 +121,6 @@
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             var result = JSON.stringify(data.field);
-            layer.alert(result, {
-                title: '最终的搜索信息'
-            });
 
             //执行搜索重载
             table.reload('currentTableId', {
@@ -149,11 +146,10 @@
                     shadeClose: true,
                     area: ['620px', '300px'],
                     content: 'page/admin/building/room-add.html',
+					end:function() {
+						table.reload("currentTableId");
+					}
                 });
-            } else if (obj.event === 'delete') {  // 监听删除操作
-                var checkStatus = table.checkStatus('currentTableId')
-                    , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
             }
         });
 
@@ -168,7 +164,9 @@
                     maxmin:true,
                     shadeClose: true,
                     area: ['620px', '300px'],
-                    content: 'page/admin/building/room-edit.html?id='+data.id,
+                    content: 'page/admin/building/room-edit.html?id='+data.id,end:function() {
+						table.reload("currentTableId");
+					}
                 });
                 return false;
             } else if (obj.event === 'delete') {

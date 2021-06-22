@@ -67,8 +67,8 @@ public class InsertServiceImpl implements InsertService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void insertYear(Integer id) throws InsertException {
-        int affectedRows = insertDao.insertYear(id);
+    public void insertYear(Integer year) throws InsertException {
+        int affectedRows = insertDao.insertYear(year);
         if (affectedRows != 1) {
             throw new InsertException("插入记录异常，应影响行数：1，实际影响行数：" + affectedRows);
         }

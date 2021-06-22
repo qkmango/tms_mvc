@@ -64,5 +64,9 @@ public class QueryServiceImpl implements QueryService {
         return list;
     }
 
-
+    @Override
+    public List<Year> getYearList(Year year) {
+        List<Year> list = queryDao.getYearList(year);
+        return list;
+    }
 }

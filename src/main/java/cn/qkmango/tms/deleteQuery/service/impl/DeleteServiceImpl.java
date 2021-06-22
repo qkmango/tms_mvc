@@ -21,7 +21,7 @@ public class DeleteServiceImpl implements DeleteService {
     public void deleteBuilding(Integer id) throws DeleteException {
         int affectedRows = deleteDao.deleteBuilding(id);
         if (affectedRows != 1) {
-            throw new DeleteException("删除记录异常，应影响行数为 1，实际影响行数为 "+affectedRows);
+            throw new DeleteException(1,affectedRows);
         }
     }
 
@@ -30,7 +30,16 @@ public class DeleteServiceImpl implements DeleteService {
     public void deleteRoom(Integer id) throws DeleteException {
         int affectedRows = deleteDao.deleteRoom(id);
         if (affectedRows != 1) {
-            throw new DeleteException("删除记录异常，应影响行数:1，实际影响行数:"+affectedRows);
+            throw new DeleteException(1,affectedRows);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteYear(Integer year) throws DeleteException {
+        int affectedRows = deleteDao.deleteYear(year);
+        if (affectedRows != 1) {
+            throw new DeleteException(1,affectedRows);
         }
     }
 }

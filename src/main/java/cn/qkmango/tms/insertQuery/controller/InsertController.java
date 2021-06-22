@@ -3,7 +3,6 @@ package cn.qkmango.tms.insertQuery.controller;
 
 import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Course;
-import cn.qkmango.tms.domain.CourseInfo;
 import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.exception.InsertException;
 import cn.qkmango.tms.insertQuery.service.InsertService;
@@ -72,9 +71,9 @@ public class InsertController {
     @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("insertYear.do")
-    public Map<String, Object> insertYear(Integer id) throws InsertException {
+    public Map<String, Object> insertYear(Integer year) throws InsertException {
 
-        service.insertYear(id);
+        service.insertYear(year);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);

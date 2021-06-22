@@ -111,5 +111,18 @@
         order by number asc
     </select>
 
+    <select id="getYearList" resultType="cn.qkmango.tms.domain.Year">
+        select year,name from t_year
+        <where>
+            <if test="year != null and year != ''">
+                year = #{year}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+        order by year asc
+    </select>
+
 
 </mapper>

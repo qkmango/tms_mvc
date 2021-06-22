@@ -22,4 +22,5 @@ public interface QueryDao {
 
     List<Building> getBuildingList(Building building);
 
+    List<Year> getYearList(Year year);
 }

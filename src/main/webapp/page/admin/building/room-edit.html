@@ -21,7 +21,7 @@
 	<div class="layui-form-item">
 	    <label class="layui-form-label">所属楼宇</label>
 		<div class="layui-input-block">
-		  <select name="building" id="building" lay-filter="building">
+		  <select name="building" id="building" lay-filter="building" lay-verify="required">
 			  <option value="">全部</option>
 		  </select>
 		</div>
@@ -30,7 +30,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">房间号</label>
         <div class="layui-input-block">
-            <input type="number" name="number" lay-verify="required" class="layui-input">
+            <input type="number" name="number" lay-verify="required|roomNumber|int" class="layui-input">
         </div>
     </div>
     
@@ -58,10 +58,20 @@
         var form = layui.form;
         var layer = layui.layer;
         var $ = layui.$;
+		
+		form.verify({
+			//楼栋号验证
+			roomNumber:function(value,item){
+				return value.toString().length<=4&&value>0?false:'楼号长度在4以内';
+			},
+			int:function(value,item) {
+				return value%1===0?false:"取值为整数"
+			}
+		})
 			
 		const roomId = getUrlParam('id');
 		if(roomId == null) {
-			cocoMessage.error('获取教室ID失败');
+			cocoMessage.error('获取房间ID失败');
 			return;
 		}
 			
@@ -69,7 +79,7 @@
 		$.ajax({
 			url:'query/getBuildingList.do',
 			async:false,
-			type:'get',
+			type:'post',
 			dataType:'json',
 			success:function(res) {
 				if(res.success) {
@@ -88,7 +98,7 @@
 			}
 		})
 		
-		//获取楼列表并渲染
+		//获取房间信息并会写
 		$.ajax({
 			url:'query/pagination/getRoomPagination.do',
 			data:{

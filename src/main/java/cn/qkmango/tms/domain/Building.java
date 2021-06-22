@@ -8,14 +8,15 @@ import cn.qkmango.tms.web.bind.building.BuildingType;
 public class Building {
 
     private Integer id;
-    private Integer number;
+    //楼号，但是可以加入英文，如12A栋
+    private String number;
     private String name;
     private BuildingType buildingType;
 
     public Building() {
     }
 
-    public Building(Integer id, Integer number, String name, BuildingType buildingType) {
+    public Building(Integer id, String number, String name, BuildingType buildingType) {
         this.id = id;
         this.number = number;
         this.name = name;
@@ -30,11 +31,11 @@ public class Building {
         this.id = id;
     }
 
-    public Integer getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

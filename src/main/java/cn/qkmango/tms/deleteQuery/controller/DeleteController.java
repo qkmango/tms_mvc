@@ -49,5 +49,19 @@ public class DeleteController {
         return map;
     }
 
+    @ResponseBody
+    @Permission(PermissionType.admin)
+    @RequestMapping("/deleteYear.do")
+    public Map<String, Object> deleteYear(Integer year) throws DeleteException {
+
+        service.deleteYear(year);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage("删除年份成功");
+
+        return map;
+    }
+
 
 }

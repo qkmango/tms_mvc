@@ -48,11 +48,10 @@
 
         table.render({
             elem: '#currentTableId',
-            url: 'query/getRoomPagination.do',
+            url: 'query/getYearList.do',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print'],
             cols: [[
-                // {type: "checkbox", width: 50},
                 {field: 'year', width: 120, title: '年份', sort: true},
                 {field: 'name',title: '年度'},
 				{title: '操作',  width: 150, toolbar: '#currentTableBar', align: "center"}
@@ -93,18 +92,17 @@
         table.on('toolbar(currentTableFilter)', function (obj) {
             if (obj.event === 'add') {  // 监听添加操作
                 var index = layer.open({
-                    title: '添加教室',
+                    title: '添加年份',
                     type: 2,
                     shade: 0.2,
                     maxmin:true,
                     shadeClose: true,
                     area: ['620px', '300px'],
-                    content: 'page/admin/building/room-add.html',
+                    content: 'page/admin/year/year-add.html',
+					end:function() {
+						table.reload("currentTableId");
+					}
                 });
-            } else if (obj.event === 'delete') {  // 监听删除操作
-                var checkStatus = table.checkStatus('currentTableId')
-                    , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
             }
         });
 
@@ -113,20 +111,23 @@
             if (obj.event === 'edit') {
 
                 var index = layer.open({
-                    title: '编辑教室',
+                    title: '编辑年份',
                     type: 2,
                     shade: 0.2,
                     maxmin:true,
                     shadeClose: true,
                     area: ['620px', '300px'],
-                    content: 'page/admin/building/room-edit.html?id='+data.id,
+                    content: 'page/admin/year/year-edit.html?year='+data.year,
+					end:function() {
+						table.reload("currentTableId");
+					}
                 });
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
                 	$.ajax({
-                		url:'delete/deleteRoom.do',
-                		data:{id:obj.data.id},
+                		url:'delete/deleteYear.do',
+                		data:{year:obj.data.year},
                 		type:'post',
                 		dataType:'json',
                 		success:function(data) {

@@ -40,4 +40,11 @@
         WHERE id = #{id}
     </update>
 
+    <update id="updateYear">
+        UPDATE t_year
+        SET year=#{newYear},name=CONCAT_WS('-',#{newYear},#{newYear}+1)
+        WHERE year = #{year}
+    </update>
+
+
 </mapper>

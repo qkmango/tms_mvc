@@ -18,26 +18,10 @@
 <body>
 <div class="layui-form layuimini-form" id="addRoomForm" lay-filter="addRoomForm">
 	
-	<div class="layui-form-item">
-	    <label class="layui-form-label">所属楼宇</label>
-		<div class="layui-input-block">
-		  <select name="building" id="building" lay-filter="building">
-			  <option value="">全部</option>
-		  </select>
-		</div>
-	</div>
-	
     <div class="layui-form-item">
-        <label class="layui-form-label">房间号</label>
+        <label class="layui-form-label">年份</label>
         <div class="layui-input-block">
-            <input type="number" name="number" lay-verify="required" class="layui-input">
-        </div>
-    </div>
-    
-    <div class="layui-form-item">
-        <label class="layui-form-label">房间名</label>
-        <div class="layui-input-block">
-            <input type="text" name="name" class="layui-input" lay-verify="required">
+            <input type="number" name="year" lay-verify="required|int|year" class="layui-input">
         </div>
     </div>
     
@@ -57,34 +41,23 @@
             layer = layui.layer,
             $ = layui.$;
 			
-		//获取楼列表并渲染
-		$.ajax({
-			url:'query/getBuildingList.do',
-			type:'get',
-			dataType:'json',
-			success:function(res) {
-				if(res.success) {
-					let html = '<option value="">全部</option>';
-					$.each(res.data,function(index,item){
-						html += '<option value='+item.id+'>'+item.number+'号楼 '+item.name+'</option>';
-					})
-					$('#building').html(html);
-					form.render('select','addRoomForm');
-				} else {
-					cocoMessage.error(2000,res.message);
-				}
+		form.verify({
+			//年份验证
+			int:function(value,item) {
+				return value%1===0?false:"取值为整数"
 			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				cocoMessage.error(2000,jqXHR.status+'');
+			year:function(value,item){
+				return /^\d{4}$/.test(value)?false:'年份格式有误';
 			}
 		})
+			
 		
         //监听提交
         form.on('submit(saveBtn)', function (data) {
 			console.log(data.field);
 			
 			$.ajax({
-				url:'insert/insertRoom.do',
+				url:'insert/insertYear.do',
 				data:data.field,
 				type:'post',
 				dataType:'json',
@@ -105,11 +78,6 @@
 
         return false;
     });
-	
-	
-	
-	
-	
 </script>
 
 </body>

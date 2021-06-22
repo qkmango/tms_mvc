@@ -18,29 +18,20 @@
 <body>
 <div class="layui-form layuimini-form" id="editRoomForm" lay-filter="editRoomForm">
 	
-	<div class="layui-form-item">
-	    <label class="layui-form-label">所属楼宇</label>
-		<div class="layui-input-block">
-		  <select name="building" id="building" lay-filter="building">
-			  <option value="">全部</option>
-		  </select>
-		</div>
-	</div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">原年份</label>
+        <div class="layui-input-block">
+            <input type="number" name="year" lay-verify="required" class="layui-input" readonly>
+        </div>
+    </div>
 	
-    <div class="layui-form-item">
-        <label class="layui-form-label">房间号</label>
-        <div class="layui-input-block">
-            <input type="number" name="number" lay-verify="required" class="layui-input">
-        </div>
-    </div>
-    
-    <div class="layui-form-item">
-        <label class="layui-form-label">房间名</label>
-        <div class="layui-input-block">
-            <input type="text" name="name" class="layui-input" lay-verify="required">
-        </div>
-    </div>
-    
+	<div class="layui-form-item">
+	    <label class="layui-form-label">修改为</label>
+	    <div class="layui-input-block">
+	        <input type="number" name="newYear" lay-verify="required|int|year" class="layui-input">
+	    </div>
+	</div>
+
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
@@ -58,73 +49,32 @@
         var form = layui.form;
         var layer = layui.layer;
         var $ = layui.$;
+		
+		form.verify({
+			//年份验证
+			int:function(value,item) {
+				return value%1===0?false:"取值为整数"
+			},
+			year:function(value,item){
+				return /^\d{4}$/.test(value)?false:'年份格式有误';
+			}
+		})
 			
-		const roomId = getUrlParam('id');
-		if(roomId == null) {
-			cocoMessage.error('获取教室ID失败');
+		const year = getUrlParam('year');
+		if(year == null) {
+			cocoMessage.error('获取年份失败');
 			return;
 		}
+		
+		//会写值
+		$("input[name='year']").val(year);
 			
-		//获取楼列表并渲染
-		$.ajax({
-			url:'query/getBuildingList.do',
-			async:false,
-			type:'get',
-			dataType:'json',
-			success:function(res) {
-				if(res.success) {
-					let html = '<option value="">全部</option>';
-					$.each(res.data,function(index,item){
-						html += '<option value='+item.id+'>'+item.number+'号楼 '+item.name+'</option>';
-					})
-					$('#building').html(html);
-					form.render('select','editRoomForm');
-				} else {
-					cocoMessage.error(2000,res.message);
-				}
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				cocoMessage.error(2000,jqXHR.status+'');
-			}
-		})
-		
-		//获取楼列表并渲染
-		$.ajax({
-			url:'query/getRoomPagination.do',
-			data:{
-				pagination:false,
-				id:roomId
-			},
-			type:'get',
-			dataType:'json',
-			success:function(res) {
-				if(res.success) {
-					var room = res.data[0];
-					form.val("editRoomForm", {
-					  "number": room.number,
-					  "name": room.name,
-					  "building":room.building
-					});
-				} else {
-					cocoMessage.error(res.message);
-				}
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				cocoMessage.error(jqXHR.status+'');
-			}
-		})
-		
-		
-		
-		
-		
         //监听提交
         form.on('submit(saveBtn)', function (data) {
 			console.log(data.field);
-			data.field.id = roomId,
 			
 			$.ajax({
-				url:'update/updateRoom.do',
+				url:'update/updateYear.do',
 				data:data.field,
 				type:'post',
 				dataType:'json',

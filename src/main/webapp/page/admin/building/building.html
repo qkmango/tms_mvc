@@ -48,9 +48,9 @@
                 {field: 'number', width: 80, title: '楼号', sort: true},
                 {field: 'buildingType', width: 80, title: '楼类型',templet: function (data){
 					switch(data.buildingType) {
-						case 'pedagogical': return '教学楼';
-						case 'experimental': return '实验楼';
-						case 'other': return '其他';
+						case 'j': return '教学楼';
+						case 's': return '实验楼';
+						case 'q': return '其他';
 					}
 				}},
 				{field: 'name',title: '楼名称'},
@@ -100,6 +100,9 @@
                     shadeClose: true,
                     area: ['620px', '300px'],
                     content: 'page/admin/building/building-edit.html?id='+obj.data.id,
+					end:function() {
+						table.reload("currentTableId");
+					}
                 });
                 return false;
 				

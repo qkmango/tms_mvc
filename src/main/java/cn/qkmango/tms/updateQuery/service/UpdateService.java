@@ -16,4 +16,6 @@ public interface UpdateService {
     void updateBuilding(Building building) throws UpdateException;
 
     void updateRoom(Room room) throws UpdateException;
+
+    void updateYear(Integer year,Integer newYear) throws UpdateException;
 }
