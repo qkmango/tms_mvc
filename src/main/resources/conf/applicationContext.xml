@@ -8,7 +8,7 @@
 
 
     <!--加载属性配置文件（使用 ${key} 方式使用）-->
-    <context:property-placeholder location="classpath:conf/jdbc.properties" />
+    <context:property-placeholder location="classpath:conf/jdbc.properties"/>
 
     <!--声明数据源，连接数据库-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
@@ -27,20 +27,21 @@
     <!--声明Mybatis的扫描器，自动创建 Dao 对象-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
-        <property name="basePackage" value= "cn.qkmango.tms.*.dao"/>
+        <property name="basePackage" value="cn.qkmango.tms.*.dao"/>
     </bean>
 
+
+
     <!--组件扫描器，创建service（@service类）的 bean-->
-    <context:component-scan base-package= "cn.qkmango.tms.*.service.impl"/>
+    <context:component-scan base-package="cn.qkmango.tms.*.service.impl"/>
 
 
     <!--声明事务管理器-->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!--事务配置：注解式配置、aspectj式配置-->
-
 </beans>

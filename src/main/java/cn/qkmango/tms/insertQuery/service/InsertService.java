@@ -5,9 +5,10 @@ import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.exception.InsertException;
 import cn.qkmango.tms.web.model.CourseInfoModel;
+import org.springframework.validation.annotation.Validated;
 
 public interface InsertService {
-    void insertCourse(Course course, CourseInfoModel courseInfoModel) throws InsertException;
+    void insertCourse(@Validated Course course, CourseInfoModel courseInfoModel) throws InsertException;
 
     void insertBuilding(Building building) throws InsertException;
 

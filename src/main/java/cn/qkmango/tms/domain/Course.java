@@ -1,17 +1,29 @@
 package cn.qkmango.tms.domain;
 
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  * 课程实体类
  */
 public class Course {
 
     private Integer id;
+    @NotEmpty(message = "课程名不能为空")
     private String name;
+    @NotNull(message = "学分不能为空")
+    @Range(min = 1,max = 4,message = "学分取值在1-4")
     private Integer credit;
+    @NotNull(message = "所属班级不能为空")
     private Integer clazz;
+    @NotNull(message = "授课老师不能为空")
     private Integer teacher;
+    @NotNull(message = "所属学年不能为空")
     private Integer courseYear;
     //false 0：表示第一学期；true 1：表示第二学期
+    @NotNull(message = "所属学期不能为空")
     private Boolean term;
 
     public Course() {

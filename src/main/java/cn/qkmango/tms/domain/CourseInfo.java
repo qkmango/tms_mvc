@@ -4,18 +4,21 @@ import cn.qkmango.tms.web.bind.course.CourseType;
 import cn.qkmango.tms.web.bind.course.WeekDay;
 import cn.qkmango.tms.web.bind.course.WeekType;
 
+import javax.validation.constraints.NotNull;
+
+
 public class CourseInfo {
 
     private Integer id;
     private Integer course;
-    private CourseType courseType;
-    private WeekType weekType;
-    private Integer startWeek;
-    private Integer endWeek;
-    private WeekDay weekDay;
-    private Integer begin;
-    private Integer length;
-    private Integer address;
+    @NotNull private CourseType courseType;
+    @NotNull private WeekType weekType;
+    @NotNull private Integer startWeek;
+    @NotNull private Integer endWeek;
+    @NotNull private WeekDay weekDay;
+    @NotNull private Integer begin;
+    @NotNull private Integer length;
+    @NotNull private Integer address;
 
     public CourseInfo() {
     }

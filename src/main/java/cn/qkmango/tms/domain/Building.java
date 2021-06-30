@@ -2,6 +2,9 @@ package cn.qkmango.tms.domain;
 
 import cn.qkmango.tms.web.bind.building.BuildingType;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 /**
  * 教学楼
  */
@@ -9,8 +12,11 @@ public class Building {
 
     private Integer id;
     //楼号，但是可以加入英文，如12A栋
+    @Pattern(regexp = "^\\d{1,3}[A-Z]?$")
     private String number;
+    @NotNull
     private String name;
+    @NotNull
     private BuildingType buildingType;
 
     public Building() {

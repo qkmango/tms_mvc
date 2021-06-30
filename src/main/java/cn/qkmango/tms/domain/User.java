@@ -2,8 +2,12 @@ package cn.qkmango.tms.domain;
 
 import cn.qkmango.tms.web.bind.PermissionType;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class User {
     protected Integer id;
+    @NotEmpty
     protected String password;
     protected String name;
     protected PermissionType permissionType;

@@ -3,19 +3,20 @@ package cn.qkmango.tms.basicQuery.controller;
 
 import cn.qkmango.tms.basicQuery.service.QueryService;
 import cn.qkmango.tms.domain.*;
-import cn.qkmango.tms.domain.pagination.RoomPagination;
-import cn.qkmango.tms.domain.pagination.StudentScorePagination;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,11 +52,22 @@ public class ListQueryController {
 
     @ResponseBody
     @RequestMapping("/test2.do")
-    public Map test2(@RequestParam Map<String, Object> map) {
-
-        System.out.println(map);
+    public Map test2(@Validated User user, BindingResult resultUser) {
 
 
+        HashMap<String, Object> map = new HashMap<>();
+        ArrayList<String> list = new ArrayList<>();
+        map.put("message",list);
+
+        if (resultUser.hasErrors()) {
+            map.put("success",false);
+
+            List<ObjectError> errors = resultUser.getAllErrors();
+            for (ObjectError error : errors) {
+                System.out.println(error.getDefaultMessage());
+                list.add(error.getDefaultMessage());
+            }
+        }
         return map;
     }
 

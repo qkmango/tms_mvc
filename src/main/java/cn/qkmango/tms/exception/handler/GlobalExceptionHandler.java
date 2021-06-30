@@ -1,7 +1,9 @@
 package cn.qkmango.tms.exception.handler;
 
 import cn.qkmango.tms.exception.*;
+import cn.qkmango.tms.exception.VerifyError;
 import cn.qkmango.tms.web.map.ResponseMap;
+import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,13 +18,14 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static Logger logger = Logger.getLogger(GlobalExceptionHandler.class);
 
     // SQLException
     @ResponseBody
     @ExceptionHandler(SQLException.class)
     public Map SQLExceptionHandler(SQLException e) {
-        e.printStackTrace();
         ResponseMap map = new ResponseMap();
+        logger.error(e.getMessage(),e);
         map.setSuccess(false);
         map.setMessage(e.getMessage());
         return map;
@@ -32,7 +35,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(LoginException.class)
     public Map loginExceptionHandler(LoginException e) {
-        e.printStackTrace();
+        logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage(e.getMessage());
@@ -43,7 +46,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(SystemException.class)
     public Map systemExceptionHandler(SystemException e) {
-        e.printStackTrace();
+        logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage(e.getMessage());
@@ -54,7 +57,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(PermissionException.class)
     public Map permissionExceptionHandler(PermissionException e) {
-        e.printStackTrace();
+        logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage(e.getMessage());
@@ -65,7 +68,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(UpdateException.class)
     public Map UpdateExceptionHandler(UpdateException e) {
-        e.printStackTrace();
+        logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage("更新数据失败");
@@ -76,7 +79,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(InsertException.class)
     public Map InsertExceptionHandler(InsertException e) {
-        e.printStackTrace();
+        logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage("插入数据失败");
@@ -87,10 +90,21 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(DeleteException.class)
     public Map DeleteExceptionHandler(DeleteException e) {
-        e.printStackTrace();
+        logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage("删除数据失败");
+        return map;
+    }
+
+    //处理 请求参数 的异常
+    @ResponseBody
+    @ExceptionHandler(VerifyError.class)
+    public Map VerifyErrorHandler(VerifyError e) {
+        logger.error("请求参数不合法");
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(false);
+        map.setMessage(e.getMessage());
         return map;
     }
 

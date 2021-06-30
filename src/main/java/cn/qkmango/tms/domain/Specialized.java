@@ -7,13 +7,13 @@ package cn.qkmango.tms.domain;
 public class Specialized {
 
     private Integer id;
-    private String faculty;
+    private Integer faculty;
     private String name;
 
     public Specialized() {
     }
 
-    public Specialized(Integer id, String faculty, String name) {
+    public Specialized(Integer id, Integer faculty, String name) {
         this.id = id;
         this.faculty = faculty;
         this.name = name;
@@ -27,11 +27,11 @@ public class Specialized {
         this.id = id;
     }
 
-    public String getFaculty() {
+    public Integer getFaculty() {
         return faculty;
     }
 
-    public void setFaculty(String faculty) {
+    public void setFaculty(Integer faculty) {
         this.faculty = faculty;
     }
 

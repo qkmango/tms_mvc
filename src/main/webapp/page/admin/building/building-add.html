@@ -60,10 +60,10 @@
 		form.verify({
 			//楼栋号验证
 			buildingNumber:function(value,item){
-				if((/^\d+[A-Z]*$/.test(value))&&(value.length<=4)) {
+				if(/^\d{1,3}[A-Z]?$/.test(value)) {
 					return false;
 				}
-				return '楼号长度在4以内';
+				return '楼号长度在4以内,只能有一个大写字母';
 			}
 		})
 

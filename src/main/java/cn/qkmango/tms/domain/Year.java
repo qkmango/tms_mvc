@@ -1,9 +1,13 @@
 package cn.qkmango.tms.domain;
 
+import javax.validation.constraints.NotNull;
+
 public class Year {
     //PK，年度，如 2020
+    @NotNull
     private Integer year;
     //年度具体值 如 2020-2021
+    @NotNull
     private String name;
 
     public Year() {
