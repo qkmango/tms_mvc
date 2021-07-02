@@ -10,10 +10,10 @@
     </insert>
 
     <insert id="insertCourseInfo" parameterType="list">
-        insert into t_course_info(course, courseType, weekType, startWeek, endWeek, weekDay, begin, length, address)
+        insert into t_course_info(course, courseType, weekType, beginWeek, lengthWeek, weekDay, begin, length, address)
         values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.course},#{item.courseType},#{item.weekType},#{item.startWeek},#{item.endWeek},#{item.weekDay},#{item.begin},#{item.length},#{item.address})
+            (#{item.course},#{item.courseType},#{item.weekType},#{item.beginWeek},#{item.lengthWeek},#{item.weekDay},#{item.begin},#{item.length},#{item.address})
         </foreach>
     </insert>
 

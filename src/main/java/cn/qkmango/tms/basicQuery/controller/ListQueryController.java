@@ -6,12 +6,11 @@ import cn.qkmango.tms.domain.*;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/query")
 public class ListQueryController {
 
@@ -30,7 +29,6 @@ public class ListQueryController {
     private QueryService queryService;
 
 
-    @ResponseBody
     @RequestMapping("/test.do")
     public Map test(HttpServletRequest request) {
 
@@ -50,7 +48,6 @@ public class ListQueryController {
         return map;
     }
 
-    @ResponseBody
     @RequestMapping("/test2.do")
     public Map test2(@Validated User user, BindingResult resultUser) {
 
@@ -76,7 +73,6 @@ public class ListQueryController {
      * 查询院系列表
      * @return
      */
-    @ResponseBody
     @RequestMapping("/getFacultyList.do")
     public Map<String, Object> getFacultyList() {
 
@@ -93,7 +89,6 @@ public class ListQueryController {
      * 条件查询专业列表
      * @return
      */
-    @ResponseBody
     @RequestMapping("/getSpecializedList.do")
     public Map<String, Object> getSpecializedList(Specialized specialized) {
 
@@ -117,7 +112,6 @@ public class ListQueryController {
      *      clazzYear   班级年级（如2020级）
      * @return
      */
-    @ResponseBody
     @Permission(PermissionType.teacher)
     @RequestMapping("/getClazzList.do")
     public Map<String, Object> getClazzList(Clazz clazz) {
@@ -137,7 +131,6 @@ public class ListQueryController {
      * @param teacher 前端传入的 老师id
      * @return
      */
-    @ResponseBody
     @Permission(PermissionType.teacher)
     @RequestMapping("/getCourseListByTeacherAndClazz.do")
     public Map<String, Object> getCourseListByTeacherAndClazz(Integer clazz, Integer teacher) {
@@ -155,7 +148,6 @@ public class ListQueryController {
         return map;
     }
 
-    @ResponseBody
     @RequestMapping("/getTeacherList.do")
     public Map<String, Object> getTeacherList(Teacher teacher) {
 
@@ -174,7 +166,6 @@ public class ListQueryController {
      * @param building
      * @return
      */
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("/getBuildingList.do")
     public Map<String, Object> getBuildingList(Building building) {
@@ -195,7 +186,6 @@ public class ListQueryController {
      * @param year
      * @return
      */
-    @ResponseBody
     @RequestMapping("/getYearList.do")
     public Map<String, Object> getYearList(Year year) {
 

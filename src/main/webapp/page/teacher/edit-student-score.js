@@ -31,7 +31,7 @@ layui.use(['form', 'table'], function () {
 			icon: 'layui-icon-tips'
 		}],
 		cols: [[
-			{type: "checkbox", width: 50},
+			// {type: "checkbox", width: 50},
 			{field: 'id', width: 80, title: 'ID', sort: true},
 			{field: 'name', width: 120, title: '姓名'},
 			{field: 'course', width: 140, title: '课程'},
@@ -39,7 +39,13 @@ layui.use(['form', 'table'], function () {
 			{field: 'clazz', title: '班级'},
 			{field: 'specialized', title: '专业'},
 			{field: 'faculty',title: '学院'},
-			{field: 'elective',title: '选课表ID',hide:true},
+			{field: 'courseYear',title: '学年',width:120,templet: function (data){
+				return data.courseYear + ' - ' + (data.courseYear+1);
+			}},
+			{field: 'term',title: '学期',width:80,templet:function(data){
+				return data.term?2:1;
+			}},
+			{field: 'elective',title: '选课表记录ID',hide:true},
 			{field: 'score', width: 80, title: '分数',edit:true,style:'background-color:#5FB878'}
 			// ,{title: '操作', minWidth: 100, toolbar: '#currentTableBar', align: "center"}
 		]],
@@ -49,7 +55,7 @@ layui.use(['form', 'table'], function () {
 		skin: 'line',
 		where:{
 			teacher:window.parent.GLOBAL.user.id,
-			courseYear:$("input[type='courseYear']").val()
+			courseYear:$("input[name='courseYear']").val()
 		}
 	});
 
@@ -61,10 +67,17 @@ layui.use(['form', 'table'], function () {
 		,field = obj.field; //得到字段
 		console.log("得到修改后的值:"+value)
 		console.log(data);
+		
+		if(value>100 || value<0) {
+			cocoMessage.error('分数取值在0-100');
+			table.reload("dataGrid");
+			return;
+		}
+		
 		$.ajax({
 			url:'update/updateStudentScore.do',
 			data:{
-				elective:data.elective,
+				id:data.elective,
 				score:data.score
 			},
 			type:'post',
@@ -77,6 +90,7 @@ layui.use(['form', 'table'], function () {
 				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
+				table.reload("dataGrid");
 				cocoMessage.error(2000,jqXHR.status+'');
 			}
 		})
@@ -95,6 +109,30 @@ layui.use(['form', 'table'], function () {
 	
 		return false;
 	});
+	
+	// 监听重置表单操作
+	form.on('submit(data-reset-btn)', function (data) {
+		//reset表单
+		$("#queryParams")[0].reset();
+		
+		//给基础数据赋值
+		form.val("queryParams", {
+		  "teacher": window.parent.GLOBAL.user.id,
+		  "courseYear": new Date().getFullYear()
+		});
+		
+		//将下来列表内容重置
+		$('#specialized').html('<option value="">全部</option>');
+		$('#clazz').html('<option value="">全部</option>');
+		$('#course').html('<option value="">全部</option>');
+		
+		//渲染表单
+		form.render(null, 'queryParams');
+	
+		return false;
+	});
+	
+	
 	
 	
 	//下拉框 院系 值改变时事件监听

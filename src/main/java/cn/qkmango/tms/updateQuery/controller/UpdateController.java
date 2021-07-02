@@ -2,25 +2,28 @@ package cn.qkmango.tms.updateQuery.controller;
 
 
 import cn.qkmango.tms.domain.Building;
+import cn.qkmango.tms.domain.Elective;
 import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.domain.User;
+import cn.qkmango.tms.exception.ParamVerifyError;
 import cn.qkmango.tms.exception.PermissionException;
 import cn.qkmango.tms.exception.UpdateException;
 import cn.qkmango.tms.updateQuery.service.UpdateService;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping(value="/update",method = RequestMethod.POST)
 
 /**
@@ -31,7 +34,6 @@ public class UpdateController {
     @Resource
     private UpdateService updateService;
 
-    @ResponseBody
     @Permission
     @RequestMapping("/updatePassword.do")
     public Map<String, Object> updatePassword(HttpServletRequest request,
@@ -61,16 +63,15 @@ public class UpdateController {
         return map;
     }
 
-    @ResponseBody
     @Permission(PermissionType.teacher)
     @RequestMapping("updateStudentScore.do")
-    public Map<String, Object> updateStudentScore(Integer elective, Integer score) throws UpdateException {
+    public Map<String, Object> updateStudentScore(@Validated Elective elective, BindingResult result) throws UpdateException {
 
-        HashMap<String, Object> requestMap = new HashMap<>();
-        requestMap.put("elective",elective);
-        requestMap.put("score",score);
+        if (result.hasErrors()) {
+            throw new ParamVerifyError(result);
+        }
 
-        updateService.updateStudentScore(requestMap);
+        updateService.updateStudentScore(elective);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
@@ -79,7 +80,6 @@ public class UpdateController {
         return map;
     }
 
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("updateBuilding.do")
     public Map<String, Object> updateBuilding(Building building) throws UpdateException {
@@ -99,7 +99,6 @@ public class UpdateController {
      * @return
      * @throws UpdateException
      */
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("updateRoom.do")
     public Map<String, Object> updateRoom(Room room) throws UpdateException {
@@ -120,7 +119,6 @@ public class UpdateController {
      * @return
      * @throws UpdateException
      */
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("updateYear.do")
     public Map<String, Object> updateYear(Integer year,Integer newYear) throws UpdateException {

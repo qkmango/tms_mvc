@@ -1,6 +1,7 @@
 package cn.qkmango.tms.updateQuery.dao;
 
 import cn.qkmango.tms.domain.Building;
+import cn.qkmango.tms.domain.Elective;
 import cn.qkmango.tms.domain.Room;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +15,7 @@ public interface UpdateDao {
 
     int updateAdminPassword(HashMap<String, Object> map);
 
-    int updateStudentScore(HashMap<String, Object> map);
+    int updateStudentScore(Elective elective);
 
     int updateBuilding(Building building);
 

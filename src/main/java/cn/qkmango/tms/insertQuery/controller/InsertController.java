@@ -5,22 +5,21 @@ import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.exception.InsertException;
-import cn.qkmango.tms.exception.VerifyError;
+import cn.qkmango.tms.exception.ParamVerifyError;
 import cn.qkmango.tms.insertQuery.service.InsertService;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
 import cn.qkmango.tms.web.model.CourseInfoModel;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/insert")
 public class InsertController {
 
@@ -39,14 +38,13 @@ public class InsertController {
      * @return
      * @throws InsertException
      */
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("/insertCourse.do")
     public Map<String, Object> insertCourse(@Validated Course course, BindingResult courseResult,
                                             @Validated CourseInfoModel courseInfoModel, BindingResult CourseInfoModelResult) throws InsertException {
 
         if (courseResult.hasErrors()||CourseInfoModelResult.hasErrors()) {
-            throw new VerifyError(courseResult,CourseInfoModelResult);
+            throw new ParamVerifyError(courseResult,CourseInfoModelResult);
         }
         service.insertCourse(course,courseInfoModel);
 
@@ -66,13 +64,12 @@ public class InsertController {
      * @return
      * @throws InsertException
      */
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("insertBuilding.do")
     public Map<String, Object> insertBuilding(@Validated Building building,BindingResult result) throws InsertException {
 
         if (result.hasErrors()) {
-            throw new VerifyError(result);
+            throw new ParamVerifyError(result);
         }
 
         service.insertBuilding(building);
@@ -84,7 +81,6 @@ public class InsertController {
         return map;
     }
 
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("insertRoom.do")
     public Map<String, Object> insertRoom(Room room) throws InsertException {
@@ -98,7 +94,6 @@ public class InsertController {
         return map;
     }
 
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("insertYear.do")
     public Map<String, Object> insertYear(Integer year) throws InsertException {

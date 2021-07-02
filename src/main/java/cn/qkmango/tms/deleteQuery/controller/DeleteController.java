@@ -6,14 +6,13 @@ import cn.qkmango.tms.exception.DeleteException;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/delete")
 public class DeleteController {
 
@@ -21,7 +20,6 @@ public class DeleteController {
     private DeleteService service;
 
 
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("/deleteBuilding.do")
     public Map<String, Object> deleteBuilding(Integer id) throws DeleteException {
@@ -35,7 +33,6 @@ public class DeleteController {
         return map;
     }
 
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("/deleteRoom.do")
     public Map<String, Object> deleteRoom(Integer id) throws DeleteException {
@@ -49,7 +46,6 @@ public class DeleteController {
         return map;
     }
 
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("/deleteYear.do")
     public Map<String, Object> deleteYear(Integer year) throws DeleteException {

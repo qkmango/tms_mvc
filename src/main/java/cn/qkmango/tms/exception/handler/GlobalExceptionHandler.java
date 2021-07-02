@@ -1,7 +1,7 @@
 package cn.qkmango.tms.exception.handler;
 
 import cn.qkmango.tms.exception.*;
-import cn.qkmango.tms.exception.VerifyError;
+import cn.qkmango.tms.exception.ParamVerifyError;
 import cn.qkmango.tms.web.map.ResponseMap;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
 
     // SQLException
     @ResponseBody
-    @ExceptionHandler(SQLException.class)
+    @ExceptionHandler
     public Map SQLExceptionHandler(SQLException e) {
         ResponseMap map = new ResponseMap();
         logger.error(e.getMessage(),e);
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
 
     //处理 登陆 的异常
     @ResponseBody
-    @ExceptionHandler(LoginException.class)
+    @ExceptionHandler
     public Map loginExceptionHandler(LoginException e) {
         logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
 
     //处理 系统 的异常
     @ResponseBody
-    @ExceptionHandler(SystemException.class)
+    @ExceptionHandler
     public Map systemExceptionHandler(SystemException e) {
         logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
 
     //处理 用户权限 的异常
     @ResponseBody
-    @ExceptionHandler(PermissionException.class)
+    @ExceptionHandler
     public Map permissionExceptionHandler(PermissionException e) {
         logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
@@ -66,7 +66,7 @@ public class GlobalExceptionHandler {
 
     //处理 更新数据 的异常
     @ResponseBody
-    @ExceptionHandler(UpdateException.class)
+    @ExceptionHandler
     public Map UpdateExceptionHandler(UpdateException e) {
         logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
@@ -77,7 +77,7 @@ public class GlobalExceptionHandler {
 
     //处理 插入数据 的异常
     @ResponseBody
-    @ExceptionHandler(InsertException.class)
+    @ExceptionHandler
     public Map InsertExceptionHandler(InsertException e) {
         logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
@@ -88,7 +88,7 @@ public class GlobalExceptionHandler {
 
     //处理 删除数据 的异常
     @ResponseBody
-    @ExceptionHandler(DeleteException.class)
+    @ExceptionHandler
     public Map DeleteExceptionHandler(DeleteException e) {
         logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
@@ -99,9 +99,9 @@ public class GlobalExceptionHandler {
 
     //处理 请求参数 的异常
     @ResponseBody
-    @ExceptionHandler(VerifyError.class)
-    public Map VerifyErrorHandler(VerifyError e) {
-        logger.error("请求参数不合法");
+    @ExceptionHandler
+    public Map ParamVerifyErrorHandler(ParamVerifyError e) {
+        logger.error(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage(e.getMessage());

@@ -16,8 +16,9 @@
         specialized.name as specialized,
         faculty.name as faculty,
         elective.score as score,
+        clazz.clazzYear as clazzYear,
         course.courseYear as courseYear,
-        clazz.clazzYear as clazzYear
+        course.term
 
         FROM t_teacher teacher,
         t_course course,

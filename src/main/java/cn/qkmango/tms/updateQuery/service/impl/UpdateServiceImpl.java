@@ -1,6 +1,7 @@
 package cn.qkmango.tms.updateQuery.service.impl;
 
 import cn.qkmango.tms.domain.Building;
+import cn.qkmango.tms.domain.Elective;
 import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.exception.PermissionException;
 import cn.qkmango.tms.exception.UpdateException;
@@ -51,8 +52,8 @@ public class UpdateServiceImpl implements UpdateService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateStudentScore(HashMap<String, Object> map) throws UpdateException {
-        int affectedRows = updateDao.updateStudentScore(map);
+    public void updateStudentScore(Elective elective) throws UpdateException {
+        int affectedRows = updateDao.updateStudentScore(elective);
         if (affectedRows != 1) {
             throw new UpdateException(1,affectedRows);
         }

@@ -5,16 +5,15 @@ import cn.qkmango.tms.domain.pagination.RoomPagination;
 import cn.qkmango.tms.domain.pagination.StudentScorePagination;
 import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.bind.PermissionType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
 
-@Controller
+@RestController
 @RequestMapping("/query/pagination")
 public class PaginationQueryController {
 
@@ -26,7 +25,6 @@ public class PaginationQueryController {
      * 获取学生成绩列表分页
      * @return
      */
-    @ResponseBody
     @Permission({PermissionType.admin,PermissionType.teacher})
     @RequestMapping("/getStudentScorePagination.do")
     public Map<String, Object> getStudentScorePagination(StudentScorePagination pagination) {
@@ -44,7 +42,6 @@ public class PaginationQueryController {
      * @param pagination
      * @return
      */
-    @ResponseBody
     @Permission(PermissionType.admin)
     @RequestMapping("/getRoomPagination.do")
     public Map<String, Object> getRoomPagination(RoomPagination pagination) {

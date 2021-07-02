@@ -12,7 +12,7 @@ public class Building {
 
     private Integer id;
     //楼号，但是可以加入英文，如12A栋
-    @Pattern(regexp = "^\\d{1,3}[A-Z]?$")
+    @Pattern(regexp = "^\\d{1,3}[A-Z]?$",message = "楼号长度在1-4，由数字和最多1个大写字母构成")
     private String number;
     @NotNull
     private String name;

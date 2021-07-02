@@ -25,7 +25,7 @@
     <update id="updateStudentScore">
         UPDATE t_elective
         SET score = #{score}
-        WHERE id = #{elective}
+        WHERE id = #{id}
     </update>
 
     <update id="updateBuilding">
