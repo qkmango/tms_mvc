@@ -1,9 +1,15 @@
 package cn.qkmango.tms.domain;
 
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotNull;
+
 public class Room {
     private Integer id;
+    @Range(min = 101,max = 999,message = "{valid.Room.number.Range}")
     private Integer number;
     private String name;
+    @NotNull(message = "{valid.Room.building.NotNull}")
     private Integer building;
 
     public Room() {

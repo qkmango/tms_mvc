@@ -19,7 +19,7 @@ layui.use(['form', 'table'], function () {
 			return value%1===0?false:"取值为整数"
 		},
 		year:function(value,item){
-			return /^\d{4}$/.test(value)?false:'年份格式有误';
+			return value>=2000&&value<=2100?false:'年份取值范围为2000-2100';
 		},
 		//持续节验证
 		length:function(value,item){

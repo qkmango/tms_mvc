@@ -195,3 +195,25 @@
 | ------ | -------- | -------- | -------- |
 | course | input    |          |          |
 
+
+
+
+
+
+# 国际化
+## 控制器参数字段合法性验证消息
+国际化文件
+- classpath:valid_en_US.properties
+- classpath:valid_zh_CN.properties
+
+键名规范 
+- `valid.类名.字段名.校验注解名`
+- 如 `valid.User.password.NotEmpty=密码不能为空`
+
+## 通过接口对数据库的操作
+国际化文件
+- classpath:db_en_US.properties
+- classpath:db_zh_CN.properties
+键名规范
+- `db.接口.状态`
+- 如 `db.insertCourse.success=插入课程成功`

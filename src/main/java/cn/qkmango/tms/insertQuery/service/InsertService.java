@@ -3,16 +3,18 @@ package cn.qkmango.tms.insertQuery.service;
 import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.Room;
+import cn.qkmango.tms.domain.Year;
 import cn.qkmango.tms.exception.InsertException;
 import cn.qkmango.tms.web.model.CourseInfoModel;
-import org.springframework.validation.annotation.Validated;
+
+import java.util.Locale;
 
 public interface InsertService {
-    void insertCourse(@Validated Course course, CourseInfoModel courseInfoModel) throws InsertException;
+    void insertCourse(Course course, CourseInfoModel courseInfoModel, Locale locale) throws InsertException;
 
-    void insertBuilding(Building building) throws InsertException;
+    void insertBuilding(Building building,Locale locale) throws InsertException;
 
-    void insertRoom(Room room) throws InsertException;
+    void insertRoom(Room room,Locale locale) throws InsertException;
 
-    void insertYear(Integer Year) throws InsertException;
+    void insertYear(Year Year,Locale locale) throws InsertException;
 }

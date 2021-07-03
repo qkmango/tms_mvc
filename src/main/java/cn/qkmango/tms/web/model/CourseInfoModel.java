@@ -1,7 +1,6 @@
 package cn.qkmango.tms.web.model;
 
 import cn.qkmango.tms.domain.CourseInfo;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class CourseInfoModel {
     @Valid
-    @NotNull(message = "课程信息不能为空")
+    @NotNull(message = "{valid.CourseInfoModel.courseInfos.NotNull}")
     private List<CourseInfo> courseInfos;
 
     public List<CourseInfo> getCourseInfos() {

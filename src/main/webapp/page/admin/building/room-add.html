@@ -59,7 +59,7 @@
 			
 		form.verify({
 			roomNumber:function(value,item){
-				return value.toString().length<=4&&value>0?false:'楼号长度在4以内';
+				return value>=101&&value<=999?false:'房间号取值在101-999';
 			},
 			int:function(value,item) {
 				return value%1===0?false:"取值为整数"

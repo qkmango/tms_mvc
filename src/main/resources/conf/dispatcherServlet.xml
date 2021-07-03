@@ -9,11 +9,37 @@
 
     <!--组件扫描器，创建controller（@controller类）的 bean-->
     <context:component-scan base-package="cn.qkmango.tms.*.controller" />
+    <!-- service -->
+    <context:component-scan base-package="cn.qkmango.tms.*.service.impl"/>
     <!-- 指定异常处理类所在的包（cn.qkmango.handler）-->
     <context:component-scan base-package="cn.qkmango.tms.exception.handler" />
 
     <mvc:annotation-driven />
 
+    <!--消息 国际化-->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+<!--        <property name="basename" value="classpath:message" />-->
+        <property name="basenames">
+            <list>
+                <value>classpath:valid</value>
+                <value>classpath:db</value>
+            </list>
+        </property>
+        <property name="useCodeAsDefaultMessage" value="false"/>
+    </bean>
+
+    <!-- 消息源 -->
+    <bean id="myValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource"/>
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+    </bean>
+    <mvc:annotation-driven validator="myValidator"></mvc:annotation-driven>
+
+
+    <!--  根据浏览器请求头 Accept-Language: zh-CN,zh;q=0.9 来辨别语言  -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver">
+        <property name="defaultLocale" value="zh_CN"/>
+    </bean>
 
 
 

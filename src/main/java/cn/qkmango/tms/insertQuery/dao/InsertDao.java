@@ -1,9 +1,6 @@
 package cn.qkmango.tms.insertQuery.dao;
 
-import cn.qkmango.tms.domain.Building;
-import cn.qkmango.tms.domain.Course;
-import cn.qkmango.tms.domain.CourseInfo;
-import cn.qkmango.tms.domain.Room;
+import cn.qkmango.tms.domain.*;
 
 import java.util.List;
 
@@ -19,5 +16,5 @@ public interface InsertDao {
 
     int insertRoom(Room room);
 
-    int insertYear(Integer id);
+    int insertYear(Year id);
 }

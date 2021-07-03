@@ -12,25 +12,25 @@ public class CourseInfo {
 
     private Integer id;
     private Integer course;
-    @NotNull
+    @NotNull(message = "{valid.CourseInfo.courseType.NotNull}")
     private CourseType courseType;
-    @NotNull
+    @NotNull(message = "{valid.CourseInfo.weekType.NotNull}")
     private WeekType weekType;
-    @NotNull
-    @Range(min = 1, message = "起始周必须>1")
+    @NotNull(message = "{valid.CourseInfo.beginWeek.NotNull}")
+    @Range(min = 1, message = "{valid.CourseInfo.beginWeek.Range}")
     private Integer beginWeek;
-    @NotNull
-    @Range(min = 1, message = "持续周必须>1")
+    @NotNull(message = "{valid.CourseInfo.lengthWeek.NotNull}")
+    @Range(min = 1, message = "{valid.CourseInfo.lengthWeek.Range}")
     private Integer lengthWeek;
-    @NotNull
+    @NotNull(message = "{valid.CourseInfo.weekDay.NotNull}")
     private WeekDay weekDay;
-    @NotNull
-    @Range(min = 1, max = 11, message = "起始节取值在1-4")
+    @NotNull(message = "{valid.CourseInfo.begin.NotNull}")
+    @Range(min = 1, max = 11, message = "{valid.CourseInfo.begin.Range}")
     private Integer begin;
-    @NotNull
-    @Range(min = 1, max = 4, message = "持续节取值在1-4")
+    @NotNull(message = "{valid.CourseInfo.length.NotNull}")
+    @Range(min = 1, max = 4, message = "{valid.CourseInfo.length.Range}")
     private Integer length;
-    @NotNull
+    @NotNull(message = "{valid.CourseInfo.address.NotNull}")
     private Integer address;
 
     public CourseInfo() {

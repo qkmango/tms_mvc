@@ -33,7 +33,7 @@
 
 
     <!--组件扫描器，创建service（@service类）的 bean-->
-    <context:component-scan base-package="cn.qkmango.tms.*.service.impl"/>
+<!--    <context:component-scan base-package="cn.qkmango.tms.*.service.impl"/>-->
 
 
     <!--声明事务管理器-->

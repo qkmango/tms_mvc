@@ -11,19 +11,20 @@ import javax.validation.constraints.NotNull;
 public class Course {
 
     private Integer id;
-    @NotEmpty(message = "课程名不能为空")
+    @NotEmpty(message = "{valid.Course.name.NotEmpty}")
     private String name;
-    @NotNull(message = "学分不能为空")
-    @Range(min = 1,max = 4,message = "学分取值在1-4")
+    @NotNull(message = "{valid.Course.credit.NotNull}")
+    @Range(min = 1,max = 4,message = "{valid.Course.credit.Range}")
     private Integer credit;
-    @NotNull(message = "所属班级不能为空")
+    @NotNull(message = "{valid.Course.clazz.NotNull}")
     private Integer clazz;
-    @NotNull(message = "授课老师不能为空")
+    @NotNull(message = "{valid.Course.teacher.NotNull}")
     private Integer teacher;
-    @NotNull(message = "所属学年不能为空")
+    @NotNull(message = "{valid.Course.courseYear.NotNull}")
+    @Range(min = 2000,max = 2100,message = "{valid.Year.year.Range}")
     private Integer courseYear;
     //false 0：表示第一学期；true 1：表示第二学期
-    @NotNull(message = "所属学期不能为空")
+    @NotNull(message = "{valid.Course.term.NotNull}")
     private Boolean term;
 
     public Course() {
