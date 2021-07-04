@@ -6,7 +6,6 @@ import cn.qkmango.tms.exception.LoginException;
 import cn.qkmango.tms.exception.PermissionException;
 import cn.qkmango.tms.web.map.ResponseMap;
 import cn.qkmango.tms.system.service.SystemService;
-import cn.qkmango.tms.web.bind.PermissionType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

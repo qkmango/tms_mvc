@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/query")
@@ -47,27 +44,6 @@ public class ListQueryController {
 
         return map;
     }
-
-    @RequestMapping("/test2.do")
-    public Map test2(@Validated User user, BindingResult resultUser) {
-
-
-        HashMap<String, Object> map = new HashMap<>();
-        ArrayList<String> list = new ArrayList<>();
-        map.put("message",list);
-
-        if (resultUser.hasErrors()) {
-            map.put("success",false);
-
-            List<ObjectError> errors = resultUser.getAllErrors();
-            for (ObjectError error : errors) {
-                System.out.println(error.getDefaultMessage());
-                list.add(error.getDefaultMessage());
-            }
-        }
-        return map;
-    }
-
 
     /**
      * 查询院系列表
