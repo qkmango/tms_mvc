@@ -21,8 +21,10 @@
 <!--        <property name="basename" value="classpath:message" />-->
         <property name="basenames">
             <list>
-                <value>classpath:valid</value>
-                <value>classpath:db</value>
+                <!--如果资源文件放在classpath根目录下，则 classpath:valid，如果放在classpath下的文件夹下，则 classpath:i18n/valid，否则会找不到-->
+                <value>classpath:i18n/valid</value>
+                <value>classpath:i18n/db</value>
+                <value>classpath:i18n/system</value>
             </list>
         </property>
         <property name="useCodeAsDefaultMessage" value="false"/>
@@ -44,7 +46,9 @@
     <mvc:interceptors>
         <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
     </mvc:interceptors>
-    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"></bean>
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="zh_CN"/>
+    </bean>
 
 
 

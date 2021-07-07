@@ -5,7 +5,6 @@ import cn.qkmango.tms.system.dao.SystemDao;
 import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.exception.LoginException;
 import cn.qkmango.tms.system.service.SystemService;
-import cn.qkmango.tms.web.bind.PermissionType;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 19/06/2021 23:52:11
+ Date: 07/07/2021 19:20:36
 */
 
 SET NAMES utf8mb4;
@@ -40,23 +40,25 @@ INSERT INTO `t_admin` VALUES (1, 'admin', b'1', '1');
 DROP TABLE IF EXISTS `t_building`;
 CREATE TABLE `t_building`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '楼id',
-  `number` int(10) UNSIGNED NOT NULL COMMENT '楼号',
+  `number` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '楼号,可以有英文结尾',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '楼名称',
-  `buildingType` enum('pedagogical','experimental','other') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '楼类型， pedagogical教学楼，experimental实验楼,other其他',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+  `buildingType` enum('j','s','q') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '楼类型， pedagogical教学楼，experimental实验楼,other其他',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `UQ_number_buildingType`(`number`, `buildingType`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_building
 -- ----------------------------
-INSERT INTO `t_building` VALUES (1, 13, '大数据与人工智能学院', 'pedagogical');
-INSERT INTO `t_building` VALUES (2, 11, '艺术学院', 'pedagogical');
-INSERT INTO `t_building` VALUES (3, 12, '财会与金融学院', 'pedagogical');
-INSERT INTO `t_building` VALUES (5, 14, '电子工程学院', 'pedagogical');
-INSERT INTO `t_building` VALUES (6, 1, '土木与环境工程学院-A', 'pedagogical');
-INSERT INTO `t_building` VALUES (7, 2, '土木与环境工程学院-B', 'pedagogical');
-INSERT INTO `t_building` VALUES (8, 7, '国际教育学院', 'pedagogical');
-INSERT INTO `t_building` VALUES (9, 7, '文化与新闻传播学院', 'pedagogical');
+INSERT INTO `t_building` VALUES (1, '13', '大数据与人工智能学院', 'j');
+INSERT INTO `t_building` VALUES (2, '11', '艺术学院', 'j');
+INSERT INTO `t_building` VALUES (3, '12', '财会与金融学院', 'j');
+INSERT INTO `t_building` VALUES (5, '14', '电子工程学院', 'j');
+INSERT INTO `t_building` VALUES (6, '1', '土木与环境工程学院-A', 'j');
+INSERT INTO `t_building` VALUES (7, '2', '土木与环境工程学院-B1', 'j');
+INSERT INTO `t_building` VALUES (8, '7A', '国际教育学院', 'j');
+INSERT INTO `t_building` VALUES (9, '7B', '文化与新闻传播学院', 'j');
+INSERT INTO `t_building` VALUES (12, '31', '2', 'j');
 
 -- ----------------------------
 -- Table structure for t_clazz
@@ -65,25 +67,20 @@ DROP TABLE IF EXISTS `t_clazz`;
 CREATE TABLE `t_clazz`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `specialized` int(11) UNSIGNED NOT NULL COMMENT '所属院系',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `clazzYear` int(4) UNSIGNED NOT NULL COMMENT '所属级，如2020级',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FK_clazz_REF_specialized`(`specialized`) USING BTREE,
-  CONSTRAINT `FK_clazz_REF_specialized` FOREIGN KEY (`specialized`) REFERENCES `t_specialized` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+  INDEX `FK_clazz_REF_year`(`clazzYear`) USING BTREE,
+  CONSTRAINT `FK_clazz_REF_specialized` FOREIGN KEY (`specialized`) REFERENCES `t_specialized` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `FK_clazz_REF_year` FOREIGN KEY (`clazzYear`) REFERENCES `t_year` (`year`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_clazz
 -- ----------------------------
-INSERT INTO `t_clazz` VALUES (1, 1, '19计应1班');
-INSERT INTO `t_clazz` VALUES (2, 2, '19通信2班');
-INSERT INTO `t_clazz` VALUES (3, 2, '测试');
-INSERT INTO `t_clazz` VALUES (4, 2, '测试');
-INSERT INTO `t_clazz` VALUES (5, 2, '测试');
-INSERT INTO `t_clazz` VALUES (6, 1, 'test');
-INSERT INTO `t_clazz` VALUES (7, 1, 'test');
-INSERT INTO `t_clazz` VALUES (8, 1, 'test');
-INSERT INTO `t_clazz` VALUES (9, 1, 'test');
-INSERT INTO `t_clazz` VALUES (10, 1, 'test');
+INSERT INTO `t_clazz` VALUES (1, 1, '20计应1班', 2020);
+INSERT INTO `t_clazz` VALUES (2, 2, '20通信2班', 2020);
 
 -- ----------------------------
 -- Table structure for t_course
@@ -95,25 +92,34 @@ CREATE TABLE `t_course`  (
   `credit` enum('1','2','3','4') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学分',
   `clazz` int(11) UNSIGNED NOT NULL COMMENT '所属班级',
   `teacher` int(11) UNSIGNED NOT NULL COMMENT '授课老师',
+  `courseYear` int(4) UNSIGNED NOT NULL COMMENT '年度',
+  `term` bit(1) NOT NULL COMMENT '学期',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `FK_course_REF_clazz`(`clazz`) USING BTREE,
   INDEX `FK_course_REF_teacher`(`teacher`) USING BTREE,
-  CONSTRAINT `FK_course_REF_clazz` FOREIGN KEY (`clazz`) REFERENCES `t_clazz` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_course_REF_teacher` FOREIGN KEY (`teacher`) REFERENCES `t_teacher` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+  INDEX `FK_course_REF_year`(`courseYear`) USING BTREE,
+  INDEX `FK_course_REF_clazz`(`clazz`) USING BTREE,
+  CONSTRAINT `FK_course_REF_clazz` FOREIGN KEY (`clazz`) REFERENCES `t_clazz` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `FK_course_REF_teacher` FOREIGN KEY (`teacher`) REFERENCES `t_teacher` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `FK_course_REF_year` FOREIGN KEY (`courseYear`) REFERENCES `t_year` (`year`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_course
 -- ----------------------------
-INSERT INTO `t_course` VALUES (1, 'Java', '4', 2, 1);
-INSERT INTO `t_course` VALUES (2, '数据库', '2', 2, 2);
-INSERT INTO `t_course` VALUES (3, '微机原理', '2', 2, 2);
-INSERT INTO `t_course` VALUES (4, '现代通信技术', '2', 2, 2);
-INSERT INTO `t_course` VALUES (13, 'HTML', '1', 1, 3);
-INSERT INTO `t_course` VALUES (25, 'AAA', '2', 1, 1);
-INSERT INTO `t_course` VALUES (33, '1', '1', 1, 3);
-INSERT INTO `t_course` VALUES (34, '1', '1', 1, 3);
-INSERT INTO `t_course` VALUES (35, 'XX', '2', 1, 1);
+INSERT INTO `t_course` VALUES (1, '1Java', '4', 1, 1, 2021, b'0');
+INSERT INTO `t_course` VALUES (2, '2数据库', '2', 1, 1, 2021, b'0');
+INSERT INTO `t_course` VALUES (3, '2微机原理', '2', 1, 2, 2021, b'1');
+INSERT INTO `t_course` VALUES (4, '2现代通信技术', '2', 1, 2, 2021, b'1');
+INSERT INTO `t_course` VALUES (13, '1HTML', '1', 1, 2, 2021, b'1');
+INSERT INTO `t_course` VALUES (14, 'QQ', '2', 1, 7, 2020, b'1');
+INSERT INTO `t_course` VALUES (15, '222', '1', 1, 5, 2020, b'0');
+INSERT INTO `t_course` VALUES (16, '11', '2', 2, 5, 2020, b'0');
+INSERT INTO `t_course` VALUES (17, '11', '2', 2, 5, 2020, b'0');
+INSERT INTO `t_course` VALUES (18, '111', '3', 1, 3, 2020, b'0');
+INSERT INTO `t_course` VALUES (19, '111', '3', 1, 3, 2020, b'0');
+INSERT INTO `t_course` VALUES (20, '111', '3', 1, 3, 2020, b'0');
+INSERT INTO `t_course` VALUES (21, '111', '3', 1, 3, 2020, b'0');
+INSERT INTO `t_course` VALUES (22, '111', '3', 1, 3, 2020, b'0');
 
 -- ----------------------------
 -- Table structure for t_course_info
@@ -124,8 +130,8 @@ CREATE TABLE `t_course_info`  (
   `course` int(11) UNSIGNED NOT NULL COMMENT 'course ID',
   `courseType` enum('theory','practice') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '课程类型 \'theory\',\'practice\' 理论课 实验课',
   `weekType` enum('sgl','dbl','all') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '周次 \'sgl\',\'dbl\',\'all\' 单周 双周 不限',
-  `startWeek` tinyint(4) UNSIGNED NOT NULL COMMENT '起始周',
-  `endWeek` tinyint(4) UNSIGNED NOT NULL COMMENT '结束周',
+  `beginWeek` tinyint(4) UNSIGNED NOT NULL COMMENT '起始周',
+  `lengthWeek` tinyint(4) UNSIGNED NOT NULL COMMENT '持续周',
   `weekDay` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '星期',
   `begin` tinyint(4) UNSIGNED NOT NULL COMMENT '起始节',
   `length` tinyint(4) UNSIGNED NOT NULL COMMENT '持续节',
@@ -135,17 +141,17 @@ CREATE TABLE `t_course_info`  (
   INDEX `FK_course_info_REF_room`(`address`) USING BTREE,
   CONSTRAINT `FK_course_info_REF_course` FOREIGN KEY (`course`) REFERENCES `t_course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_course_info_REF_room` FOREIGN KEY (`address`) REFERENCES `t_room` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_course_info
 -- ----------------------------
-INSERT INTO `t_course_info` VALUES (1, 25, 'theory', 'sgl', 1, 1, 'Saturday', 1, 1, 1);
-INSERT INTO `t_course_info` VALUES (2, 25, 'theory', 'all', 1, 1, 'Saturday', 1, 1, 1);
-INSERT INTO `t_course_info` VALUES (7, 34, 'theory', 'sgl', 1, 1, 'Saturday', 1, 1, 1);
-INSERT INTO `t_course_info` VALUES (8, 34, 'theory', 'all', 1, 1, 'Saturday', 1, 1, 1);
-INSERT INTO `t_course_info` VALUES (9, 33, 'theory', 'sgl', 1, 1, 'Saturday', 1, 1, 1);
-INSERT INTO `t_course_info` VALUES (10, 35, 'theory', 'sgl', 1, 1, 'Friday', 1, 1, 1);
+INSERT INTO `t_course_info` VALUES (1, 14, 'theory', 'sgl', 1, 1, 'Thursday', 1, 1, 1);
+INSERT INTO `t_course_info` VALUES (2, 15, 'theory', 'sgl', 2, 2, 'Sunday', 2, 2, 2);
+INSERT INTO `t_course_info` VALUES (3, 16, 'theory', 'all', 1, 1, 'Saturday', 1, 1, 3);
+INSERT INTO `t_course_info` VALUES (4, 17, 'theory', 'all', 1, 1, 'Saturday', 1, 1, 3);
+INSERT INTO `t_course_info` VALUES (5, 18, 'theory', 'all', 1, 1, 'Sunday', 1, 1, 3);
+INSERT INTO `t_course_info` VALUES (6, 19, 'theory', 'all', 1, 1, 'Sunday', 1, 1, 3);
 
 -- ----------------------------
 -- Table structure for t_elective
@@ -157,84 +163,105 @@ CREATE TABLE `t_elective`  (
   `course` int(11) UNSIGNED NOT NULL,
   `score` int(11) NULL DEFAULT NULL COMMENT '成绩',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `FK_elective_REF_course`(`course`) USING BTREE,
   UNIQUE INDEX `UI_student_course`(`student`, `course`) USING BTREE,
+  INDEX `FK_elective_REF_course`(`course`) USING BTREE,
   CONSTRAINT `FK_elective_REF_course` FOREIGN KEY (`course`) REFERENCES `t_course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_elective_REF_student` FOREIGN KEY (`student`) REFERENCES `t_student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 70 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 267 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_elective
 -- ----------------------------
-INSERT INTO `t_elective` VALUES (1, 1, 1, NULL);
-INSERT INTO `t_elective` VALUES (2, 2, 1, NULL);
-INSERT INTO `t_elective` VALUES (3, 3, 2, 2);
-INSERT INTO `t_elective` VALUES (4, 4, 2, NULL);
-INSERT INTO `t_elective` VALUES (5, 5, 2, NULL);
-INSERT INTO `t_elective` VALUES (6, 4, 3, NULL);
-INSERT INTO `t_elective` VALUES (7, 5, 3, NULL);
-INSERT INTO `t_elective` VALUES (8, 3, 4, 88);
-INSERT INTO `t_elective` VALUES (9, 4, 4, NULL);
-INSERT INTO `t_elective` VALUES (10, 5, 4, NULL);
-INSERT INTO `t_elective` VALUES (11, 6, 4, NULL);
-INSERT INTO `t_elective` VALUES (12, 7, 4, NULL);
-INSERT INTO `t_elective` VALUES (13, 8, 4, NULL);
-INSERT INTO `t_elective` VALUES (14, 9, 4, NULL);
-INSERT INTO `t_elective` VALUES (15, 10, 4, NULL);
-INSERT INTO `t_elective` VALUES (16, 11, 4, NULL);
-INSERT INTO `t_elective` VALUES (17, 12, 4, NULL);
-INSERT INTO `t_elective` VALUES (18, 13, 4, NULL);
-INSERT INTO `t_elective` VALUES (19, 14, 4, NULL);
-INSERT INTO `t_elective` VALUES (20, 15, 4, NULL);
-INSERT INTO `t_elective` VALUES (21, 16, 4, NULL);
-INSERT INTO `t_elective` VALUES (22, 17, 4, NULL);
-INSERT INTO `t_elective` VALUES (23, 18, 4, NULL);
-INSERT INTO `t_elective` VALUES (24, 19, 4, NULL);
-INSERT INTO `t_elective` VALUES (25, 20, 4, NULL);
-INSERT INTO `t_elective` VALUES (26, 21, 4, NULL);
-INSERT INTO `t_elective` VALUES (27, 22, 4, NULL);
-INSERT INTO `t_elective` VALUES (28, 23, 4, NULL);
-INSERT INTO `t_elective` VALUES (29, 24, 4, NULL);
-INSERT INTO `t_elective` VALUES (30, 25, 4, NULL);
-INSERT INTO `t_elective` VALUES (31, 26, 4, NULL);
-INSERT INTO `t_elective` VALUES (32, 27, 4, NULL);
-INSERT INTO `t_elective` VALUES (33, 28, 4, NULL);
-INSERT INTO `t_elective` VALUES (34, 29, 4, NULL);
-INSERT INTO `t_elective` VALUES (35, 30, 4, NULL);
-INSERT INTO `t_elective` VALUES (36, 31, 4, NULL);
-INSERT INTO `t_elective` VALUES (37, 32, 4, NULL);
-INSERT INTO `t_elective` VALUES (38, 33, 4, NULL);
-INSERT INTO `t_elective` VALUES (39, 34, 4, NULL);
-INSERT INTO `t_elective` VALUES (40, 35, 4, NULL);
-INSERT INTO `t_elective` VALUES (41, 36, 4, NULL);
-INSERT INTO `t_elective` VALUES (42, 37, 4, NULL);
-INSERT INTO `t_elective` VALUES (43, 38, 4, NULL);
-INSERT INTO `t_elective` VALUES (44, 39, 4, NULL);
-INSERT INTO `t_elective` VALUES (45, 40, 4, NULL);
-INSERT INTO `t_elective` VALUES (46, 41, 4, NULL);
-INSERT INTO `t_elective` VALUES (47, 42, 4, NULL);
-INSERT INTO `t_elective` VALUES (48, 43, 4, NULL);
-INSERT INTO `t_elective` VALUES (49, 44, 4, NULL);
-INSERT INTO `t_elective` VALUES (50, 45, 4, NULL);
-INSERT INTO `t_elective` VALUES (51, 46, 4, NULL);
-INSERT INTO `t_elective` VALUES (52, 47, 4, NULL);
-INSERT INTO `t_elective` VALUES (53, 48, 4, NULL);
-INSERT INTO `t_elective` VALUES (54, 49, 4, NULL);
-INSERT INTO `t_elective` VALUES (55, 50, 4, NULL);
-INSERT INTO `t_elective` VALUES (56, 51, 4, NULL);
-INSERT INTO `t_elective` VALUES (57, 52, 4, NULL);
-INSERT INTO `t_elective` VALUES (58, 53, 4, NULL);
-INSERT INTO `t_elective` VALUES (59, 54, 4, NULL);
-INSERT INTO `t_elective` VALUES (60, 55, 4, NULL);
-INSERT INTO `t_elective` VALUES (61, 56, 4, NULL);
-INSERT INTO `t_elective` VALUES (62, 57, 4, NULL);
-INSERT INTO `t_elective` VALUES (63, 58, 4, NULL);
-INSERT INTO `t_elective` VALUES (64, 59, 4, NULL);
-INSERT INTO `t_elective` VALUES (65, 60, 4, NULL);
-INSERT INTO `t_elective` VALUES (66, 61, 4, NULL);
-INSERT INTO `t_elective` VALUES (67, 62, 4, NULL);
-INSERT INTO `t_elective` VALUES (68, 63, 4, NULL);
-INSERT INTO `t_elective` VALUES (69, 64, 4, NULL);
+INSERT INTO `t_elective` VALUES (177, 1, 1, 88);
+INSERT INTO `t_elective` VALUES (178, 2, 1, NULL);
+INSERT INTO `t_elective` VALUES (179, 3, 1, NULL);
+INSERT INTO `t_elective` VALUES (180, 4, 1, NULL);
+INSERT INTO `t_elective` VALUES (181, 5, 1, NULL);
+INSERT INTO `t_elective` VALUES (182, 6, 1, NULL);
+INSERT INTO `t_elective` VALUES (183, 7, 1, NULL);
+INSERT INTO `t_elective` VALUES (184, 8, 1, NULL);
+INSERT INTO `t_elective` VALUES (185, 9, 1, NULL);
+INSERT INTO `t_elective` VALUES (186, 10, 1, NULL);
+INSERT INTO `t_elective` VALUES (187, 11, 1, NULL);
+INSERT INTO `t_elective` VALUES (188, 12, 1, NULL);
+INSERT INTO `t_elective` VALUES (189, 13, 1, 98);
+INSERT INTO `t_elective` VALUES (190, 14, 1, NULL);
+INSERT INTO `t_elective` VALUES (191, 15, 1, NULL);
+INSERT INTO `t_elective` VALUES (192, 16, 1, NULL);
+INSERT INTO `t_elective` VALUES (193, 17, 1, NULL);
+INSERT INTO `t_elective` VALUES (194, 18, 1, NULL);
+INSERT INTO `t_elective` VALUES (195, 19, 1, NULL);
+INSERT INTO `t_elective` VALUES (196, 20, 1, NULL);
+INSERT INTO `t_elective` VALUES (197, 21, 1, 0);
+INSERT INTO `t_elective` VALUES (198, 22, 1, NULL);
+INSERT INTO `t_elective` VALUES (199, 23, 1, NULL);
+INSERT INTO `t_elective` VALUES (200, 24, 1, NULL);
+INSERT INTO `t_elective` VALUES (201, 25, 1, NULL);
+INSERT INTO `t_elective` VALUES (202, 26, 1, NULL);
+INSERT INTO `t_elective` VALUES (203, 27, 1, NULL);
+INSERT INTO `t_elective` VALUES (204, 28, 1, NULL);
+INSERT INTO `t_elective` VALUES (205, 29, 1, NULL);
+INSERT INTO `t_elective` VALUES (206, 30, 1, NULL);
+INSERT INTO `t_elective` VALUES (207, 1, 13, 99);
+INSERT INTO `t_elective` VALUES (208, 2, 13, 77);
+INSERT INTO `t_elective` VALUES (209, 3, 13, NULL);
+INSERT INTO `t_elective` VALUES (210, 4, 13, NULL);
+INSERT INTO `t_elective` VALUES (211, 5, 13, NULL);
+INSERT INTO `t_elective` VALUES (212, 6, 13, NULL);
+INSERT INTO `t_elective` VALUES (213, 7, 13, NULL);
+INSERT INTO `t_elective` VALUES (214, 8, 13, NULL);
+INSERT INTO `t_elective` VALUES (215, 9, 13, NULL);
+INSERT INTO `t_elective` VALUES (216, 10, 13, NULL);
+INSERT INTO `t_elective` VALUES (217, 11, 13, 87);
+INSERT INTO `t_elective` VALUES (218, 12, 13, NULL);
+INSERT INTO `t_elective` VALUES (219, 13, 13, NULL);
+INSERT INTO `t_elective` VALUES (220, 14, 13, NULL);
+INSERT INTO `t_elective` VALUES (221, 15, 13, NULL);
+INSERT INTO `t_elective` VALUES (222, 16, 13, NULL);
+INSERT INTO `t_elective` VALUES (223, 17, 13, NULL);
+INSERT INTO `t_elective` VALUES (224, 18, 13, NULL);
+INSERT INTO `t_elective` VALUES (225, 19, 13, NULL);
+INSERT INTO `t_elective` VALUES (226, 20, 13, NULL);
+INSERT INTO `t_elective` VALUES (227, 21, 13, NULL);
+INSERT INTO `t_elective` VALUES (228, 22, 13, NULL);
+INSERT INTO `t_elective` VALUES (229, 23, 13, NULL);
+INSERT INTO `t_elective` VALUES (230, 24, 13, NULL);
+INSERT INTO `t_elective` VALUES (231, 25, 13, NULL);
+INSERT INTO `t_elective` VALUES (232, 26, 13, NULL);
+INSERT INTO `t_elective` VALUES (233, 27, 13, NULL);
+INSERT INTO `t_elective` VALUES (234, 28, 13, NULL);
+INSERT INTO `t_elective` VALUES (235, 29, 13, NULL);
+INSERT INTO `t_elective` VALUES (236, 30, 13, NULL);
+INSERT INTO `t_elective` VALUES (237, 31, 3, NULL);
+INSERT INTO `t_elective` VALUES (238, 32, 4, NULL);
+INSERT INTO `t_elective` VALUES (239, 33, 2, NULL);
+INSERT INTO `t_elective` VALUES (240, 34, 3, NULL);
+INSERT INTO `t_elective` VALUES (241, 35, 4, NULL);
+INSERT INTO `t_elective` VALUES (242, 36, 2, NULL);
+INSERT INTO `t_elective` VALUES (243, 37, 3, NULL);
+INSERT INTO `t_elective` VALUES (244, 38, 4, NULL);
+INSERT INTO `t_elective` VALUES (245, 39, 2, NULL);
+INSERT INTO `t_elective` VALUES (246, 40, 3, NULL);
+INSERT INTO `t_elective` VALUES (247, 41, 4, NULL);
+INSERT INTO `t_elective` VALUES (248, 42, 2, NULL);
+INSERT INTO `t_elective` VALUES (249, 43, 3, NULL);
+INSERT INTO `t_elective` VALUES (250, 44, 4, NULL);
+INSERT INTO `t_elective` VALUES (251, 45, 2, NULL);
+INSERT INTO `t_elective` VALUES (252, 46, 3, NULL);
+INSERT INTO `t_elective` VALUES (253, 47, 4, NULL);
+INSERT INTO `t_elective` VALUES (254, 48, 2, NULL);
+INSERT INTO `t_elective` VALUES (255, 49, 3, NULL);
+INSERT INTO `t_elective` VALUES (256, 50, 4, NULL);
+INSERT INTO `t_elective` VALUES (257, 51, 2, NULL);
+INSERT INTO `t_elective` VALUES (258, 52, 3, NULL);
+INSERT INTO `t_elective` VALUES (259, 53, 4, NULL);
+INSERT INTO `t_elective` VALUES (260, 54, 2, NULL);
+INSERT INTO `t_elective` VALUES (261, 55, 3, NULL);
+INSERT INTO `t_elective` VALUES (262, 56, 4, NULL);
+INSERT INTO `t_elective` VALUES (263, 57, 2, NULL);
+INSERT INTO `t_elective` VALUES (264, 58, 3, NULL);
+INSERT INTO `t_elective` VALUES (265, 59, 4, NULL);
+INSERT INTO `t_elective` VALUES (266, 60, 2, NULL);
 
 -- ----------------------------
 -- Table structure for t_faculty
@@ -261,6 +288,8 @@ CREATE TABLE `t_room`  (
   `building` int(11) UNSIGNED NOT NULL COMMENT '所属楼id',
   `number` int(11) UNSIGNED NOT NULL COMMENT '房间号',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '房间名称，可以不指定',
+  `capacity` int(11) UNSIGNED NOT NULL COMMENT '容纳人数',
+  `roomType` enum('bz','jt','sy','sx','wj','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'bz标准教室\r\njt阶梯教室\r\nsy实验室\r\nsx实训教室\r\nwj微机教室\r\nq其他',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `UI_number_building`(`building`, `number`) USING BTREE,
   CONSTRAINT `FK_room_REF_building` FOREIGN KEY (`building`) REFERENCES `t_building` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -269,9 +298,9 @@ CREATE TABLE `t_room`  (
 -- ----------------------------
 -- Records of t_room
 -- ----------------------------
-INSERT INTO `t_room` VALUES (1, 1, 401, '计算机应用技术实验基地');
-INSERT INTO `t_room` VALUES (2, 1, 402, '计算机网络实训基地');
-INSERT INTO `t_room` VALUES (3, 2, 308, '动漫设计');
+INSERT INTO `t_room` VALUES (1, 1, 402, '计算机网络实训基地', 50, 'sx');
+INSERT INTO `t_room` VALUES (2, 2, 308, '动漫设计', 0, 'bz');
+INSERT INTO `t_room` VALUES (3, 1, 401, '计算机组装与维护', 0, 'bz');
 
 -- ----------------------------
 -- Table structure for t_specialized
@@ -302,80 +331,78 @@ CREATE TABLE `t_student`  (
   `sex` bit(1) NOT NULL COMMENT '性别，1男，0女',
   `birth` char(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '生日',
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
-  `clazz` int(11) UNSIGNED NOT NULL COMMENT '所属班级',
+  `clazz` int(11) UNSIGNED NULL DEFAULT NULL COMMENT '所属班级',
+  `specialized` int(11) UNSIGNED NOT NULL COMMENT '所属专业',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FK_student_REF_clazz`(`clazz`) USING BTREE,
-  CONSTRAINT `FK_student_REF_clazz` FOREIGN KEY (`clazz`) REFERENCES `t_clazz` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 66 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+  INDEX `FK_student_REF_specialized`(`specialized`) USING BTREE,
+  CONSTRAINT `FK_student_REF_clazz` FOREIGN KEY (`clazz`) REFERENCES `t_clazz` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `FK_student_REF_specialized` FOREIGN KEY (`specialized`) REFERENCES `t_specialized` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_student
 -- ----------------------------
-INSERT INTO `t_student` VALUES (1, '是世昌', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (2, '表梓晨', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (3, '东门夏沫', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (4, '候璟春', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (5, '湛耘郗', b'0', '2000-12-23', '1', 2);
-INSERT INTO `t_student` VALUES (6, '班奕玮', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (7, '夹谷东硕', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (8, '常千', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (9, '穆晓', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (10, '项蓝月', b'0', '2000-12-23', '1', 2);
-INSERT INTO `t_student` VALUES (11, '孔树人', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (12, '麴柯一', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (13, '宁熙', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (14, '城晟华', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (15, '烟睿', b'0', '2000-12-23', '1', 2);
-INSERT INTO `t_student` VALUES (16, '相羽铮', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (17, '廖雪', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (18, '山亚捷', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (19, '洛子轩', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (20, '覃景川', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (21, '翦羽', b'1', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (22, '祖一然', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (23, '丹树涵', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (24, '叶爱丹', b'0', '2000-12-23', '1', 2);
-INSERT INTO `t_student` VALUES (25, '别浩毅', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (26, '程小秋', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (27, '尉迟恒宇', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (28, '顾圣贤', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (29, '蓝树源', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (30, '居涵舒', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (31, '苗熙苒', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (32, '佛千', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (33, '房玉惠', b'0', '2000-12-23', '1', 2);
-INSERT INTO `t_student` VALUES (34, '刑明哲', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (35, '娄柯汝', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (36, '真林莹', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (37, '司空洪滨', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (38, '巢楠', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (39, '祢东慧', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (40, '费梓童', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (41, '东文博', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (42, '松誉馨', b'0', '2000-12-23', '1', 2);
-INSERT INTO `t_student` VALUES (43, '甄一诺', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (44, '慕馨阳', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (45, '曲筱萌', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (46, '阴宇硕', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (47, '丁睿', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (48, '诺阳阳', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (49, '势羽墨', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (50, '零珞', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (51, '养恩贝', b'0', '2000-12-23', '1', 2);
-INSERT INTO `t_student` VALUES (52, '茂阳', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (53, '傅慧青', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (54, '阙篷璐', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (55, '紫爱豪', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (56, '钊轩', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (57, '师钰岩', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (58, '业冰杰', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (59, '雪旭', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (60, '逮淑怡', b'0', '2000-12-23', '1', 2);
-INSERT INTO `t_student` VALUES (61, '空子晨', b'1', '2000-11-13', '1', 1);
-INSERT INTO `t_student` VALUES (62, '皇柯佳', b'0', '2000-10-10', '1', 1);
-INSERT INTO `t_student` VALUES (63, '苏晴', b'0', '2001-12-22', '1', 2);
-INSERT INTO `t_student` VALUES (64, '郜淇轩', b'1', '2000-11-15', '1', 2);
-INSERT INTO `t_student` VALUES (65, '唐芳宁', b'0', '2000-12-23', '1', 2);
+INSERT INTO `t_student` VALUES (1, '是世昌', b'1', '2000-11-13', '1', 1, 1);
+INSERT INTO `t_student` VALUES (2, '表梓晨', b'0', '2000-10-10', '1', 1, 1);
+INSERT INTO `t_student` VALUES (3, '东门夏沫', b'0', '2001-12-22', '1', 1, 1);
+INSERT INTO `t_student` VALUES (4, '候璟春', b'1', '2000-11-15', '1', 1, 1);
+INSERT INTO `t_student` VALUES (5, '湛耘郗', b'0', '2000-12-23', '1', 1, 1);
+INSERT INTO `t_student` VALUES (6, '班奕玮', b'1', '2000-11-13', '1', 1, 1);
+INSERT INTO `t_student` VALUES (7, '夹谷东硕', b'0', '2000-10-10', '1', 1, 1);
+INSERT INTO `t_student` VALUES (8, '常千', b'0', '2001-12-22', '1', 1, 1);
+INSERT INTO `t_student` VALUES (9, '穆晓', b'1', '2000-11-15', '1', 1, 1);
+INSERT INTO `t_student` VALUES (10, '项蓝月', b'0', '2000-12-23', '1', 1, 1);
+INSERT INTO `t_student` VALUES (11, '孔树人', b'1', '2000-11-13', '1', 1, 1);
+INSERT INTO `t_student` VALUES (12, '麴柯一', b'0', '2000-10-10', '1', 1, 1);
+INSERT INTO `t_student` VALUES (13, '宁熙', b'0', '2001-12-22', '1', 1, 1);
+INSERT INTO `t_student` VALUES (14, '城晟华', b'1', '2000-11-15', '1', 1, 1);
+INSERT INTO `t_student` VALUES (15, '烟睿', b'0', '2000-12-23', '1', 1, 1);
+INSERT INTO `t_student` VALUES (16, '相羽铮', b'1', '2000-11-13', '1', 1, 1);
+INSERT INTO `t_student` VALUES (17, '廖雪', b'0', '2000-10-10', '1', 1, 1);
+INSERT INTO `t_student` VALUES (18, '山亚捷', b'0', '2001-12-22', '1', 1, 1);
+INSERT INTO `t_student` VALUES (19, '洛子轩', b'1', '2000-11-15', '1', 1, 1);
+INSERT INTO `t_student` VALUES (20, '覃景川', b'1', '2000-11-13', '1', 1, 1);
+INSERT INTO `t_student` VALUES (21, '翦羽', b'1', '2000-10-10', '1', 1, 1);
+INSERT INTO `t_student` VALUES (22, '祖一然', b'0', '2001-12-22', '1', 1, 1);
+INSERT INTO `t_student` VALUES (23, '丹树涵', b'1', '2000-11-15', '1', 1, 1);
+INSERT INTO `t_student` VALUES (24, '叶爱丹', b'0', '2000-12-23', '1', 1, 1);
+INSERT INTO `t_student` VALUES (25, '别浩毅', b'1', '2000-11-13', '1', 1, 1);
+INSERT INTO `t_student` VALUES (26, '程小秋', b'0', '2000-10-10', '1', 1, 1);
+INSERT INTO `t_student` VALUES (27, '尉迟恒宇', b'0', '2001-12-22', '1', 1, 1);
+INSERT INTO `t_student` VALUES (28, '顾圣贤', b'1', '2000-11-15', '1', 1, 1);
+INSERT INTO `t_student` VALUES (29, '蓝树源', b'1', '2000-11-13', '1', 1, 1);
+INSERT INTO `t_student` VALUES (30, '居涵舒', b'0', '2000-10-10', '1', 1, 1);
+INSERT INTO `t_student` VALUES (31, '苗熙苒', b'0', '2001-12-22', '1', 2, 2);
+INSERT INTO `t_student` VALUES (32, '佛千', b'1', '2000-11-15', '1', 2, 2);
+INSERT INTO `t_student` VALUES (33, '房玉惠', b'0', '2000-12-23', '1', 2, 2);
+INSERT INTO `t_student` VALUES (34, '刑明哲', b'1', '2000-11-13', '1', 2, 2);
+INSERT INTO `t_student` VALUES (35, '娄柯汝', b'0', '2000-10-10', '1', 2, 2);
+INSERT INTO `t_student` VALUES (36, '真林莹', b'0', '2001-12-22', '1', 2, 2);
+INSERT INTO `t_student` VALUES (37, '司空洪滨', b'1', '2000-11-15', '1', 2, 2);
+INSERT INTO `t_student` VALUES (38, '巢楠', b'1', '2000-11-13', '1', 2, 2);
+INSERT INTO `t_student` VALUES (39, '祢东慧', b'0', '2000-10-10', '1', 2, 2);
+INSERT INTO `t_student` VALUES (40, '费梓童', b'0', '2001-12-22', '1', 2, 2);
+INSERT INTO `t_student` VALUES (41, '东文博', b'1', '2000-11-15', '1', 2, 2);
+INSERT INTO `t_student` VALUES (42, '松誉馨', b'0', '2000-12-23', '1', 2, 2);
+INSERT INTO `t_student` VALUES (43, '甄一诺', b'1', '2000-11-13', '1', 2, 2);
+INSERT INTO `t_student` VALUES (44, '慕馨阳', b'0', '2000-10-10', '1', 2, 2);
+INSERT INTO `t_student` VALUES (45, '曲筱萌', b'0', '2001-12-22', '1', 2, 2);
+INSERT INTO `t_student` VALUES (46, '阴宇硕', b'1', '2000-11-15', '1', 2, 2);
+INSERT INTO `t_student` VALUES (47, '丁睿', b'1', '2000-11-13', '1', 2, 2);
+INSERT INTO `t_student` VALUES (48, '诺阳阳', b'0', '2000-10-10', '1', 2, 2);
+INSERT INTO `t_student` VALUES (49, '势羽墨', b'0', '2001-12-22', '1', 2, 2);
+INSERT INTO `t_student` VALUES (50, '零珞', b'1', '2000-11-15', '1', 2, 2);
+INSERT INTO `t_student` VALUES (51, '养恩贝', b'0', '2000-12-23', '1', 2, 2);
+INSERT INTO `t_student` VALUES (52, '茂阳', b'1', '2000-11-13', '1', 2, 2);
+INSERT INTO `t_student` VALUES (53, '傅慧青', b'0', '2000-10-10', '1', 2, 2);
+INSERT INTO `t_student` VALUES (54, '阙篷璐', b'0', '2001-12-22', '1', 2, 2);
+INSERT INTO `t_student` VALUES (55, '紫爱豪', b'1', '2000-11-15', '1', 2, 2);
+INSERT INTO `t_student` VALUES (56, '钊轩', b'1', '2000-11-13', '1', 2, 2);
+INSERT INTO `t_student` VALUES (57, '师钰岩', b'0', '2000-10-10', '1', 2, 2);
+INSERT INTO `t_student` VALUES (58, '业冰杰', b'0', '2001-12-22', '1', 2, 2);
+INSERT INTO `t_student` VALUES (59, '雪旭', b'1', '2000-11-15', '1', 2, 2);
+INSERT INTO `t_student` VALUES (60, '逮淑怡', b'0', '2000-12-23', '1', 2, 2);
 
 -- ----------------------------
 -- Table structure for t_teacher
@@ -404,5 +431,33 @@ INSERT INTO `t_teacher` VALUES (5, 'ls5', b'0', '1', 1, '教授');
 INSERT INTO `t_teacher` VALUES (6, 'ls6', b'1', '1', 2, '老师');
 INSERT INTO `t_teacher` VALUES (7, 'ls7', b'0', '1', 1, '教授');
 INSERT INTO `t_teacher` VALUES (8, 'ls8', b'1', '1', 2, '老师');
+
+-- ----------------------------
+-- Table structure for t_year
+-- ----------------------------
+DROP TABLE IF EXISTS `t_year`;
+CREATE TABLE `t_year`  (
+  `year` int(4) UNSIGNED NOT NULL COMMENT '年度，如2019',
+  `name` char(9) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '如2019-2020',
+  PRIMARY KEY (`year`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_year
+-- ----------------------------
+INSERT INTO `t_year` VALUES (2012, '2012-2013');
+INSERT INTO `t_year` VALUES (2013, '2013-2014');
+INSERT INTO `t_year` VALUES (2014, '2014-2015');
+INSERT INTO `t_year` VALUES (2015, '2015-2016');
+INSERT INTO `t_year` VALUES (2016, '2016-2017');
+INSERT INTO `t_year` VALUES (2017, '2017-2018');
+INSERT INTO `t_year` VALUES (2018, '2018-2019');
+INSERT INTO `t_year` VALUES (2019, '2019-2020');
+INSERT INTO `t_year` VALUES (2020, '2020-2021');
+INSERT INTO `t_year` VALUES (2021, '2021-2022');
+INSERT INTO `t_year` VALUES (2022, '2022-2023');
+INSERT INTO `t_year` VALUES (2023, '2023-2024');
+INSERT INTO `t_year` VALUES (2024, '2024-2025');
+INSERT INTO `t_year` VALUES (2025, '2025-2026');
 
 SET FOREIGN_KEY_CHECKS = 1;

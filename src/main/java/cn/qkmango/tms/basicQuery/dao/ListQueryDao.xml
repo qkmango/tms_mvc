@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="cn.qkmango.tms.basicQuery.dao.QueryDao">
+<mapper namespace="cn.qkmango.tms.basicQuery.dao.ListQueryDao">
 
     <select id="getFacultyList" resultType="cn.qkmango.tms.domain.Faculty">
         SELECT id, name
@@ -94,13 +94,13 @@
                 and number = #{number}
             </if>
             <if test="buildingType!=null">
-                <if test="buildingType == @cn.qkmango.tms.web.bind.building.BuildingType@pedagogical">
+                <if test="buildingType == @cn.qkmango.tms.domain.bind.building.BuildingType@pedagogical">
                     and buildingType = 'pedagogical'
                 </if>
-                <if test="buildingType == @cn.qkmango.tms.web.bind.building.BuildingType@experimental">
+                <if test="buildingType == @cn.qkmango.tms.domain.bind.building.BuildingType@experimental">
                     and buildingType = 'experimental'
                 </if>
-                <if test="buildingType == @cn.qkmango.tms.web.bind.building.BuildingType@other">
+                <if test="buildingType == @cn.qkmango.tms.domain.bind.building.BuildingType@other">
                     and buildingType = 'other'
                 </if>
             </if>

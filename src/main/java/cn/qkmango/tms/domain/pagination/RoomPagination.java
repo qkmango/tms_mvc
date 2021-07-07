@@ -1,5 +1,7 @@
 package cn.qkmango.tms.domain.pagination;
 
+import cn.qkmango.tms.domain.bind.RoomType;
+
 /**
  * room分页对象
  */
@@ -9,16 +11,20 @@ public class RoomPagination extends Pagination{
     private Integer number;
     private String name;
     private Integer building;
+    private Integer capacity;
+    private RoomType roomType;
 
     public RoomPagination() {
     }
 
-    public RoomPagination(Integer page, Integer limit, Boolean pagination, Integer id, Integer number, String name, Integer building) {
+    public RoomPagination(Integer page, Integer limit, Boolean pagination, Integer id, Integer number, String name, Integer building,Integer capacity, RoomType roomType) {
         super(page, limit, pagination);
         this.id = id;
         this.number = number;
         this.name = name;
         this.building = building;
+        this.capacity = capacity;
+        this.roomType = roomType;
     }
 
     public String getName() {
@@ -53,16 +59,35 @@ public class RoomPagination extends Pagination{
         this.id = id;
     }
 
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
+
     @Override
     public String toString() {
         return "RoomPagination{" +
                 "page=" + page +
                 ", limit=" + limit +
                 ", skipCount=" + skipCount +
+                ", pagination=" + pagination +
                 ", id=" + id +
                 ", number=" + number +
                 ", name='" + name + '\'' +
                 ", building=" + building +
+                ", capacity=" + capacity +
+                ", roomType=" + roomType +
                 '}';
     }
 }

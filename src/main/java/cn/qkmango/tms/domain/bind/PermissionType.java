@@ -1,4 +1,4 @@
-package cn.qkmango.tms.web.bind;
+package cn.qkmango.tms.domain.bind;
 
 public enum PermissionType {
     student,

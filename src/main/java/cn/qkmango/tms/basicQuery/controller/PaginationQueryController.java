@@ -4,7 +4,7 @@ import cn.qkmango.tms.basicQuery.service.PaginationQueryService;
 import cn.qkmango.tms.domain.pagination.RoomPagination;
 import cn.qkmango.tms.domain.pagination.StudentScorePagination;
 import cn.qkmango.tms.web.anno.Permission;
-import cn.qkmango.tms.web.bind.PermissionType;
+import cn.qkmango.tms.domain.bind.PermissionType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +38,7 @@ public class PaginationQueryController {
     }
 
     /**
-     * 条件获取房间列表 分页
+     * 条件获取教室列表 分页
      * @param pagination
      * @return
      */

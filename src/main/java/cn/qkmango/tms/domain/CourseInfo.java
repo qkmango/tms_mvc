@@ -1,8 +1,8 @@
 package cn.qkmango.tms.domain;
 
-import cn.qkmango.tms.web.bind.course.CourseType;
-import cn.qkmango.tms.web.bind.course.WeekDay;
-import cn.qkmango.tms.web.bind.course.WeekType;
+import cn.qkmango.tms.domain.bind.course.CourseType;
+import cn.qkmango.tms.domain.bind.course.WeekDay;
+import cn.qkmango.tms.domain.bind.course.WeekType;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;

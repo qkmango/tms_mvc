@@ -36,7 +36,7 @@
 
     <update id="updateRoom">
         UPDATE t_room
-        SET number=#{number},name=#{name},building=#{building}
+        SET number=#{number},name=#{name},building=#{building},capacity=#{capacity},roomType=#{roomType}
         WHERE id = #{id}
     </update>
 

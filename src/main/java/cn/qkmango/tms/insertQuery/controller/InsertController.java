@@ -5,13 +5,14 @@ import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.domain.Year;
+import cn.qkmango.tms.domain.bind.PermissionType;
 import cn.qkmango.tms.exception.InsertException;
 import cn.qkmango.tms.exception.ParamVerifyError;
 import cn.qkmango.tms.insertQuery.service.InsertService;
 import cn.qkmango.tms.web.anno.Permission;
-import cn.qkmango.tms.web.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
 import cn.qkmango.tms.web.model.CourseInfoModel;
+import cn.qkmango.tms.web.validate.group.insert.insertRoom;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -28,11 +29,10 @@ import java.util.Map;
 public class InsertController {
 
     @Resource
-    private ReloadableResourceBundleMessageSource messageSource;
-
-    @Resource
     private InsertService service;
 
+    @Resource
+    private ReloadableResourceBundleMessageSource messageSource;
 
     /**
      * 插入课程
@@ -97,7 +97,7 @@ public class InsertController {
      */
     @Permission(PermissionType.admin)
     @RequestMapping("insertRoom.do")
-    public Map<String, Object> insertRoom(@Validated Room room,BindingResult result,Locale locale) throws InsertException {
+    public Map<String, Object> insertRoom(@Validated(insertRoom.class) Room room, BindingResult result, Locale locale) throws InsertException {
 
         if (result.hasErrors()) {
             throw new ParamVerifyError(result);

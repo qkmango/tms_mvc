@@ -1,4 +1,4 @@
-package cn.qkmango.tms.web.bind.course;
+package cn.qkmango.tms.domain.bind.course;
 
 public enum WeekDay {
     //周一  ~  周日

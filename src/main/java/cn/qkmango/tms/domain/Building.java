@@ -1,6 +1,6 @@
 package cn.qkmango.tms.domain;
 
-import cn.qkmango.tms.web.bind.building.BuildingType;
+import cn.qkmango.tms.domain.bind.building.BuildingType;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

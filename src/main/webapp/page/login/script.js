@@ -73,3 +73,20 @@ function login() {
 		}
 	})
 }
+
+/**
+ * 更改语言
+ */
+function changeLocale(locale) {
+	$.ajax({
+		url:'system/setLocale.do',
+		data:{
+			locale
+		},
+		success:function(data){
+			if(data.success) {
+				window.location.reload();
+			}
+		}
+	})
+}

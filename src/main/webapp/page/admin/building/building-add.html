@@ -16,36 +16,35 @@
     </style>
 </head>
 <body>
-<div class="layui-form layuimini-form">
-	
+<div class="layui-form layui-form-pane">
 	<div class="layui-form-item">
-	    <label class="layui-form-label">楼类型</label>
-	    <div class="layui-input-block">
-	        <input type="radio" name="buildingType" value="j" title="教学楼" checked>
-	        <input type="radio" name="buildingType" value="s" title="实验楼">
-	        <input type="radio" name="buildingType" value="q" title="其他">
-	    </div>
+		<label class="layui-form-label">楼类型</label>
+		<div class="layui-input-block">
+			<input type="radio" name="buildingType" value="j" title="教学楼" checked>
+			<input type="radio" name="buildingType" value="s" title="实验楼">
+			<input type="radio" name="buildingType" value="q" title="其他">
+		</div>
 	</div>
-	
-    <div class="layui-form-item">
-        <label class="layui-form-label">楼号</label>
-        <div class="layui-input-block">
-            <input type="text" name="number" lay-verify="required|buildingNumber" class="layui-input">
-        </div>
-    </div>
-    
-    <div class="layui-form-item">
-        <label class="layui-form-label">楼名称</label>
-        <div class="layui-input-block">
-            <input type="text" name="name" class="layui-input" lay-verify="required">
-        </div>
-    </div>
-    
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
-        </div>
-    </div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">楼号</label>
+		<div class="layui-input-block">
+			<input type="text" name="number" lay-verify="required|buildingNumber" class="layui-input">
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">楼名称</label>
+		<div class="layui-input-block">
+			<input type="text" name="name" class="layui-input" lay-verify="required">
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn layui-btn-normal layui-layout-right" lay-submit lay-filter="saveBtn">确认保存</button>
+		</div>
+	</div>
 </div>
 <script src="lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script>

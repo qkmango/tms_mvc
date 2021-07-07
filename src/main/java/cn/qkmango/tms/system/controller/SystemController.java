@@ -4,26 +4,30 @@ package cn.qkmango.tms.system.controller;
 import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.exception.LoginException;
 import cn.qkmango.tms.exception.PermissionException;
-import cn.qkmango.tms.web.map.ResponseMap;
 import cn.qkmango.tms.system.service.SystemService;
-import org.springframework.stereotype.Controller;
+import cn.qkmango.tms.web.map.ResponseMap;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
-@Controller
-@RequestMapping("/system")
+@RestController()
+@RequestMapping(value = "/system")
 public class SystemController {
 
 
     @Resource
     private SystemService service;
 
+    @Resource
+    private ReloadableResourceBundleMessageSource messageSource;
 
     /**
      * @param request
@@ -32,7 +36,6 @@ public class SystemController {
      * @throws LoginException
      */
     @RequestMapping(value = "/login.do",method = RequestMethod.POST)
-    @ResponseBody
     public Map<String, Object> login(HttpServletRequest request, User user) throws LoginException, PermissionException {
 
         User loginUser = service.login(user);
@@ -48,7 +51,6 @@ public class SystemController {
 
 
     @RequestMapping(value = "/logout.do",method = RequestMethod.POST)
-    @ResponseBody
     public Map<String, Object> logout(HttpServletRequest request, User user) {
         request.getSession().invalidate();
 
@@ -59,7 +61,6 @@ public class SystemController {
     }
 
     @RequestMapping("/getUserInfo.do")
-    @ResponseBody
     public Map<String, Object> getUserInfo(HttpServletRequest request) {
 
         User user = (User) request.getSession().getAttribute("user");
@@ -69,4 +70,21 @@ public class SystemController {
         map.put("user", user);
         return map;
     }
+
+    /**
+     * 更改语言环境
+     * @param locale 新的语言
+     * @return
+     */
+    @RequestMapping(value = "/setLocale.do")
+    public Map setLocale(@NotEmpty(message = "{system.setLocale.NotEmpty}") String locale, Locale localeObj) {
+        HashMap<Object, Object> map = new HashMap<>();
+
+        map.put("locale",localeObj.getLanguage());
+        map.put("success",true);
+        map.put("message",messageSource.getMessage("response.setLocale.success",null,localeObj));
+        return map;
+
+    }
+
 }

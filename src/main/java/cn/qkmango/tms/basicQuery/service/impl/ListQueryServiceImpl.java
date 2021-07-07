@@ -1,42 +1,38 @@
 package cn.qkmango.tms.basicQuery.service.impl;
 
-import cn.qkmango.tms.basicQuery.dao.QueryDao;
-import cn.qkmango.tms.basicQuery.service.QueryService;
+import cn.qkmango.tms.basicQuery.dao.ListQueryDao;
+import cn.qkmango.tms.basicQuery.service.ListQueryService;
 import cn.qkmango.tms.domain.*;
-import cn.qkmango.tms.domain.pagination.RoomPagination;
-import cn.qkmango.tms.domain.pagination.StudentScorePagination;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class QueryServiceImpl implements QueryService {
+public class ListQueryServiceImpl implements ListQueryService {
 
 
     @Resource
-    private QueryDao queryDao;
+    private ListQueryDao listQueryDao;
 
     @Override
     public List<Faculty> getFacultyList() {
-        List<Faculty> facultyList = queryDao.getFacultyList();
+        List<Faculty> facultyList = listQueryDao.getFacultyList();
         return facultyList;
     }
 
     @Override
     public List<Specialized> getSpecializedList(Specialized specialized) {
 
-        List<Specialized> specializedList = queryDao.getSpecializedList(specialized);
+        List<Specialized> specializedList = listQueryDao.getSpecializedList(specialized);
 
         return specializedList;
     }
 
     @Override
     public List<Clazz> getClazzList(Clazz clazz) {
-        List<Clazz> clazzList = queryDao.getClazzList(clazz);
+        List<Clazz> clazzList = listQueryDao.getClazzList(clazz);
 
         return clazzList;
     }
@@ -44,7 +40,7 @@ public class QueryServiceImpl implements QueryService {
     @Override
     public List<Course> getCourseListByTeacherAndClazz(HashMap<String, Integer> paramsMap) {
 
-        List<Course> courseList = queryDao.getCourseListByTeacherAndClazz(paramsMap);
+        List<Course> courseList = listQueryDao.getCourseListByTeacherAndClazz(paramsMap);
 
         return courseList;
     }
@@ -52,21 +48,21 @@ public class QueryServiceImpl implements QueryService {
     @Override
     public List<Teacher> getTeacherList(Teacher teacher) {
 
-        List<Teacher> list = queryDao.getTeacherList(teacher);
+        List<Teacher> list = listQueryDao.getTeacherList(teacher);
         return list;
     }
 
     @Override
     public List<Building> getBuildingList(Building building) {
 
-        List<Building> list = queryDao.getBuildingList(building);
+        List<Building> list = listQueryDao.getBuildingList(building);
 
         return list;
     }
 
     @Override
     public List<Year> getYearList(Year year) {
-        List<Year> list = queryDao.getYearList(year);
+        List<Year> list = listQueryDao.getYearList(year);
         return list;
     }
 }

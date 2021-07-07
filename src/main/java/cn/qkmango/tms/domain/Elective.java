@@ -1,6 +1,9 @@
 package cn.qkmango.tms.domain;
 
+import cn.qkmango.tms.web.validate.group.update.updateStudentScore;
 import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @className: Elective
@@ -12,10 +15,12 @@ import org.hibernate.validator.constraints.Range;
 public class Elective {
     //选课ID，学生ID，课程ID，课程分数
 
+    @NotNull(message = "{valid.Elective.id.NotNull}",groups = {updateStudentScore.class})
     private Integer id;
     private Integer student;
     private Integer course;
-    @Range(min = 0,max = 100,message = "分数取值在0-100")
+    @NotNull(message = "{valid.Elective.id.NotNull}",groups = {updateStudentScore.class})
+    @Range(min = 0,max = 100,message = "{valid.Elective.id.NotNull}",groups = {updateStudentScore.class})
     private Integer score;
 
     public Elective() {

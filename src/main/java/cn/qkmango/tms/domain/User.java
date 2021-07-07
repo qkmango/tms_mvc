@@ -1,6 +1,6 @@
 package cn.qkmango.tms.domain;
 
-import cn.qkmango.tms.web.bind.PermissionType;
+import cn.qkmango.tms.domain.bind.PermissionType;
 
 import javax.validation.constraints.NotEmpty;
 

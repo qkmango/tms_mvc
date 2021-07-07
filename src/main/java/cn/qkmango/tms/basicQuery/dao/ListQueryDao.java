@@ -1,13 +1,12 @@
-package cn.qkmango.tms.basicQuery.service;
+package cn.qkmango.tms.basicQuery.dao;
 
 import cn.qkmango.tms.domain.*;
-import cn.qkmango.tms.domain.pagination.RoomPagination;
-import cn.qkmango.tms.domain.pagination.StudentScorePagination;
 
 import java.util.HashMap;
 import java.util.List;
 
-public interface QueryService {
+public interface ListQueryDao {
+    int getCount();
 
     List<Faculty> getFacultyList();
 

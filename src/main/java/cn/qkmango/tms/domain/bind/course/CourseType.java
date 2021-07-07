@@ -1,4 +1,4 @@
-package cn.qkmango.tms.web.bind.course;
+package cn.qkmango.tms.domain.bind.course;
 
 
 /**

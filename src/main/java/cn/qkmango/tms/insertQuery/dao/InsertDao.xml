@@ -23,8 +23,8 @@
     </insert>
 
     <insert id="insertRoom">
-        insert into t_room (number, name, building)
-        values (#{number},#{name},#{building});
+        insert into t_room (number, name, building, capacity, roomType)
+        values (#{number},#{name},#{building},#{capacity},#{roomType});
     </insert>
 
 

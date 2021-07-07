@@ -79,6 +79,8 @@
         room.id,
         room.number,
         room.name,
+        room.capacity,
+        room.roomType,
         building.id building,
         building.number buildingNumber,
         building.name buildingName,
@@ -99,6 +101,9 @@
             </if>
             <if test="building != null">
                 and room.building = #{building}
+            </if>
+            <if test="roomType != null">
+                and room.roomType = #{roomType}
             </if>
         </where>
         order by room.number asc

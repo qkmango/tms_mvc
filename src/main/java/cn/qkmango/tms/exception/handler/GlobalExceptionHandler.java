@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public Map SQLExceptionHandler(SQLException e) {
         ResponseMap map = new ResponseMap();
-        logger.error(e.getMessage(),e);
+        logger.warn(e.getMessage());
         map.setSuccess(false);
         map.setMessage(e.getMessage());
         return map;
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler
     public Map loginExceptionHandler(LoginException e) {
-        logger.error(e.getMessage());
+        logger.warn(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage(e.getMessage());
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler
     public Map systemExceptionHandler(SystemException e) {
-        logger.error(e.getMessage());
+        logger.warn(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage(e.getMessage());
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler
     public Map permissionExceptionHandler(PermissionException e) {
-        logger.error(e.getMessage());
+        logger.warn(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage(e.getMessage());
@@ -68,7 +68,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler
     public Map UpdateExceptionHandler(UpdateException e) {
-        logger.error(e.getMessage());
+        logger.warn(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage("更新数据失败");
@@ -79,7 +79,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler
     public Map InsertExceptionHandler(InsertException e) {
-        logger.error(e.getMessage());
+        logger.warn(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage("插入数据失败");
@@ -90,7 +90,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler
     public Map DeleteExceptionHandler(DeleteException e) {
-        logger.error(e.getMessage());
+        logger.warn(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage("删除数据失败");
@@ -101,7 +101,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler
     public Map ParamVerifyErrorHandler(ParamVerifyError e) {
-        logger.error(e.getMessage());
+        logger.warn(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
         map.setMessage(e.getMessage());

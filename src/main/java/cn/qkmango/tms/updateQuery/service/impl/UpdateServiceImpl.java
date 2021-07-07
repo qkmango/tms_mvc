@@ -7,18 +7,23 @@ import cn.qkmango.tms.exception.PermissionException;
 import cn.qkmango.tms.exception.UpdateException;
 import cn.qkmango.tms.updateQuery.dao.UpdateDao;
 import cn.qkmango.tms.updateQuery.service.UpdateService;
-import cn.qkmango.tms.web.bind.PermissionType;
+import cn.qkmango.tms.domain.bind.PermissionType;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.Locale;
 
 @Service
 public class UpdateServiceImpl implements UpdateService {
 
     @Resource
     private UpdateDao updateDao;
+
+    @Resource
+    private ReloadableResourceBundleMessageSource messageSource;
 
 
     @Override
@@ -70,10 +75,10 @@ public class UpdateServiceImpl implements UpdateService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateRoom(Room room) throws UpdateException {
+    public void updateRoom(Room room, Locale locale) throws UpdateException {
         int affectedRows = updateDao.updateRoom(room);
         if (affectedRows != 1) {
-            throw new UpdateException(1,affectedRows);
+            throw new UpdateException(messageSource.getMessage("db.updateRoom.failure",null,locale));
         }
     }
 

@@ -1,14 +1,12 @@
 package cn.qkmango.tms.basicQuery.controller;
 
 
-import cn.qkmango.tms.basicQuery.service.QueryService;
+import cn.qkmango.tms.basicQuery.service.ListQueryService;
 import cn.qkmango.tms.domain.*;
 import cn.qkmango.tms.web.anno.Permission;
-import cn.qkmango.tms.web.bind.PermissionType;
+import cn.qkmango.tms.domain.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +21,10 @@ public class ListQueryController {
 
 
     @Resource
-    private QueryService queryService;
+    private ListQueryService listQueryService;
+
+    @Resource
+    private ReloadableResourceBundleMessageSource messageSource;
 
 
     @RequestMapping("/test.do")
@@ -52,7 +53,7 @@ public class ListQueryController {
     @RequestMapping("/getFacultyList.do")
     public Map<String, Object> getFacultyList() {
 
-        List<Faculty> facultyList = queryService.getFacultyList();
+        List<Faculty> facultyList = listQueryService.getFacultyList();
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
@@ -68,7 +69,7 @@ public class ListQueryController {
     @RequestMapping("/getSpecializedList.do")
     public Map<String, Object> getSpecializedList(Specialized specialized) {
 
-        List<Specialized> SpecializedList = queryService.getSpecializedList(specialized);
+        List<Specialized> SpecializedList = listQueryService.getSpecializedList(specialized);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
@@ -92,7 +93,7 @@ public class ListQueryController {
     @RequestMapping("/getClazzList.do")
     public Map<String, Object> getClazzList(Clazz clazz) {
 
-        List<Clazz> ClazzList = queryService.getClazzList(clazz);
+        List<Clazz> ClazzList = listQueryService.getClazzList(clazz);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
@@ -114,11 +115,11 @@ public class ListQueryController {
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("clazz", clazz);
         paramsMap.put("teacher",teacher);
-        List<Course> CourseList = queryService.getCourseListByTeacherAndClazz(paramsMap);
+        List<Course> CourseList = listQueryService.getCourseListByTeacherAndClazz(paramsMap);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setMessage("条件(TeacherAndClazz)获取学科列表成功");
+        // map.setMessage("条件(TeacherAndClazz)获取学科列表成功");
         map.setData(CourseList);
 
         return map;
@@ -127,11 +128,11 @@ public class ListQueryController {
     @RequestMapping("/getTeacherList.do")
     public Map<String, Object> getTeacherList(Teacher teacher) {
 
-        List<Teacher> data = queryService.getTeacherList(teacher);
+        List<Teacher> data = listQueryService.getTeacherList(teacher);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setMessage("获取老师列表成功");
+        // map.setMessage("获取老师列表成功");
         map.setData(data);
 
         return map;
@@ -146,11 +147,11 @@ public class ListQueryController {
     @RequestMapping("/getBuildingList.do")
     public Map<String, Object> getBuildingList(Building building) {
 
-        List<Building> data = queryService.getBuildingList(building);
+        List<Building> data = listQueryService.getBuildingList(building);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setMessage("获取教学楼列表成功");
+        // map.setMessage("获取教学楼列表成功");
         map.setData(data);
 
         return map;
@@ -165,11 +166,11 @@ public class ListQueryController {
     @RequestMapping("/getYearList.do")
     public Map<String, Object> getYearList(Year year) {
 
-        List<Year> data = queryService.getYearList(year);
+        List<Year> data = listQueryService.getYearList(year);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setMessage("获取年份列表成功");
+        // map.setMessage("获取年份列表成功");
         map.setData(data);
 
         return map;

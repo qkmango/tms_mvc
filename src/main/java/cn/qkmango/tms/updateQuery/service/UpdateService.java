@@ -7,6 +7,7 @@ import cn.qkmango.tms.exception.PermissionException;
 import cn.qkmango.tms.exception.UpdateException;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 public interface UpdateService {
 
@@ -16,7 +17,7 @@ public interface UpdateService {
 
     void updateBuilding(Building building) throws UpdateException;
 
-    void updateRoom(Room room) throws UpdateException;
+    void updateRoom(Room room, Locale locale) throws UpdateException;
 
     void updateYear(Integer year,Integer newYear) throws UpdateException;
 }

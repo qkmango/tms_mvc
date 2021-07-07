@@ -10,8 +10,11 @@ import cn.qkmango.tms.exception.PermissionException;
 import cn.qkmango.tms.exception.UpdateException;
 import cn.qkmango.tms.updateQuery.service.UpdateService;
 import cn.qkmango.tms.web.anno.Permission;
-import cn.qkmango.tms.web.bind.PermissionType;
+import cn.qkmango.tms.domain.bind.PermissionType;
 import cn.qkmango.tms.web.map.ResponseMap;
+import cn.qkmango.tms.web.validate.group.update.updateRoom;
+import cn.qkmango.tms.web.validate.group.update.updateStudentScore;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @RestController
@@ -33,6 +37,9 @@ public class UpdateController {
 
     @Resource
     private UpdateService updateService;
+
+    @Resource
+    private ReloadableResourceBundleMessageSource messageSource;
 
     @Permission
     @RequestMapping("/updatePassword.do")
@@ -63,9 +70,16 @@ public class UpdateController {
         return map;
     }
 
+    /**
+     * 更新
+     * @param elective
+     * @param result
+     * @return
+     * @throws UpdateException
+     */
     @Permission(PermissionType.teacher)
     @RequestMapping("updateStudentScore.do")
-    public Map<String, Object> updateStudentScore(@Validated Elective elective, BindingResult result) throws UpdateException {
+    public Map<String, Object> updateStudentScore(@Validated(updateStudentScore.class) Elective elective, BindingResult result) throws UpdateException {
 
         if (result.hasErrors()) {
             throw new ParamVerifyError(result);
@@ -94,20 +108,25 @@ public class UpdateController {
     }
 
     /**
-     * 更新修改 教室信息
+     * 修改 教室信息
+     * @validated true
      * @param room
      * @return
      * @throws UpdateException
      */
     @Permission(PermissionType.admin)
     @RequestMapping("updateRoom.do")
-    public Map<String, Object> updateRoom(Room room) throws UpdateException {
+    public Map<String, Object> updateRoom(@Validated(updateRoom.class) Room room, BindingResult result, Locale locale) throws UpdateException {
 
-        updateService.updateRoom(room);
+        if (result.hasErrors()) {
+            throw new ParamVerifyError(result);
+        }
+
+        updateService.updateRoom(room,locale);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setMessage("修改教室信息成功");
+        map.setMessage(messageSource.getMessage("db.updateRoom.success",null,locale));
 
         return map;
     }

@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-<div class="layui-form layuimini-form" id="addRoomForm" lay-filter="addRoomForm">
+<div class="layui-form layui-form-pane" id="addRoomForm" lay-filter="addRoomForm">
 	
 	<div class="layui-form-item">
 	    <label class="layui-form-label">所属楼宇</label>
@@ -28,22 +28,44 @@
 	</div>
 	
     <div class="layui-form-item">
-        <label class="layui-form-label">房间号</label>
+        <label class="layui-form-label">教室号</label>
         <div class="layui-input-block">
             <input type="number" name="number" lay-verify="required|roomNumber|int" class="layui-input">
         </div>
     </div>
     
     <div class="layui-form-item">
-        <label class="layui-form-label">房间名</label>
+        <label class="layui-form-label">教室名</label>
         <div class="layui-input-block">
             <input type="text" name="name" class="layui-input" lay-verify="required">
         </div>
     </div>
+	
+	<div class="layui-form-item">
+	    <label class="layui-form-label">教室类型</label>
+	    <div class="layui-input-block">
+	        <select name="roomType" id="roomType" lay-filter="roomType" lay-verify="required">
+				<option value="">全部</option>
+				<option value="bz">标准教室</option>
+				<option value="jt">阶梯教室</option>
+				<option value="sy">实验室</option>
+				<option value="sx">实训教室</option>
+				<option value="wj">微机教室</option>
+				<option value="q">其他</option>
+	        </select>
+	    </div>
+	</div>
+	
+	<div class="layui-form-item">
+	    <label class="layui-form-label">容纳人数</label>
+	    <div class="layui-input-block">
+	        <input type="capacity" name="capacity" lay-verify="required|capacity|int" class="layui-input">
+	    </div>
+	</div>
     
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+            <button class="layui-btn layui-btn-normal layui-layout-right" lay-submit lay-filter="saveBtn">确认保存</button>
         </div>
     </div>
 </div>
@@ -59,10 +81,13 @@
 			
 		form.verify({
 			roomNumber:function(value,item){
-				return value>=101&&value<=999?false:'房间号取值在101-999';
+				return value>=101&&value<=999?false:'教室号取值在101-999';
 			},
 			int:function(value,item) {
 				return value%1===0?false:"取值为整数"
+			},
+			capacity:function(value,item) {
+				return value>0?false:"必须大于0"
 			}
 		})
 			

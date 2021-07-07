@@ -1,7 +1,7 @@
 package cn.qkmango.tms.web.anno;
 
 
-import cn.qkmango.tms.web.bind.PermissionType;
+import cn.qkmango.tms.domain.bind.PermissionType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

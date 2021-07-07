@@ -1,25 +1,45 @@
 package cn.qkmango.tms.domain;
 
+import cn.qkmango.tms.domain.bind.RoomType;
+import cn.qkmango.tms.web.validate.group.update.updateRoom;
+import cn.qkmango.tms.web.validate.group.insert.insertRoom;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 属性：ID，教室号，名称，所属楼宇，容纳人数，教室类型
+ */
 public class Room {
+    @NotNull(message = "{valid.Room.id.NotNull}",groups = {updateRoom.class})
     private Integer id;
-    @Range(min = 101,max = 999,message = "{valid.Room.number.Range}")
+
+    @NotNull(message = "{valid.Room.number.NotNull}",groups = {updateRoom.class,insertRoom.class})
+    @Range(min = 101,max = 999,message = "{valid.Room.number.Range}",groups = {updateRoom.class,insertRoom.class})
     private Integer number;
+
     private String name;
-    @NotNull(message = "{valid.Room.building.NotNull}")
+
+    @NotNull(message = "{valid.Room.building.NotNull}",groups = {updateRoom.class,insertRoom.class})
     private Integer building;
+
+    @NotNull(message = "{valid.Room.capacity.NotNull}",groups = {updateRoom.class,insertRoom.class})
+    @Range(min = 1,message = "{valid.Room.capacity.Range}",groups = {updateRoom.class,insertRoom.class})
+    private Integer capacity;
+
+    @NotNull(message = "{valid.Room.roomType.NotNull}",groups = {updateRoom.class,insertRoom.class})
+    private RoomType roomType;
 
     public Room() {
     }
 
-    public Room(Integer id, Integer number, String name, Integer building) {
+    public Room(Integer id, Integer number, String name, Integer building, Integer capacity, RoomType roomType) {
         this.id = id;
         this.number = number;
         this.name = name;
         this.building = building;
+        this.capacity = capacity;
+        this.roomType = roomType;
     }
 
     public Integer getId() {
@@ -54,6 +74,22 @@ public class Room {
         this.building = building;
     }
 
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
@@ -61,6 +97,8 @@ public class Room {
                 ", number=" + number +
                 ", name='" + name + '\'' +
                 ", building=" + building +
+                ", capacity=" + capacity +
+                ", roomType=" + roomType +
                 '}';
     }
 }
