@@ -33,7 +33,7 @@ public class ListQueryController {
         HttpSession session = request.getSession(false);
         User user;
         if (session == null) {
-            user = new User(1,null,"admin",PermissionType.admin);
+            user = new User(1,null,"芒果小洛",PermissionType.student);
             request.getSession(true).setAttribute("user",user);
         } else {
             user = (User)request.getSession().getAttribute("user");

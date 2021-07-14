@@ -1,6 +1,7 @@
 package cn.qkmango.tms.basicQuery.controller;
 
 import cn.qkmango.tms.basicQuery.service.PaginationQueryService;
+import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.domain.pagination.RoomPagination;
 import cn.qkmango.tms.domain.pagination.StudentScorePagination;
 import cn.qkmango.tms.web.anno.Permission;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,9 +29,17 @@ public class PaginationQueryController {
      */
     @Permission({PermissionType.admin,PermissionType.teacher})
     @RequestMapping("/getStudentScorePagination.do")
-    public Map<String, Object> getStudentScorePagination(StudentScorePagination pagination) {
+    public Map<String, Object> getStudentScorePagination(StudentScorePagination pagination, HttpSession session) {
+
+        //判断当前用户，如果是学生的话，传入ID，仅可以查询自己的成绩
+        User user = (User) session.getAttribute("user");
+        if (PermissionType.student == user.getPermissionType()) {
+            pagination.setId(user.getId());
+        }
 
         HashMap<String,Object> map = paginationQueryService.getStudentScorePagination(pagination);
+
+
 
         map.put("success",true);
         map.put("message","获取学生成绩分页列表成功");

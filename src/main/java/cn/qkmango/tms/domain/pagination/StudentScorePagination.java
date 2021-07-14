@@ -18,15 +18,19 @@ public class StudentScorePagination extends Pagination {
     private Integer course;
     //学科 开设年份
     private Integer courseYear;
-    //班级 年级（如 2020级）
-    private Integer clazzYear;
     //学期，false 上学期，true 下学期
     private Boolean term;
+    //班级 年级（如 2020级）
+    private Integer clazzYear;
+    //课程 名称
+    private String courseName;
+
+
 
     public StudentScorePagination() {
     }
 
-    public StudentScorePagination(Integer page, Integer limit, Boolean pagination, Integer id, String name, Integer teacher, Integer faculty, Integer specialized, Integer clazz, Integer course, Integer courseYear, Integer clazzYear, Boolean term) {
+    public StudentScorePagination(Integer page, Integer limit, Boolean pagination, Integer id, String name, Integer teacher, Integer faculty, Integer specialized, Integer clazz, Integer course, Integer courseYear, Integer clazzYear, Boolean term, String courseName) {
         super(page, limit, pagination);
         this.id = id;
         this.name = name;
@@ -38,6 +42,7 @@ public class StudentScorePagination extends Pagination {
         this.courseYear = courseYear;
         this.clazzYear = clazzYear;
         this.term = term;
+        this.courseName = courseName;
     }
 
     public Integer getId() {
@@ -120,6 +125,14 @@ public class StudentScorePagination extends Pagination {
         this.term = term;
     }
 
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
     @Override
     public String toString() {
         return "StudentScorePagination{" +
@@ -135,8 +148,9 @@ public class StudentScorePagination extends Pagination {
                 ", clazz=" + clazz +
                 ", course=" + course +
                 ", courseYear=" + courseYear +
-                ", clazzYear=" + clazzYear +
                 ", term=" + term +
+                ", clazzYear=" + clazzYear +
+                ", courseName='" + courseName + '\'' +
                 '}';
     }
 }

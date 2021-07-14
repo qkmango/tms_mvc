@@ -12,7 +12,7 @@
 		{
 			"title": "成绩查询",
 			"icon": "fa fa-address-book",
-			"href": "",
+			"href": "page/student/course.html",
 			"target": "_self"
 		},{
 			"title": "课表",

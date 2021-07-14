@@ -60,6 +60,10 @@
             <if test="clazzYear!=null">
                 and clazz.clazzYear = #{clazzYear}
             </if>
+            <if test="courseName != null and courseName != ''">
+                and course.name like '%' #{courseName} '%'
+            </if>
+
 
             AND course.teacher = teacher.id
             AND elective.course = course.id
