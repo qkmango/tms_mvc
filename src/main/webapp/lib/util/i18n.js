@@ -20,141 +20,110 @@
  * 
  * 示例国际化文件内容
 	{
-		"user":{
-			"id":"编号",
-			"name":"姓名",
-			"age":"年龄"
+		"title":{
+			"username":"用户名",
+			"password":"密码"
 		},
-		"class":{
-			"id":"班级编号",
-			"name":"班级名"
+		"input":{
+			"username":"请输入用户名",
+			"password":"请输入密码"
 		}
 	}
 	
  * 国际化标签使用示例
- * <span class="i18n" i18nkey='user.name' i18ntarget='inner'></span>
- * <input class="i18n" type="text" i18nkey='placeholder' i18ntarget='placeholder' />
+ * <span class="i18n" i18nkey='title.username' i18ntarget='inner'></span>
+ * <input type="text" class="i18n" i18nkey='input.username' i18ntarget='placeholder'/>
  * 
- * class='i18n'：必须使用class属性指定需要国际化的标签，并在调用 i18nFromAjax()或i18n()时传入指定的class属性
- * i18nkey='user.name'：获取到的国际化json文件转为js对象，通过点调用的方式
+ * 
+ * class='i18n'：必须使用class属性指定需要国际化的标签，并在调用 render()时传入指定的class属性
+ * i18nkey='title.username'：国际化数据对象，通过点调用的方式访问其属性
  * i18ntarget='inner'：需要将国际化的文本放在哪里，取值有：
  * 		inner：标签内（innerText）
  * 		其他自定义或标签属性：如 i18ntarget='placeholder'，则将国际化的文本作为输入框的提示信息
  */
-
-
-//国际化对象，存放已经请求过的国际化数据
-var i18nData = null;
-
-/**
- * 通过ajax的形式获取国际化值，并渲染到指定的属性上或标签内，将页面进行国际化
- * @param {Object} url 国际化json文件的URL，如 http://tms/data_{lang}.json
- * @param {Object} locale 语言地区，值格式为 zh_CN、en_US
- * 		当指定其值后，国际化采用指定的语言，
- * 		如果没指定，那么通过本地cookie获取cookie中指定的国际化语言，
- * 		如果cookie没有指定国际化语言，那么就默认采用 zh_CN
- * 		优先级：参数指定 > cookie指定 > 默认
- * @param {Object} asyn ajax方式获取，是否采用异步方式，默认true异步
- * @param {Object} className 需要进行国际化的标签类名，如果不指定则不进行渲染 
- * @param {Object} cacheObj 获取国际化文件后，缓存到哪个对象中
- * @param {Object} localeKey 是获取国际化的key，通过此key获取本地cookie，
- * 		此获取的cookie，其值就是 指定了需要那种语言和地区，如 zh_CN,en_US
- * 
- * 需要进行国际化的标签内部，要使用如 user.name的形式，程序自动查找国际化json文件中对应的字段
- */
-function i18nFromAjax({url,locale,asyn=true,className,localeKey='org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE'}) {
-	if(locale==undefined) {
-		//从cookie中获取 locale 的 key
-		let cookieLocale = getCookie(localeKey);
-		//判断 locale，当为null时默认赋值为中文，不为null，将-转为_，国际化文件后缀如 zh_CN
-		//为什么要将 -转为_ 因为国际化文件命名，语言切换的URL，都是使用_来分隔的，
-		//但是 通过cookie进行国际化，cookie存入的值使用的是-，所以要替换一下
-		if(cookieLocale!=null) {
-			locale = cookieLocale.replaceAll('-', '_');
-		} else {
-			locale = 'zh_CN';
+function i18n() {
+	
+	//国际化数据对象
+	let i18nData = null;
+	
+	/**
+	 * 通过ajax的形式获取数据并解析为国际化数据对象
+	 * @param {Object} url 国际化json文件的URL，如 http://demo/data_{lang}.json
+	 * @param {Object} locale 语言地区，值格式为 zh_CN、en_US
+	 * 		当指定其值后，国际化采用指定的语言，
+	 * 		如果没指定，那么通过本地cookie获取cookie中指定的国际化语言，
+	 * 		如果cookie没有指定国际化语言，那么就默认采用 zh_CN
+	 * 		优先级：参数指定 > cookie指定 > 默认
+	 * @param {Object} localeKey 是获取国际化的key，通过此key获取本地cookie，
+	 * 		此获取的cookie，其值就是 指定了需要那种语言和地区，如 zh_CN,en_US
+	 * 
+	 * 需要进行国际化的标签内部，要使用如 title.username 的形式，程序自动查找国际化数据对象中对应的字段
+	 */
+	this.getI18nDataFromAjax = function ({url,locale,localeKey='org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE'}) {
+		if(locale==undefined) {
+			let cookieLocale = getCookie(localeKey);
+			if(cookieLocale!=null) {
+				locale = cookieLocale.replaceAll('-', '_');
+			} else {
+				locale = 'zh_CN';
+			}
 		}
+		url = url.replaceAll("{lang}", locale);
+	
+		var xhr;
+		if (window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		} else {
+			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				let data = JSON.parse(xhr.responseText);
+				i18nData  =data;
+			}
+		}
+		xhr.open("GET", url, false);
+		xhr.send();
+		return i18nData;
 	}
-	// locale = cookieLocale.replaceAll('-', '_');
-	url = url.replaceAll("{lang}", locale);
-
-	// ajax 请求国际化文件，并用于页面需要国际化的字段
-	var xhr;
-	if (window.XMLHttpRequest) {
-		xhr = new XMLHttpRequest();
-	} else {
-		xhr = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			let data = JSON.parse(xhr.responseText);
-			i18nData  =data;
-			//如果传入 需要国际化的类名，那么进行国际化
-			if(className != undefined) {
-				i18n({data:data,className:className});
+	
+	
+	/**
+	 * 使用指定的国际化数据对象将页面进行国际化
+	 * @param {Object} data 国际化数据对象
+	 * @param {Object} className 需要进行国际化的标签类名
+	 */
+	this.render = function ({data=i18nData, className='i18n'}) {
+		if(data == null) {
+			return;
+		}
+		var doms = document.getElementsByClassName(className);
+		for (var i = 0; i < doms.length; i++) {
+			var keys = doms[i].getAttribute('i18nkey').split('.');
+			var value = data;
+			for (var j = 0; j < keys.length; j++) {
+				value = value[keys[j]];
+			}
+			
+			let i18ntarget = doms[i].getAttribute('i18ntarget');
+			if(i18ntarget == 'inner') {
+				doms[i].innerText = value;
+			} else {
+				doms[i].setAttribute(i18ntarget,value);
 			}
 		}
 	}
-	xhr.open("GET", url, false);
-	xhr.send();
-	return i18nData;
+	
+	/**
+	 * 获取当前国际化对象的国际化数据对象
+	 */
+	this.getThisObjI18nData = function() {
+		return i18nData;
+	}
 	
 }
 
-/**
- * 使用指定的国际化对象将页面进行国际化
- * @param {Object} data 国际化对象
- * @param {Object} className 需要进行国际化的标签类名
- */
-function i18n({data, className}) {
-	if(data == undefined) {
-		return;
-	}
-	if(className == undefined) {
-		return;
-	}
-	var doms = document.getElementsByClassName(className);
-	for (var i = 0; i < doms.length; i++) {
-		// var keys = doms[i].innerText.split('.');
-		var keys = doms[i].getAttribute('i18nkey').split('.');
-		var value = data;
-		for (var j = 0; j < keys.length; j++) {
-			value = value[keys[j]];
-		}
-		
-		let i18ntarget = doms[i].getAttribute('i18ntarget');
-		
-		switch(i18ntarget) {
-			case 'inner':
-				doms[i].innerText = value;break;
-			default:
-				doms[i].setAttribute(i18ntarget,value);
-		}
-	}
-}
 
-/**
- * 获取国际化对象
- * 如果国际化对象已经存在，那么就返回
- * 如果国际化对象不存在，那么调用 i18nFromAjax() 异步获取国际化对象
- * @param {Object} url 获取国际化文件的URL
- */
-function getI18nData(url) {
-	if(i18nData != null) {
-		return i18nData;
-	}
-	if(url != undefined) {
-		i18nFromAjax({url:url,asyn:false});
-		return i18nData;
-	}
-	return null;
-}
-
-
-/**
- * 获取cookie
- * @param {Object} name cookie名，也即key
- */
 function getCookie(name) {
 	var strcookie = document.cookie;
 	var arrcookie = strcookie.split("; ");

@@ -24,7 +24,7 @@
                 <!--如果资源文件放在classpath根目录下，则 classpath:valid，如果放在classpath下的文件夹下，则 classpath:i18n/valid，否则会找不到-->
                 <value>classpath:i18n/valid</value>
                 <value>classpath:i18n/db</value>
-                <value>classpath:i18n/system</value>
+                <value>classpath:i18n/response</value>
             </list>
         </property>
         <property name="useCodeAsDefaultMessage" value="false"/>

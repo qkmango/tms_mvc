@@ -16,11 +16,18 @@ body {
 	border-radius: 6px;
 	transition: all 0.4s;
 	color: #0366d6;
+	box-sizing: border-box;
 }
+
 #locale button:hover {
-	background-color: #0366d6;
-	color: white;
+	background-color: rgba(3,102,204,.3);
 }
+.this_locale_btn {
+	background-color: #0366d6 !important;
+	color: white !important;
+}
+
+
 .header {
 	padding: 32px 0;
 	width: 65px;
@@ -148,3 +155,25 @@ select:focus{
 .link a:hover {
 	text-decoration: underline;
 }
+
+
+
+
+
+/* 更改select样式 */
+select {
+	appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	
+	background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjI2MjcyNTk2Mzc4IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjM0MDciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNODU4LjQ1MzMzMyAyNjkuOTYwNTMzbDcyLjYxODY2NyA3Mi42MTg2NjdMNTkxLjYzMzA2NyA2ODEuOTg0bDAuMTcwNjY2IDAuMTcwNjY3LTcxLjkwMTg2NiA3MS45MDE4NjYtMC4xNzA2NjctMC4xNzA2NjYtMC4xNTM2IDAuMTcwNjY2LTcyLjYxODY2Ny03Mi42MTg2NjYgMC4xNTM2LTAuMTUzNkwxMTIuNDY5MzMzIDM0Ni42NzUybDcxLjkxODkzNC03MS45MDE4NjcgMzM0LjYwOTA2NiAzMzQuNjI2MTM0eiIgcC1pZD0iMzQwOCI+PC9wYXRoPjwvc3ZnPg==") no-repeat scroll  #fff;
+	background-size: 13px;
+	background-position: 245px;
+	
+	/*为下拉小箭头留出一点位置，避免被文字覆盖*/
+	/* padding-right: 14px; */
+}
+ 
+ 
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand { display: none; }

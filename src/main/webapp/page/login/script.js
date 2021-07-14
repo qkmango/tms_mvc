@@ -37,6 +37,14 @@ $(function() {
 			login()
 		}
 	}
+	
+	
+	let locale = getLocale();
+	if(locale == 'en-US') {
+		document.querySelector('#en_US').className = 'this_locale_btn';
+	} else {
+		document.querySelector('#zh_CN').className = 'this_locale_btn';
+	}
 
 })
 
@@ -72,6 +80,18 @@ function login() {
 			cocoMessage.error(2000,jqXHR.status+'')
 		}
 	})
+}
+
+
+/**
+ * 获取本地语言，基于cookie
+ */
+
+function getLocale(name) {
+	if(name == undefined) {
+		name = 'org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE';
+	}
+	return getCookie(name);
 }
 
 /**
