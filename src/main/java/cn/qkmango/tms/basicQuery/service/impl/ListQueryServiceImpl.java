@@ -3,11 +3,13 @@ package cn.qkmango.tms.basicQuery.service.impl;
 import cn.qkmango.tms.basicQuery.dao.ListQueryDao;
 import cn.qkmango.tms.basicQuery.service.ListQueryService;
 import cn.qkmango.tms.domain.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ListQueryServiceImpl implements ListQueryService {
@@ -63,6 +65,13 @@ public class ListQueryServiceImpl implements ListQueryService {
     @Override
     public List<Year> getYearList(Year year) {
         List<Year> list = listQueryDao.getYearList(year);
+        return list;
+    }
+
+    @Override
+    public List<Map> getStudentElectiveCourseList(HashMap<String, Object> params) {
+
+        List<Map> list = listQueryDao.getStudentElectiveCourseList(params);
         return list;
     }
 }

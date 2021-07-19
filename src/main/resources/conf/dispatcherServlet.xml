@@ -25,6 +25,7 @@
                 <value>classpath:i18n/valid</value>
                 <value>classpath:i18n/db</value>
                 <value>classpath:i18n/response</value>
+                <value>classpath:i18n/query</value>
             </list>
         </property>
         <property name="useCodeAsDefaultMessage" value="false"/>

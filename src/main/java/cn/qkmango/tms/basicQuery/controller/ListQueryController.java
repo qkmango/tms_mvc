@@ -3,8 +3,8 @@ package cn.qkmango.tms.basicQuery.controller;
 
 import cn.qkmango.tms.basicQuery.service.ListQueryService;
 import cn.qkmango.tms.domain.*;
-import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.domain.bind.PermissionType;
+import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.map.ResponseMap;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/query")
@@ -171,6 +174,31 @@ public class ListQueryController {
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
         // map.setMessage("获取年份列表成功");
+        map.setData(data);
+
+        return map;
+    }
+
+
+    /**
+     * 获取 当前学生选课列表（）包括已选和未选的课程
+     * @return
+     */
+    @RequestMapping("/getStudentElectiveCourseList.do")
+    public Map<String, Object> getStudentElectiveCourseList(Boolean alreadyElective, HttpSession session, Locale locale) {
+
+        User user = (User) session.getAttribute("user");
+        Integer id = user.getId();
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id",id);
+        params.put("alreadyElective",alreadyElective);
+
+        List<Map> data = listQueryService.getStudentElectiveCourseList(params);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setMessage(messageSource.getMessage("query.getStudentElectiveCourseList.success",null,locale));
         map.setData(data);
 
         return map;

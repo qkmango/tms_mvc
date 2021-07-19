@@ -4,6 +4,7 @@ import cn.qkmango.tms.domain.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface ListQueryDao {
     int getCount();
@@ -21,4 +22,6 @@ public interface ListQueryDao {
     List<Building> getBuildingList(Building building);
 
     List<Year> getYearList(Year year);
+
+    List<Map> getStudentElectiveCourseList(HashMap<String, Object> params);
 }
