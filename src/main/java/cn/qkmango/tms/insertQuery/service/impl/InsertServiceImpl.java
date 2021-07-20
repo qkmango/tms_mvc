@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -92,7 +93,13 @@ public class InsertServiceImpl implements InsertService {
         }
     }
 
-
-
-
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insertElective(HashMap<String, Object> param, Locale locale) throws InsertException {
+        int affectedRows = insertDao.insertElective(param);
+        // Integer[] ids = (Integer[]) param.get("ids");
+        // if (affectedRows != ids.length) {
+        //     throw new InsertException(messageSource.getMessage("db.insertElective.failure",null,locale));
+        // }
+    }
 }

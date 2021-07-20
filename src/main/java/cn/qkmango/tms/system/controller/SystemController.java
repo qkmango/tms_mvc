@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-@RestController()
+@RestController
 @RequestMapping(value = "/system")
 public class SystemController {
 
@@ -77,9 +76,8 @@ public class SystemController {
      * @return
      */
     @RequestMapping(value = "/setLocale.do")
-    public Map setLocale(@NotEmpty(message = "{system.setLocale.NotEmpty}") String locale, Locale localeObj) {
+    public Map setLocale(String locale, Locale localeObj) {
         HashMap<Object, Object> map = new HashMap<>();
-
         map.put("locale",localeObj.getLanguage());
         map.put("success",true);
         map.put("message",messageSource.getMessage("response.setLocale.success",null,localeObj));

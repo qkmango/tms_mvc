@@ -37,5 +37,13 @@
         values (#{year},CONCAT_WS('-',#{year},#{year}+1))
     </insert>
 
+    <insert id="insertElective">
+        insert into t_elective(student,course)
+        values
+        <foreach collection="courseIds" item="id" separator=",">
+            (#{studentId},#{id})
+        </foreach>
+    </insert>
+
 
 </mapper>

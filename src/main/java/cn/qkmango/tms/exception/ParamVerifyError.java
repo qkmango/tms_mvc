@@ -36,6 +36,11 @@ public class ParamVerifyError extends java.lang.VerifyError {
         }
     }
 
+    public ParamVerifyError(ArrayList<BindingResult> bindingResultList) {
+        super();
+        BindingResultList = bindingResultList;
+    }
+
     public ParamVerifyError(String s, BindingResult... bindingResultList) {
         super(s);
         for (BindingResult bindingResult : bindingResultList) {

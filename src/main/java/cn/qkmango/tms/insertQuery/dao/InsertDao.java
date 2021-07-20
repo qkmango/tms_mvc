@@ -2,6 +2,7 @@ package cn.qkmango.tms.insertQuery.dao;
 
 import cn.qkmango.tms.domain.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface InsertDao {
@@ -17,4 +18,6 @@ public interface InsertDao {
     int insertRoom(Room room);
 
     int insertYear(Year id);
+
+    int insertElective(HashMap<String, Object> param);
 }

@@ -16,4 +16,8 @@
         delete from t_year where year = #{year}
     </delete>
 
+    <delete id="deleteElective">
+        delete from t_elective where student=#{studentId} and course=#{courseId}
+    </delete>
+
 </mapper>

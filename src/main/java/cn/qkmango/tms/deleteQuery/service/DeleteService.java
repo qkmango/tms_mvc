@@ -2,6 +2,7 @@ package cn.qkmango.tms.deleteQuery.service;
 
 import cn.qkmango.tms.exception.DeleteException;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 public interface DeleteService {
@@ -10,4 +11,6 @@ public interface DeleteService {
     void deleteRoom(Integer id,Locale locale) throws DeleteException;
 
     void deleteYear(Integer year,Locale locale) throws DeleteException;
+
+    void deleteElective(HashMap<String, Object> param, Locale locale) throws DeleteException;
 }

@@ -2,20 +2,25 @@ package cn.qkmango.tms.deleteQuery.controller;
 
 
 import cn.qkmango.tms.deleteQuery.service.DeleteService;
-import cn.qkmango.tms.exception.DeleteException;
-import cn.qkmango.tms.web.anno.Permission;
+import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.domain.bind.PermissionType;
+import cn.qkmango.tms.exception.DeleteException;
+import cn.qkmango.tms.exception.InsertException;
+import cn.qkmango.tms.web.anno.Permission;
 import cn.qkmango.tms.web.map.ResponseMap;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/delete")
+@RequestMapping(value = "/delete",method = RequestMethod.POST)
 public class DeleteController {
 
     @Resource
@@ -60,6 +65,34 @@ public class DeleteController {
         map.setSuccess(true);
         map.setMessage(messageSource.getMessage("db.deleteYear.success",null,locale));
 
+        return map;
+    }
+
+    /**
+     * 删除选课，删除学生已经选择的课程
+     * @param courseId
+     * @param session
+     * @param locale
+     * @return
+     * @throws InsertException
+     */
+    @Permission(PermissionType.student)
+    @RequestMapping("/deleteElective.do")
+    public Map<String, Object> deleteElective(Integer courseId, HttpSession session, Locale locale) throws DeleteException {
+
+        User user = (User) session.getAttribute("user");
+        Integer id = user.getId();
+
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("studentId",id);
+        param.put("courseId",courseId);
+
+        service.deleteElective(param,locale);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+
+        map.setMessage(messageSource.getMessage("db.deleteElective.success",null,locale));
         return map;
     }
 

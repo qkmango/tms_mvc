@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.Locale;
 
 @Service
@@ -43,6 +44,15 @@ public class DeleteServiceImpl implements DeleteService {
         int affectedRows = deleteDao.deleteYear(year);
         if (affectedRows != 1) {
             throw new DeleteException(messageSource.getMessage("db.deleteYear.failure",null,locale));
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteElective(HashMap<String, Object> param, Locale locale) throws DeleteException {
+        int affectedRows = deleteDao.deleteElective(param);
+        if (affectedRows != 1) {
+            throw new DeleteException(messageSource.getMessage("db.deleteElective.failure",null,locale));
         }
     }
 }

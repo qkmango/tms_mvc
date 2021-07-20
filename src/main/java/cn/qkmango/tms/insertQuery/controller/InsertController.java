@@ -1,11 +1,9 @@
 package cn.qkmango.tms.insertQuery.controller;
 
 
-import cn.qkmango.tms.domain.Building;
-import cn.qkmango.tms.domain.Course;
-import cn.qkmango.tms.domain.Room;
-import cn.qkmango.tms.domain.Year;
+import cn.qkmango.tms.domain.*;
 import cn.qkmango.tms.domain.bind.PermissionType;
+import cn.qkmango.tms.domain.vo.InsertElectiveVO;
 import cn.qkmango.tms.exception.InsertException;
 import cn.qkmango.tms.exception.ParamVerifyError;
 import cn.qkmango.tms.insertQuery.service.InsertService;
@@ -21,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -72,7 +72,7 @@ public class InsertController {
      * @throws InsertException
      */
     @Permission(PermissionType.admin)
-    @RequestMapping("insertBuilding.do")
+    @RequestMapping("/insertBuilding.do")
     public Map<String, Object> insertBuilding(@Validated Building building,BindingResult result,Locale locale) throws InsertException {
 
         if (result.hasErrors()) {
@@ -96,7 +96,7 @@ public class InsertController {
      * @throws InsertException
      */
     @Permission(PermissionType.admin)
-    @RequestMapping("insertRoom.do")
+    @RequestMapping("/insertRoom.do")
     public Map<String, Object> insertRoom(@Validated(insertRoom.class) Room room, BindingResult result, Locale locale) throws InsertException {
 
         if (result.hasErrors()) {
@@ -122,7 +122,7 @@ public class InsertController {
      * @throws InsertException
      */
     @Permission(PermissionType.admin)
-    @RequestMapping("insertYear.do")
+    @RequestMapping("/insertYear.do")
     public Map<String, Object> insertYear(@Validated Year year,BindingResult result,Locale locale) throws InsertException {
 
         if (result.hasErrors()) {
@@ -134,6 +134,43 @@ public class InsertController {
         map.setSuccess(true);
 
         map.setMessage(messageSource.getMessage("db.insertYear.success",null,locale));
+        return map;
+    }
+
+
+    /**
+     * 批量插入选课，学生进行选课
+     * @validated true
+     * @param electiveVO
+     * @param session
+     * @param locale
+     * @return
+     * @throws InsertException
+     */
+    @Permission(PermissionType.student)
+    @RequestMapping("/insertElective.do")
+    public Map<String, Object> insertElective(@Validated InsertElectiveVO electiveVO,
+                                              BindingResult result,
+                                              HttpSession session,
+                                              Locale locale) throws InsertException {
+
+        if (result.hasErrors()) {
+            throw new ParamVerifyError(result);
+        }
+
+        User user = (User) session.getAttribute("user");
+        Integer id = user.getId();
+
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("studentId",id);
+        param.put("courseIds",electiveVO.getCourseIds());
+
+        service.insertElective(param,locale);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+
+        map.setMessage(messageSource.getMessage("db.insertElective.success",null,locale));
         return map;
     }
 
