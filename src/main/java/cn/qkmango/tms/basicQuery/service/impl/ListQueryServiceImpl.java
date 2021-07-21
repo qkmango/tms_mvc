@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Service
@@ -72,6 +73,13 @@ public class ListQueryServiceImpl implements ListQueryService {
     public List<Map> getStudentElectiveCourseList(HashMap<String, Object> params) {
 
         List<Map> list = listQueryDao.getStudentElectiveCourseList(params);
+        return list;
+    }
+
+    @Override
+    public List<Map> getStudentTimetable(Integer studentId, Locale locale) {
+
+        List<Map> list = listQueryDao.getStudentTimetable(studentId);
         return list;
     }
 }

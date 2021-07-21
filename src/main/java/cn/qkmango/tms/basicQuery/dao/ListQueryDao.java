@@ -24,4 +24,6 @@ public interface ListQueryDao {
     List<Year> getYearList(Year year);
 
     List<Map> getStudentElectiveCourseList(HashMap<String, Object> params);
+
+    List<Map> getStudentTimetable(Integer studentId);
 }

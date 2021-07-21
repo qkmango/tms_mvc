@@ -205,5 +205,28 @@ public class ListQueryController {
     }
 
 
+    /**
+     * 获取学生课表
+     * @param session
+     * @param locale
+     * @return
+     */
+    @RequestMapping("/getStudentTimetable.do")
+    public Map<String,Object> getStudentTimetable(HttpSession session, Locale locale) {
+        User user = (User) session.getAttribute("user");
+        Integer studentId = user.getId();
+
+        List<Map> data = listQueryService.getStudentTimetable(studentId,locale);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        // map.setMessage(messageSource.getMessage("query.getStudentElectiveCourseList.success",null,locale));
+        map.setData(data);
+
+        return map;
+
+    }
+
+
 
 }

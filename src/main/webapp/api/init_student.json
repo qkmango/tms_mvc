@@ -12,7 +12,7 @@
 		{
 			"title": "成绩查询",
 			"icon": "fa fa-address-book",
-			"href": "page/student/course.html",
+			"href": "page/student/course/course.html",
 			"target": "_self"
 		},{
 			"title": "课表",
@@ -22,7 +22,12 @@
 		},{
 			"title": "选课",
 			"icon": "fa fa-address-book",
-			"href": "page/student/elective.html",
+			"href": "page/student/elective/elective.html",
+			"target": "_self"
+		}, {
+			"title": "课程表",
+			"icon": "fa fa-address-book",
+			"href": "page/student/public/timetable.html",
 			"target": "_self"
 		}
 	]

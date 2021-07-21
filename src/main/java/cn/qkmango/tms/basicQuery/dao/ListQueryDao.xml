@@ -158,4 +158,31 @@
             </choose>
     </select>
 
+    <select id="getStudentTimetable" resultType="hashmap">
+        SELECT course.id,
+               course.name,
+               teacher.name teacher,
+               course_info.beginWeek,
+               course_info.lengthWeek,
+               course_info.weekDay,
+               course_info.begin,
+               course_info.length,
+               course_info.weekType,
+               room.number roomNumber,
+               building.number buildingNumber
+        FROM t_elective elective,
+             t_course course,
+             t_course_info course_info,
+             t_building building,
+             t_room room,
+             t_teacher teacher
+
+        WHERE elective.student = #{studentId}
+          AND elective.course = course.id
+          AND course.teacher = teacher.id
+          AND course_info.course = course.id
+          AND course_info.address = room.id
+          AND room.building = building.id
+    </select>
+
 </mapper>
