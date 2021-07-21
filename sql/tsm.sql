@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 07/07/2021 19:20:36
+ Date: 21/07/2021 21:12:19
 */
 
 SET NAMES utf8mb4;
@@ -45,7 +45,7 @@ CREATE TABLE `t_building`  (
   `buildingType` enum('j','s','q') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '楼类型， pedagogical教学楼，experimental实验楼,other其他',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `UQ_number_buildingType`(`number`, `buildingType`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_building
@@ -58,7 +58,6 @@ INSERT INTO `t_building` VALUES (6, '1', '土木与环境工程学院-A', 'j');
 INSERT INTO `t_building` VALUES (7, '2', '土木与环境工程学院-B1', 'j');
 INSERT INTO `t_building` VALUES (8, '7A', '国际教育学院', 'j');
 INSERT INTO `t_building` VALUES (9, '7B', '文化与新闻传播学院', 'j');
-INSERT INTO `t_building` VALUES (12, '31', '2', 'j');
 
 -- ----------------------------
 -- Table structure for t_clazz
@@ -101,25 +100,28 @@ CREATE TABLE `t_course`  (
   CONSTRAINT `FK_course_REF_clazz` FOREIGN KEY (`clazz`) REFERENCES `t_clazz` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `FK_course_REF_teacher` FOREIGN KEY (`teacher`) REFERENCES `t_teacher` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `FK_course_REF_year` FOREIGN KEY (`courseYear`) REFERENCES `t_year` (`year`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_course
 -- ----------------------------
 INSERT INTO `t_course` VALUES (1, '1Java', '4', 1, 1, 2021, b'0');
-INSERT INTO `t_course` VALUES (2, '2数据库', '2', 1, 1, 2021, b'0');
+INSERT INTO `t_course` VALUES (2, '2SQLServer数据库', '2', 1, 1, 2021, b'0');
 INSERT INTO `t_course` VALUES (3, '2微机原理', '2', 1, 2, 2021, b'1');
-INSERT INTO `t_course` VALUES (4, '2现代通信技术', '2', 1, 2, 2021, b'1');
-INSERT INTO `t_course` VALUES (13, '1HTML', '1', 1, 2, 2021, b'1');
-INSERT INTO `t_course` VALUES (14, 'QQ', '2', 1, 7, 2020, b'1');
-INSERT INTO `t_course` VALUES (15, '222', '1', 1, 5, 2020, b'0');
-INSERT INTO `t_course` VALUES (16, '11', '2', 2, 5, 2020, b'0');
-INSERT INTO `t_course` VALUES (17, '11', '2', 2, 5, 2020, b'0');
-INSERT INTO `t_course` VALUES (18, '111', '3', 1, 3, 2020, b'0');
-INSERT INTO `t_course` VALUES (19, '111', '3', 1, 3, 2020, b'0');
-INSERT INTO `t_course` VALUES (20, '111', '3', 1, 3, 2020, b'0');
-INSERT INTO `t_course` VALUES (21, '111', '3', 1, 3, 2020, b'0');
-INSERT INTO `t_course` VALUES (22, '111', '3', 1, 3, 2020, b'0');
+INSERT INTO `t_course` VALUES (4, '2通信技术', '2', 1, 2, 2021, b'1');
+INSERT INTO `t_course` VALUES (5, '1HTML', '1', 1, 2, 2021, b'1');
+INSERT INTO `t_course` VALUES (6, '计算机基础', '2', 1, 7, 2020, b'1');
+INSERT INTO `t_course` VALUES (7, '高等数学', '1', 1, 5, 2020, b'0');
+INSERT INTO `t_course` VALUES (8, 'HTML网站设计', '2', 2, 5, 2020, b'0');
+INSERT INTO `t_course` VALUES (9, 'MySQL数据库', '2', 2, 5, 2020, b'0');
+INSERT INTO `t_course` VALUES (10, '英语', '3', 1, 3, 2020, b'0');
+INSERT INTO `t_course` VALUES (11, '数字逻辑电路', '3', 1, 3, 2020, b'0');
+INSERT INTO `t_course` VALUES (12, '模拟电路', '3', 1, 3, 2020, b'0');
+INSERT INTO `t_course` VALUES (13, 'PHP动态网站开发', '3', 1, 3, 2020, b'0');
+INSERT INTO `t_course` VALUES (14, 'spring', '3', 1, 3, 2020, b'0');
+INSERT INTO `t_course` VALUES (15, 'springmvc', '2', 1, 1, 2020, b'0');
+INSERT INTO `t_course` VALUES (16, 'Mybatis', '2', 1, 1, 2020, b'0');
+INSERT INTO `t_course` VALUES (17, 'Office', '3', 1, 8, 2020, b'1');
 
 -- ----------------------------
 -- Table structure for t_course_info
@@ -141,17 +143,21 @@ CREATE TABLE `t_course_info`  (
   INDEX `FK_course_info_REF_room`(`address`) USING BTREE,
   CONSTRAINT `FK_course_info_REF_course` FOREIGN KEY (`course`) REFERENCES `t_course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_course_info_REF_room` FOREIGN KEY (`address`) REFERENCES `t_room` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_course_info
 -- ----------------------------
-INSERT INTO `t_course_info` VALUES (1, 14, 'theory', 'sgl', 1, 1, 'Thursday', 1, 1, 1);
-INSERT INTO `t_course_info` VALUES (2, 15, 'theory', 'sgl', 2, 2, 'Sunday', 2, 2, 2);
-INSERT INTO `t_course_info` VALUES (3, 16, 'theory', 'all', 1, 1, 'Saturday', 1, 1, 3);
-INSERT INTO `t_course_info` VALUES (4, 17, 'theory', 'all', 1, 1, 'Saturday', 1, 1, 3);
-INSERT INTO `t_course_info` VALUES (5, 18, 'theory', 'all', 1, 1, 'Sunday', 1, 1, 3);
-INSERT INTO `t_course_info` VALUES (6, 19, 'theory', 'all', 1, 1, 'Sunday', 1, 1, 3);
+INSERT INTO `t_course_info` VALUES (1, 6, 'theory', 'sgl', 1, 1, 'Thursday', 1, 1, 1);
+INSERT INTO `t_course_info` VALUES (2, 7, 'theory', 'sgl', 2, 2, 'Sunday', 2, 2, 2);
+INSERT INTO `t_course_info` VALUES (3, 8, 'theory', 'all', 1, 1, 'Saturday', 1, 1, 3);
+INSERT INTO `t_course_info` VALUES (4, 9, 'theory', 'all', 1, 1, 'Saturday', 1, 1, 3);
+INSERT INTO `t_course_info` VALUES (5, 10, 'theory', 'all', 1, 1, 'Sunday', 1, 1, 3);
+INSERT INTO `t_course_info` VALUES (6, 11, 'theory', 'all', 1, 1, 'Sunday', 1, 1, 3);
+INSERT INTO `t_course_info` VALUES (9, 16, 'theory', 'all', 1, 1, 'Sunday', 1, 1, 3);
+INSERT INTO `t_course_info` VALUES (10, 16, 'theory', 'all', 2, 2, 'Saturday', 2, 2, 2);
+INSERT INTO `t_course_info` VALUES (11, 17, 'theory', 'sgl', 1, 15, 'Saturday', 2, 2, 3);
+INSERT INTO `t_course_info` VALUES (12, 17, 'practice', 'dbl', 2, 16, 'Friday', 5, 4, 1);
 
 -- ----------------------------
 -- Table structure for t_elective
@@ -167,12 +173,11 @@ CREATE TABLE `t_elective`  (
   INDEX `FK_elective_REF_course`(`course`) USING BTREE,
   CONSTRAINT `FK_elective_REF_course` FOREIGN KEY (`course`) REFERENCES `t_course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_elective_REF_student` FOREIGN KEY (`student`) REFERENCES `t_student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 267 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 348 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of t_elective
 -- ----------------------------
-INSERT INTO `t_elective` VALUES (177, 1, 1, 88);
 INSERT INTO `t_elective` VALUES (178, 2, 1, NULL);
 INSERT INTO `t_elective` VALUES (179, 3, 1, NULL);
 INSERT INTO `t_elective` VALUES (180, 4, 1, NULL);
@@ -202,36 +207,35 @@ INSERT INTO `t_elective` VALUES (203, 27, 1, NULL);
 INSERT INTO `t_elective` VALUES (204, 28, 1, NULL);
 INSERT INTO `t_elective` VALUES (205, 29, 1, NULL);
 INSERT INTO `t_elective` VALUES (206, 30, 1, NULL);
-INSERT INTO `t_elective` VALUES (207, 1, 13, 99);
-INSERT INTO `t_elective` VALUES (208, 2, 13, 77);
-INSERT INTO `t_elective` VALUES (209, 3, 13, NULL);
-INSERT INTO `t_elective` VALUES (210, 4, 13, NULL);
-INSERT INTO `t_elective` VALUES (211, 5, 13, NULL);
-INSERT INTO `t_elective` VALUES (212, 6, 13, NULL);
-INSERT INTO `t_elective` VALUES (213, 7, 13, NULL);
-INSERT INTO `t_elective` VALUES (214, 8, 13, NULL);
-INSERT INTO `t_elective` VALUES (215, 9, 13, NULL);
-INSERT INTO `t_elective` VALUES (216, 10, 13, NULL);
-INSERT INTO `t_elective` VALUES (217, 11, 13, 87);
-INSERT INTO `t_elective` VALUES (218, 12, 13, NULL);
-INSERT INTO `t_elective` VALUES (219, 13, 13, NULL);
-INSERT INTO `t_elective` VALUES (220, 14, 13, NULL);
-INSERT INTO `t_elective` VALUES (221, 15, 13, NULL);
-INSERT INTO `t_elective` VALUES (222, 16, 13, NULL);
-INSERT INTO `t_elective` VALUES (223, 17, 13, NULL);
-INSERT INTO `t_elective` VALUES (224, 18, 13, NULL);
-INSERT INTO `t_elective` VALUES (225, 19, 13, NULL);
-INSERT INTO `t_elective` VALUES (226, 20, 13, NULL);
-INSERT INTO `t_elective` VALUES (227, 21, 13, NULL);
-INSERT INTO `t_elective` VALUES (228, 22, 13, NULL);
-INSERT INTO `t_elective` VALUES (229, 23, 13, NULL);
-INSERT INTO `t_elective` VALUES (230, 24, 13, NULL);
-INSERT INTO `t_elective` VALUES (231, 25, 13, NULL);
-INSERT INTO `t_elective` VALUES (232, 26, 13, NULL);
-INSERT INTO `t_elective` VALUES (233, 27, 13, NULL);
-INSERT INTO `t_elective` VALUES (234, 28, 13, NULL);
-INSERT INTO `t_elective` VALUES (235, 29, 13, NULL);
-INSERT INTO `t_elective` VALUES (236, 30, 13, NULL);
+INSERT INTO `t_elective` VALUES (208, 2, 5, 77);
+INSERT INTO `t_elective` VALUES (209, 3, 5, NULL);
+INSERT INTO `t_elective` VALUES (210, 4, 5, NULL);
+INSERT INTO `t_elective` VALUES (211, 5, 5, NULL);
+INSERT INTO `t_elective` VALUES (212, 6, 5, NULL);
+INSERT INTO `t_elective` VALUES (213, 7, 5, NULL);
+INSERT INTO `t_elective` VALUES (214, 8, 5, NULL);
+INSERT INTO `t_elective` VALUES (215, 9, 5, NULL);
+INSERT INTO `t_elective` VALUES (216, 10, 5, NULL);
+INSERT INTO `t_elective` VALUES (217, 11, 5, 87);
+INSERT INTO `t_elective` VALUES (218, 12, 5, NULL);
+INSERT INTO `t_elective` VALUES (219, 13, 5, NULL);
+INSERT INTO `t_elective` VALUES (220, 14, 5, NULL);
+INSERT INTO `t_elective` VALUES (221, 15, 5, NULL);
+INSERT INTO `t_elective` VALUES (222, 16, 5, NULL);
+INSERT INTO `t_elective` VALUES (223, 17, 5, NULL);
+INSERT INTO `t_elective` VALUES (224, 18, 5, NULL);
+INSERT INTO `t_elective` VALUES (225, 19, 5, NULL);
+INSERT INTO `t_elective` VALUES (226, 20, 5, NULL);
+INSERT INTO `t_elective` VALUES (227, 21, 5, NULL);
+INSERT INTO `t_elective` VALUES (228, 22, 5, NULL);
+INSERT INTO `t_elective` VALUES (229, 23, 5, NULL);
+INSERT INTO `t_elective` VALUES (230, 24, 5, NULL);
+INSERT INTO `t_elective` VALUES (231, 25, 5, NULL);
+INSERT INTO `t_elective` VALUES (232, 26, 5, NULL);
+INSERT INTO `t_elective` VALUES (233, 27, 5, NULL);
+INSERT INTO `t_elective` VALUES (234, 28, 5, NULL);
+INSERT INTO `t_elective` VALUES (235, 29, 5, NULL);
+INSERT INTO `t_elective` VALUES (236, 30, 5, NULL);
 INSERT INTO `t_elective` VALUES (237, 31, 3, NULL);
 INSERT INTO `t_elective` VALUES (238, 32, 4, NULL);
 INSERT INTO `t_elective` VALUES (239, 33, 2, NULL);
@@ -262,6 +266,21 @@ INSERT INTO `t_elective` VALUES (263, 57, 2, NULL);
 INSERT INTO `t_elective` VALUES (264, 58, 3, NULL);
 INSERT INTO `t_elective` VALUES (265, 59, 4, NULL);
 INSERT INTO `t_elective` VALUES (266, 60, 2, NULL);
+INSERT INTO `t_elective` VALUES (333, 1, 12, NULL);
+INSERT INTO `t_elective` VALUES (334, 1, 13, NULL);
+INSERT INTO `t_elective` VALUES (335, 1, 14, NULL);
+INSERT INTO `t_elective` VALUES (336, 1, 7, NULL);
+INSERT INTO `t_elective` VALUES (337, 1, 6, NULL);
+INSERT INTO `t_elective` VALUES (338, 1, 1, NULL);
+INSERT INTO `t_elective` VALUES (339, 1, 2, NULL);
+INSERT INTO `t_elective` VALUES (340, 1, 15, NULL);
+INSERT INTO `t_elective` VALUES (341, 1, 16, NULL);
+INSERT INTO `t_elective` VALUES (342, 1, 3, NULL);
+INSERT INTO `t_elective` VALUES (343, 1, 4, NULL);
+INSERT INTO `t_elective` VALUES (344, 1, 5, NULL);
+INSERT INTO `t_elective` VALUES (345, 1, 10, NULL);
+INSERT INTO `t_elective` VALUES (346, 1, 11, NULL);
+INSERT INTO `t_elective` VALUES (347, 1, 17, NULL);
 
 -- ----------------------------
 -- Table structure for t_faculty
@@ -457,7 +476,5 @@ INSERT INTO `t_year` VALUES (2020, '2020-2021');
 INSERT INTO `t_year` VALUES (2021, '2021-2022');
 INSERT INTO `t_year` VALUES (2022, '2022-2023');
 INSERT INTO `t_year` VALUES (2023, '2023-2024');
-INSERT INTO `t_year` VALUES (2024, '2024-2025');
-INSERT INTO `t_year` VALUES (2025, '2025-2026');
 
 SET FOREIGN_KEY_CHECKS = 1;
