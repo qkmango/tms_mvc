@@ -1,4 +1,4 @@
-package cn.qkmango.tms.exception;
+package cn.qkmango.tms.common.exception;
 
 public class DeleteException extends Exception{
     public DeleteException() {

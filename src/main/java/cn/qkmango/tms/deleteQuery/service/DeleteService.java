@@ -1,6 +1,6 @@
 package cn.qkmango.tms.deleteQuery.service;
 
-import cn.qkmango.tms.exception.DeleteException;
+import cn.qkmango.tms.common.exception.DeleteException;
 
 import java.util.HashMap;
 import java.util.Locale;

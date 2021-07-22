@@ -1,4 +1,4 @@
-package cn.qkmango.tms.exception;
+package cn.qkmango.tms.common.exception;
 
 public class InsertException extends Exception{
     public InsertException() {

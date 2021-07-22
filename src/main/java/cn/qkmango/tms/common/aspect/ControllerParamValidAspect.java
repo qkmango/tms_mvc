@@ -1,23 +1,24 @@
 package cn.qkmango.tms.common.aspect;
 
-import cn.qkmango.tms.exception.ParamVerifyError;
+import cn.qkmango.tms.common.exception.ParamVerifyError;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;
 
 /**
- * @className: Aspect
+ * @className: 控制器方法参数校验切面
  * @Description:TODO
  * @author: qkmango
  * @date: 2021-07-20 21:04
  * @version: 1.0
  */
-@org.aspectj.lang.annotation.Aspect
+@Aspect
 @Component
-public class ValidAspect {
+public class ControllerParamValidAspect {
     @Around("execution(* cn.qkmango.tms.test.controller.*Controller.*(..))")
     public Object myBefore2(ProceedingJoinPoint jp) throws Throwable {
         System.out.println("切面————前");

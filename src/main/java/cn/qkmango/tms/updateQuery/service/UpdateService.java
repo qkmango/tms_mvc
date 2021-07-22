@@ -3,8 +3,8 @@ package cn.qkmango.tms.updateQuery.service;
 import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Elective;
 import cn.qkmango.tms.domain.Room;
-import cn.qkmango.tms.exception.PermissionException;
-import cn.qkmango.tms.exception.UpdateException;
+import cn.qkmango.tms.common.exception.PermissionException;
+import cn.qkmango.tms.common.exception.UpdateException;
 
 import java.util.HashMap;
 import java.util.Locale;

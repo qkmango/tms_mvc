@@ -1,7 +1,7 @@
-package cn.qkmango.tms.exception.handler;
+package cn.qkmango.tms.common.exception.handler;
 
-import cn.qkmango.tms.exception.*;
-import cn.qkmango.tms.exception.ParamVerifyError;
+import cn.qkmango.tms.common.exception.*;
+import cn.qkmango.tms.common.exception.ParamVerifyError;
 import cn.qkmango.tms.web.map.ResponseMap;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;

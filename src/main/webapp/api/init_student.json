@@ -15,19 +15,14 @@
 			"href": "page/student/course/course.html",
 			"target": "_self"
 		},{
-			"title": "课表",
-			"icon": "fa fa-address-book",
-			"href": "",
-			"target": "_self"
-		},{
 			"title": "选课",
 			"icon": "fa fa-address-book",
 			"href": "page/student/elective/elective.html",
 			"target": "_self"
 		}, {
-			"title": "课程表",
+			"title": "课表",
 			"icon": "fa fa-address-book",
-			"href": "page/student/public/timetable.html",
+			"href": "page/student/common/timetable.html",
 			"target": "_self"
 		}
 	]

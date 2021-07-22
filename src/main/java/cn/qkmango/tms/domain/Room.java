@@ -1,8 +1,8 @@
 package cn.qkmango.tms.domain;
 
 import cn.qkmango.tms.domain.bind.RoomType;
-import cn.qkmango.tms.web.validate.group.update.updateRoom;
-import cn.qkmango.tms.web.validate.group.insert.insertRoom;
+import cn.qkmango.tms.common.validate.group.update.updateRoom;
+import cn.qkmango.tms.common.validate.group.insert.insertRoom;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;

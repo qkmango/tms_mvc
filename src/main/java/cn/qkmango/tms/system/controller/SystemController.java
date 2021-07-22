@@ -2,8 +2,8 @@ package cn.qkmango.tms.system.controller;
 
 
 import cn.qkmango.tms.domain.User;
-import cn.qkmango.tms.exception.LoginException;
-import cn.qkmango.tms.exception.PermissionException;
+import cn.qkmango.tms.common.exception.LoginException;
+import cn.qkmango.tms.common.exception.PermissionException;
 import cn.qkmango.tms.system.service.SystemService;
 import cn.qkmango.tms.web.map.ResponseMap;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;

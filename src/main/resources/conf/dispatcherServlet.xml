@@ -12,7 +12,7 @@
     <!-- service -->
     <context:component-scan base-package="cn.qkmango.tms.*.service.impl"/>
     <!-- 指定异常处理类所在的包（cn.qkmango.handler）-->
-    <context:component-scan base-package="cn.qkmango.tms.exception.handler" />
+    <context:component-scan base-package="cn.qkmango.tms.common.exception.handler" />
 
     <mvc:annotation-driven />
 

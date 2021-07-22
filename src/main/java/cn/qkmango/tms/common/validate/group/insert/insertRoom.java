@@ -1,4 +1,4 @@
-package cn.qkmango.tms.web.validate.group.insert;
+package cn.qkmango.tms.common.validate.group.insert;
 
 /**
  * @className: insertRoom

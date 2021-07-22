@@ -1,9 +1,9 @@
 package cn.qkmango.tms.system.service.impl;
 
-import cn.qkmango.tms.exception.PermissionException;
+import cn.qkmango.tms.common.exception.PermissionException;
 import cn.qkmango.tms.system.dao.SystemDao;
 import cn.qkmango.tms.domain.User;
-import cn.qkmango.tms.exception.LoginException;
+import cn.qkmango.tms.common.exception.LoginException;
 import cn.qkmango.tms.system.service.SystemService;
 import org.springframework.stereotype.Service;
 

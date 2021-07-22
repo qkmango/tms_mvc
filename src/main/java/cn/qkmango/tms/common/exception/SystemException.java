@@ -1,4 +1,4 @@
-package cn.qkmango.tms.exception;
+package cn.qkmango.tms.common.exception;
 
 /**
  * 当年龄有问题时抛出异常

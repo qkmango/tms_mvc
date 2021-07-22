@@ -2,7 +2,7 @@ package cn.qkmango.tms.deleteQuery.service.impl;
 
 import cn.qkmango.tms.deleteQuery.dao.DeleteDao;
 import cn.qkmango.tms.deleteQuery.service.DeleteService;
-import cn.qkmango.tms.exception.DeleteException;
+import cn.qkmango.tms.common.exception.DeleteException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

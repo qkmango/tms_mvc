@@ -4,8 +4,8 @@ import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Course;
 import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.domain.Year;
-import cn.qkmango.tms.exception.InsertException;
-import cn.qkmango.tms.web.model.CourseInfoModel;
+import cn.qkmango.tms.common.exception.InsertException;
+import cn.qkmango.tms.domain.model.CourseInfoModel;
 
 import java.util.HashMap;
 import java.util.Locale;

@@ -1,10 +1,10 @@
 package cn.qkmango.tms.insertQuery.service.impl;
 
 import cn.qkmango.tms.domain.*;
-import cn.qkmango.tms.exception.InsertException;
+import cn.qkmango.tms.common.exception.InsertException;
 import cn.qkmango.tms.insertQuery.dao.InsertDao;
 import cn.qkmango.tms.insertQuery.service.InsertService;
-import cn.qkmango.tms.web.model.CourseInfoModel;
+import cn.qkmango.tms.domain.model.CourseInfoModel;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

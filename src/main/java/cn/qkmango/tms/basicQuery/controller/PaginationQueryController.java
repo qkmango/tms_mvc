@@ -4,7 +4,7 @@ import cn.qkmango.tms.basicQuery.service.PaginationQueryService;
 import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.domain.pagination.RoomPagination;
 import cn.qkmango.tms.domain.pagination.StudentScorePagination;
-import cn.qkmango.tms.web.anno.Permission;
+import cn.qkmango.tms.common.anno.Permission;
 import cn.qkmango.tms.domain.bind.PermissionType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

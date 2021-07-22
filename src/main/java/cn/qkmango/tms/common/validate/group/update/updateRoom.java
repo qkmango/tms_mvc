@@ -1,4 +1,4 @@
-package cn.qkmango.tms.web.validate.group.update;
+package cn.qkmango.tms.common.validate.group.update;
 
 /**
  * @className: updateRoom

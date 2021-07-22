@@ -1,4 +1,4 @@
-package cn.qkmango.tms.web.model;
+package cn.qkmango.tms.domain.model;
 
 import cn.qkmango.tms.domain.CourseInfo;
 

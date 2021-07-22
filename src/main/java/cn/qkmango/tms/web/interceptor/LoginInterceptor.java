@@ -1,6 +1,6 @@
 package cn.qkmango.tms.web.interceptor;
 
-import cn.qkmango.tms.util.ResponseUtil;
+import cn.qkmango.tms.common.util.ResponseUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;

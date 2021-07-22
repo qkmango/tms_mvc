@@ -4,7 +4,7 @@ package cn.qkmango.tms.basicQuery.controller;
 import cn.qkmango.tms.basicQuery.service.ListQueryService;
 import cn.qkmango.tms.domain.*;
 import cn.qkmango.tms.domain.bind.PermissionType;
-import cn.qkmango.tms.web.anno.Permission;
+import cn.qkmango.tms.common.anno.Permission;
 import cn.qkmango.tms.web.map.ResponseMap;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.RequestMapping;
