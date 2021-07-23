@@ -8,6 +8,7 @@ import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.common.exception.ParamVerifyError;
 import cn.qkmango.tms.common.exception.PermissionException;
 import cn.qkmango.tms.common.exception.UpdateException;
+import cn.qkmango.tms.domain.vo.UpdatePasswordVO;
 import cn.qkmango.tms.updateQuery.service.UpdateService;
 import cn.qkmango.tms.common.anno.Permission;
 import cn.qkmango.tms.domain.bind.PermissionType;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -41,37 +43,44 @@ public class UpdateController {
     @Resource
     private ReloadableResourceBundleMessageSource messageSource;
 
+    /**
+     * 更改用户密码
+     * @param session
+     * @param updatePasswordVO
+     * @param locale
+     * @return
+     * @throws PermissionException
+     * @throws UpdateException
+     */
     @Permission
     @RequestMapping("/updatePassword.do")
-    public Map<String, Object> updatePassword(HttpServletRequest request,
-                                              String oldPassword,
-                                              String newPassword) throws PermissionException, UpdateException {
+    public Map<String, Object> updatePassword(HttpSession session,
+                                              UpdatePasswordVO updatePasswordVO,
+                                              Locale locale) throws PermissionException, UpdateException {
 
-        User user = (User) request.getSession().getAttribute("user");
+        //获取用户ID
+        User user = (User) session.getAttribute("user");
         Integer id = user.getId();
+
         //获取用户权限类型
         PermissionType thisUserPermissionType = user.getPermissionType();
 
-        HashMap<String, Object> requestMap = new HashMap<>();
+        updatePasswordVO.setId(id);
+        updatePasswordVO.setPermissionType(thisUserPermissionType);
 
-
-        requestMap.put("id",id);
-        requestMap.put("oldPassword",oldPassword);
-        requestMap.put("newPassword",newPassword);
-        requestMap.put("thisUserPermissionType",thisUserPermissionType);
-
-        updateService.updatePassword(requestMap);
+        updateService.updatePassword(updatePasswordVO,locale);
 
         ResponseMap map = new ResponseMap();
 
         map.setSuccess(true);
-        map.setMessage("密码更改成功");
+        map.setMessage(messageSource.getMessage("db.updatePassword.success",null,locale));
 
         return map;
     }
 
     /**
-     * 更新
+     * 更新学生成绩
+     * @Validated true
      * @param elective
      * @param result
      * @return
@@ -94,6 +103,13 @@ public class UpdateController {
         return map;
     }
 
+    /**
+     * 更新楼宇信息
+     * @Validated false
+     * @param building
+     * @return
+     * @throws UpdateException
+     */
     @Permission(PermissionType.admin)
     @RequestMapping("updateBuilding.do")
     public Map<String, Object> updateBuilding(Building building) throws UpdateException {
@@ -134,6 +150,7 @@ public class UpdateController {
 
     /**
      * 更新修改 年份
+     * @Validated false
      * @param year
      * @return
      * @throws UpdateException

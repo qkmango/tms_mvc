@@ -5,13 +5,14 @@ import cn.qkmango.tms.domain.Elective;
 import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.common.exception.PermissionException;
 import cn.qkmango.tms.common.exception.UpdateException;
+import cn.qkmango.tms.domain.vo.UpdatePasswordVO;
 
 import java.util.HashMap;
 import java.util.Locale;
 
 public interface UpdateService {
 
-    void updatePassword(HashMap<String, Object> map) throws PermissionException, UpdateException;
+    void updatePassword(UpdatePasswordVO updatePasswordVO, Locale locale) throws PermissionException, UpdateException;
 
     void updateStudentScore(Elective elective) throws UpdateException;
 

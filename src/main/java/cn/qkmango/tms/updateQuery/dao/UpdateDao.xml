@@ -3,25 +3,6 @@
 
 <mapper namespace="cn.qkmango.tms.updateQuery.dao.UpdateDao">
 
-
-    <update id="updateStudentPassword">
-        UPDATE t_student
-        SET password = #{newPassword}
-        WHERE id = #{id}
-          and password = #{oldPassword}
-    </update>
-
-    <update id="updateTeacherPassword">
-        UPDATE t_teacher
-        SET password = #{newPassword}
-        WHERE id = #{id}
-          and password = #{oldPassword}
-    </update>
-
-    <update id="updateAdminPassword">
-
-    </update>
-
     <update id="updateStudentScore">
         UPDATE t_elective
         SET score = #{score}
@@ -44,6 +25,22 @@
         UPDATE t_year
         SET year=#{newYear},name=CONCAT_WS('-',#{newYear},#{newYear}+1)
         WHERE year = #{year}
+    </update>
+
+    <update id="updatePassword">
+        UPDATE
+        <if test="permissionType == @cn.qkmango.tms.domain.bind.PermissionType@student">
+            t_student
+        </if>
+        <if test="permissionType == @cn.qkmango.tms.domain.bind.PermissionType@teacher">
+            t_teacher
+        </if>
+        <if test="permissionType == @cn.qkmango.tms.domain.bind.PermissionType@admin">
+            t_admin
+        </if>
+        SET password = #{newPassword}
+        WHERE id = #{id}
+          and password = #{oldPassword}
     </update>
 
 
