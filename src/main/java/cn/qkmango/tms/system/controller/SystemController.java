@@ -5,7 +5,7 @@ import cn.qkmango.tms.domain.User;
 import cn.qkmango.tms.common.exception.LoginException;
 import cn.qkmango.tms.common.exception.PermissionException;
 import cn.qkmango.tms.system.service.SystemService;
-import cn.qkmango.tms.web.map.ResponseMap;
+import cn.qkmango.tms.common.map.ResponseMap;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,7 +53,7 @@ public class SystemController {
     public Map<String, Object> logout(HttpServletRequest request, User user) {
         request.getSession().invalidate();
 
-        HashMap<String, Object> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>(2);
         map.put("success", true);
         map.put("message", "退出成功！");
         return map;
@@ -64,7 +64,7 @@ public class SystemController {
 
         User user = (User) request.getSession().getAttribute("user");
 
-        HashMap<String, Object> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>(2);
         map.put("success", true);
         map.put("user", user);
         return map;
@@ -77,7 +77,7 @@ public class SystemController {
      */
     @RequestMapping(value = "/setLocale.do")
     public Map setLocale(String locale, Locale localeObj) {
-        HashMap<Object, Object> map = new HashMap<>();
+        HashMap<Object, Object> map = new HashMap<>(3);
         map.put("locale",localeObj.getLanguage());
         map.put("success",true);
         map.put("message",messageSource.getMessage("response.setLocale.success",null,localeObj));

@@ -1,8 +1,8 @@
 package cn.qkmango.tms.common.exception.handler;
 
 import cn.qkmango.tms.common.exception.*;
-import cn.qkmango.tms.common.exception.ParamVerifyError;
-import cn.qkmango.tms.web.map.ResponseMap;
+import cn.qkmango.tms.common.exception.ParamVerifyException;
+import cn.qkmango.tms.common.map.ResponseMap;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
     //处理 更新数据 的异常
     @ResponseBody
     @ExceptionHandler
-    public Map UpdateExceptionHandler(UpdateException e) {
+    public Map updateExceptionHandler(UpdateException e) {
         logger.warn(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
@@ -78,7 +78,7 @@ public class GlobalExceptionHandler {
     //处理 插入数据 的异常
     @ResponseBody
     @ExceptionHandler
-    public Map InsertExceptionHandler(InsertException e) {
+    public Map insertExceptionHandler(InsertException e) {
         logger.warn(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
     //处理 删除数据 的异常
     @ResponseBody
     @ExceptionHandler
-    public Map DeleteExceptionHandler(DeleteException e) {
+    public Map deleteExceptionHandler(DeleteException e) {
         logger.warn(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);
@@ -100,7 +100,7 @@ public class GlobalExceptionHandler {
     //处理 请求参数 的异常
     @ResponseBody
     @ExceptionHandler
-    public Map ParamVerifyErrorHandler(ParamVerifyError e) {
+    public Map paramVerifyErrorHandler(ParamVerifyException e) {
         logger.warn(e.getMessage());
         ResponseMap map = new ResponseMap();
         map.setSuccess(false);

@@ -5,12 +5,12 @@ import cn.qkmango.tms.domain.*;
 import cn.qkmango.tms.domain.bind.PermissionType;
 import cn.qkmango.tms.domain.vo.InsertElectiveVO;
 import cn.qkmango.tms.common.exception.InsertException;
-import cn.qkmango.tms.common.exception.ParamVerifyError;
+import cn.qkmango.tms.common.exception.ParamVerifyException;
 import cn.qkmango.tms.insertQuery.service.InsertService;
 import cn.qkmango.tms.common.anno.Permission;
-import cn.qkmango.tms.web.map.ResponseMap;
+import cn.qkmango.tms.common.map.ResponseMap;
 import cn.qkmango.tms.domain.model.CourseInfoModel;
-import cn.qkmango.tms.common.validate.group.insert.insertRoom;
+import cn.qkmango.tms.common.validate.group.insert.InsertRoom;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +24,15 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+
+/**
+ * 插入数据控制器
+ *
+ * 所有需要校验的字段都需要在字段后面跟 BindingResult result，
+ * 类切面会自动拦截方法，
+ * ControllerAspect 判断 result 对象中是否保存的有字段校验错误信息，如果有则直接响应给前端
+ * @see cn.qkmango.tms.common.aspect.ControllerAspect
+ */
 @RestController
 @RequestMapping(value = "/insert",method = RequestMethod.POST)
 public class InsertController {
@@ -40,18 +49,18 @@ public class InsertController {
      * @param course 课程
      * @param courseResult
      * @param courseInfoModel 课程信息（每次上课的信息）
-     * @param CourseInfoModelResult
+     * @param courseInfoModelResult
      * @return
      * @throws InsertException
      */
     @Permission(PermissionType.admin)
     @RequestMapping("/insertCourse.do")
     public Map<String, Object> insertCourse(@Validated Course course, BindingResult courseResult,
-                                            @Validated CourseInfoModel courseInfoModel, BindingResult CourseInfoModelResult,
+                                            @Validated CourseInfoModel courseInfoModel, BindingResult courseInfoModelResult,
                                             Locale locale) throws InsertException {
 
-        if (courseResult.hasErrors()||CourseInfoModelResult.hasErrors()) {
-            throw new ParamVerifyError(courseResult,CourseInfoModelResult);
+        if (courseResult.hasErrors()|| courseInfoModelResult.hasErrors()) {
+            throw new ParamVerifyException(courseResult, courseInfoModelResult);
         }
         service.insertCourse(course,courseInfoModel,locale);
 
@@ -75,10 +84,6 @@ public class InsertController {
     @RequestMapping("/insertBuilding.do")
     public Map<String, Object> insertBuilding(@Validated Building building,BindingResult result,Locale locale) throws InsertException {
 
-        if (result.hasErrors()) {
-            throw new ParamVerifyError(result);
-        }
-
         service.insertBuilding(building,locale);
 
         ResponseMap map = new ResponseMap();
@@ -97,11 +102,7 @@ public class InsertController {
      */
     @Permission(PermissionType.admin)
     @RequestMapping("/insertRoom.do")
-    public Map<String, Object> insertRoom(@Validated(insertRoom.class) Room room, BindingResult result, Locale locale) throws InsertException {
-
-        if (result.hasErrors()) {
-            throw new ParamVerifyError(result);
-        }
+    public Map<String, Object> insertRoom(@Validated(InsertRoom.class) Room room, BindingResult result, Locale locale) throws InsertException {
 
         service.insertRoom(room,locale);
 
@@ -124,10 +125,6 @@ public class InsertController {
     @Permission(PermissionType.admin)
     @RequestMapping("/insertYear.do")
     public Map<String, Object> insertYear(@Validated Year year,BindingResult result,Locale locale) throws InsertException {
-
-        if (result.hasErrors()) {
-            throw new ParamVerifyError(result);
-        }
         service.insertYear(year,locale);
 
         ResponseMap map = new ResponseMap();
@@ -154,14 +151,10 @@ public class InsertController {
                                               HttpSession session,
                                               Locale locale) throws InsertException {
 
-        if (result.hasErrors()) {
-            throw new ParamVerifyError(result);
-        }
-
         User user = (User) session.getAttribute("user");
         Integer id = user.getId();
 
-        HashMap<String, Object> param = new HashMap<>();
+        HashMap<String, Object> param = new HashMap<>(2);
         param.put("studentId",id);
         param.put("courseIds",electiveVO.getCourseIds());
 

@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * @author qkmango
+ */
 @Service
 public class ListQueryServiceImpl implements ListQueryService {
 
@@ -77,7 +80,7 @@ public class ListQueryServiceImpl implements ListQueryService {
     }
 
     @Override
-    public List<Map> getStudentTimetable(Integer studentId, Locale locale) {
+    public List<Map> getStudentTimetable(Integer studentId) {
 
         List<Map> list = listQueryDao.getStudentTimetable(studentId);
         return list;

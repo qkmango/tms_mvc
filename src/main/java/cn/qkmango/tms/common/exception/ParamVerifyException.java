@@ -8,34 +8,34 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @className: ParamVerifyError 参数验证错误
+ * @className: ParamVerifyException 参数验证错误
  * 此类存放由控制器存入的 所有参数绑定（验证）错误的异常类 BindingResult 对象，
  * 所以此类包含了所有的验证错误消息，通过getMessage()即可获取这些参数绑定（验证）错误的消息
  * @author: qkmango
  * @date: 2021/6/30 17:35
  * @version: 1.0
  */
-public class ParamVerifyError extends java.lang.VerifyError {
-    private List<BindingResult> BindingResultList = null;
+public class ParamVerifyException extends java.lang.VerifyError {
+    private List<BindingResult> bindingResultList = null;
 
-    public ParamVerifyError() {}
+    public ParamVerifyException() {}
 
     /**
      * 使用 BindingResult 变长数组构造
      * @param bindingResultList
      */
-    public ParamVerifyError(BindingResult... bindingResultList) {
+    public ParamVerifyException(BindingResult... bindingResultList) {
         super();
-        BindingResultList = Arrays.asList(bindingResultList);
+        this.bindingResultList = Arrays.asList(bindingResultList);
     }
 
     /**
      * 使用 BindingResult 列表对象构造
      * @param bindingResultList
      */
-    public ParamVerifyError(ArrayList<BindingResult> bindingResultList) {
+    public ParamVerifyException(ArrayList<BindingResult> bindingResultList) {
         super();
-        BindingResultList = bindingResultList;
+        this.bindingResultList = bindingResultList;
     }
 
     /**
@@ -43,10 +43,10 @@ public class ParamVerifyError extends java.lang.VerifyError {
      * @param s
      * @param bindingResultList
      */
-    public ParamVerifyError(String s, BindingResult... bindingResultList) {
+    public ParamVerifyException(String s, BindingResult... bindingResultList) {
         super(s);
         List<BindingResult> bindingResults = Arrays.asList(bindingResultList);
-        BindingResultList = bindingResults;
+        this.bindingResultList = bindingResults;
     }
 
     /**
@@ -54,9 +54,9 @@ public class ParamVerifyError extends java.lang.VerifyError {
      * @param s
      * @param bindingResultList
      */
-    public ParamVerifyError(String s, ArrayList<BindingResult> bindingResultList) {
+    public ParamVerifyException(String s, ArrayList<BindingResult> bindingResultList) {
         super(s);
-        BindingResultList = bindingResultList;
+        this.bindingResultList = bindingResultList;
     }
 
     /**
@@ -64,7 +64,7 @@ public class ParamVerifyError extends java.lang.VerifyError {
      * @return
      */
     public List<BindingResult> getBindingResultList() {
-        return BindingResultList;
+        return bindingResultList;
     }
 
     /**
@@ -72,7 +72,7 @@ public class ParamVerifyError extends java.lang.VerifyError {
      * @param bindingResultList
      */
     public void setBindingResult(BindingResult... bindingResultList) {
-        BindingResultList = Arrays.asList(bindingResultList);
+        this.bindingResultList = Arrays.asList(bindingResultList);
     }
 
     /**
@@ -80,7 +80,7 @@ public class ParamVerifyError extends java.lang.VerifyError {
      * @param bindingResultList
      */
     public void setBindingResult(List<BindingResult> bindingResultList) {
-        BindingResultList = bindingResultList;
+        this.bindingResultList = bindingResultList;
     }
 
     /**
@@ -99,7 +99,7 @@ public class ParamVerifyError extends java.lang.VerifyError {
     public List<String> getMessageList() {
         List<String> errorMessageList = new ArrayList<>();
 
-        for (BindingResult bindingResult : BindingResultList) {
+        for (BindingResult bindingResult : bindingResultList) {
             List<ObjectError> errors = bindingResult.getAllErrors();
             for (ObjectError error : errors) {
                 errorMessageList.add(error.getDefaultMessage());
@@ -110,8 +110,8 @@ public class ParamVerifyError extends java.lang.VerifyError {
 
     @Override
     public String toString() {
-        return "ParamVerifyError{" +
-                "BindingResultList=" + BindingResultList +
+        return "ParamVerifyException{" +
+                "BindingResultList=" + bindingResultList +
                 '}';
     }
 }

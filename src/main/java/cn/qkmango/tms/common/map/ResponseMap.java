@@ -1,4 +1,4 @@
-package cn.qkmango.tms.web.map;
+package cn.qkmango.tms.common.map;
 
 import java.util.HashMap;
 

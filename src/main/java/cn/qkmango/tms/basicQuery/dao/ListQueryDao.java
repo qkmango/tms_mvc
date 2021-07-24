@@ -6,7 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author qkmango
+ */
 public interface ListQueryDao {
+
     int getCount();
 
     List<Faculty> getFacultyList();

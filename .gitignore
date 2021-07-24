@@ -4,4 +4,5 @@ src/main/webapp/page/*.html
 src/main/webapp/test/
 src/main/java/cn/qkmango/tms/test/
 src/main/webapp/lib/layui-v2.6.3/layui_update.js
+src/main/webapp/**/*.bak.*
 src/test/

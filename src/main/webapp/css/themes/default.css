@@ -93,3 +93,12 @@
 .layuimini-tab .layui-tab-title .layui-this .layuimini-tab-active {
     background-color: #1e9fff;
 }
+
+
+/* color */
+.bg-color-black{
+    background-color: black;
+}
+.bg-color-white{
+    background-color: white;
+}

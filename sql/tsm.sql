@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 21/07/2021 21:12:19
+ Date: 24/07/2021 17:03:38
 */
 
 SET NAMES utf8mb4;
@@ -442,7 +442,7 @@ CREATE TABLE `t_teacher`  (
 -- ----------------------------
 -- Records of t_teacher
 -- ----------------------------
-INSERT INTO `t_teacher` VALUES (1, '老师1', b'0', '1', 1, '教授');
+INSERT INTO `t_teacher` VALUES (1, '老师1', b'0', '2', 1, '教授');
 INSERT INTO `t_teacher` VALUES (2, '老师2', b'1', '1', 2, '老师');
 INSERT INTO `t_teacher` VALUES (3, '老师3', b'0', '1', 1, '教授');
 INSERT INTO `t_teacher` VALUES (4, 'ls4', b'1', '1', 2, '老师');

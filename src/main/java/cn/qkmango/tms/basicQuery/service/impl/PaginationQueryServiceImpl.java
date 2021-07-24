@@ -12,6 +12,9 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author qkmango
+ */
 @Service
 public class PaginationQueryServiceImpl implements PaginationQueryService {
 
@@ -27,7 +30,7 @@ public class PaginationQueryServiceImpl implements PaginationQueryService {
 
         List<HashMap<String, Object>> data = paginationQueryDao.getStudentScorePagination(pagination);
 
-        HashMap<String, Object> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>(3);
 
         if (pagination.getPagination() != false) {
             int count = paginationQueryDao.getCount();
@@ -45,7 +48,7 @@ public class PaginationQueryServiceImpl implements PaginationQueryService {
 
         List<HashMap<String, Object>> data = paginationQueryDao.getRoomPagination(pagination);
 
-        HashMap<String, Object> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>(3);
 
         if (pagination.getPagination() != false) {
             int count = paginationQueryDao.getCount();

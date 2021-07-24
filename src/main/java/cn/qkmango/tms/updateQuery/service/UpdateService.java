@@ -14,11 +14,11 @@ public interface UpdateService {
 
     void updatePassword(UpdatePasswordVO updatePasswordVO, Locale locale) throws PermissionException, UpdateException;
 
-    void updateStudentScore(Elective elective) throws UpdateException;
+    void updateStudentScore(Elective elective, Locale locale) throws UpdateException;
 
-    void updateBuilding(Building building) throws UpdateException;
+    void updateBuilding(Building building, Locale locale) throws UpdateException;
 
     void updateRoom(Room room, Locale locale) throws UpdateException;
 
-    void updateYear(Integer year,Integer newYear) throws UpdateException;
+    void updateYear(Integer year,Integer newYear, Locale locale) throws UpdateException;
 }

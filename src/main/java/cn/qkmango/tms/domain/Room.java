@@ -1,8 +1,8 @@
 package cn.qkmango.tms.domain;
 
+import cn.qkmango.tms.common.validate.group.insert.InsertRoom;
+import cn.qkmango.tms.common.validate.group.update.UpdateRoom;
 import cn.qkmango.tms.domain.bind.RoomType;
-import cn.qkmango.tms.common.validate.group.update.updateRoom;
-import cn.qkmango.tms.common.validate.group.insert.insertRoom;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
@@ -11,23 +11,23 @@ import javax.validation.constraints.NotNull;
  * 属性：ID，教室号，名称，所属楼宇，容纳人数，教室类型
  */
 public class Room {
-    @NotNull(message = "{valid.Room.id.NotNull}",groups = {updateRoom.class})
+    @NotNull(message = "{valid.Room.id.NotNull}",groups = {UpdateRoom.class})
     private Integer id;
 
-    @NotNull(message = "{valid.Room.number.NotNull}",groups = {updateRoom.class,insertRoom.class})
-    @Range(min = 101,max = 999,message = "{valid.Room.number.Range}",groups = {updateRoom.class,insertRoom.class})
+    @NotNull(message = "{valid.Room.number.NotNull}",groups = {UpdateRoom.class, InsertRoom.class})
+    @Range(min = 101,max = 999,message = "{valid.Room.number.Range}",groups = {UpdateRoom.class, InsertRoom.class})
     private Integer number;
 
     private String name;
 
-    @NotNull(message = "{valid.Room.building.NotNull}",groups = {updateRoom.class,insertRoom.class})
+    @NotNull(message = "{valid.Room.building.NotNull}",groups = {UpdateRoom.class, InsertRoom.class})
     private Integer building;
 
-    @NotNull(message = "{valid.Room.capacity.NotNull}",groups = {updateRoom.class,insertRoom.class})
-    @Range(min = 1,message = "{valid.Room.capacity.Range}",groups = {updateRoom.class,insertRoom.class})
+    @NotNull(message = "{valid.Room.capacity.NotNull}",groups = {UpdateRoom.class, InsertRoom.class})
+    @Range(min = 1,message = "{valid.Room.capacity.Range}",groups = {UpdateRoom.class, InsertRoom.class})
     private Integer capacity;
 
-    @NotNull(message = "{valid.Room.roomType.NotNull}",groups = {updateRoom.class,insertRoom.class})
+    @NotNull(message = "{valid.Room.roomType.NotNull}",groups = {UpdateRoom.class, InsertRoom.class})
     private RoomType roomType;
 
     public Room() {

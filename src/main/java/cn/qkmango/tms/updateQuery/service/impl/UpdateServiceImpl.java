@@ -40,19 +40,19 @@ public class UpdateServiceImpl implements UpdateService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateStudentScore(Elective elective) throws UpdateException {
+    public void updateStudentScore(Elective elective, Locale locale) throws UpdateException {
         int affectedRows = updateDao.updateStudentScore(elective);
         if (affectedRows != 1) {
-            throw new UpdateException();
+            throw new UpdateException(messageSource.getMessage("db.updateStudentScore.failure",null,locale));
         }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateBuilding(Building building) throws UpdateException {
+    public void updateBuilding(Building building, Locale locale) throws UpdateException {
         int affectedRows = updateDao.updateBuilding(building);
         if (affectedRows != 1) {
-            throw new UpdateException();
+            throw new UpdateException(messageSource.getMessage("db.updateBuilding.failure",null,locale));
         }
     }
 
@@ -67,10 +67,10 @@ public class UpdateServiceImpl implements UpdateService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateYear(Integer year,Integer newYear) throws UpdateException {
+    public void updateYear(Integer year,Integer newYear, Locale locale) throws UpdateException {
         int affectedRows = updateDao.updateYear(year,newYear);
         if (affectedRows != 1) {
-            throw new UpdateException();
+            throw new UpdateException(messageSource.getMessage("db.updateYear.failure",null,locale));
         }
     }
 }

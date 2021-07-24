@@ -7,7 +7,7 @@ import cn.qkmango.tms.domain.bind.PermissionType;
 import cn.qkmango.tms.common.exception.DeleteException;
 import cn.qkmango.tms.common.exception.InsertException;
 import cn.qkmango.tms.common.anno.Permission;
-import cn.qkmango.tms.web.map.ResponseMap;
+import cn.qkmango.tms.common.map.ResponseMap;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -83,7 +83,7 @@ public class DeleteController {
         User user = (User) session.getAttribute("user");
         Integer id = user.getId();
 
-        HashMap<String, Object> param = new HashMap<>();
+        HashMap<String, Object> param = new HashMap<>(2);
         param.put("studentId",id);
         param.put("courseId",courseId);
 

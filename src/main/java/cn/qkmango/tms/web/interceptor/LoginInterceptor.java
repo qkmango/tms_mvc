@@ -16,8 +16,10 @@ public class LoginInterceptor implements HandlerInterceptor {
                              Object handler) throws Exception {
         String path = request.getServletPath();
 
+        String loginUrl = "/system/login.do";
+
         //如果是登陆请求，则放行
-        if ("/system/login.do".equals(path)) {
+        if (loginUrl.equals(path)) {
             return true;
         }
 

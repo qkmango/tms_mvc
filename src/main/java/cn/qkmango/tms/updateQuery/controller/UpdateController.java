@@ -5,16 +5,15 @@ import cn.qkmango.tms.domain.Building;
 import cn.qkmango.tms.domain.Elective;
 import cn.qkmango.tms.domain.Room;
 import cn.qkmango.tms.domain.User;
-import cn.qkmango.tms.common.exception.ParamVerifyError;
 import cn.qkmango.tms.common.exception.PermissionException;
 import cn.qkmango.tms.common.exception.UpdateException;
 import cn.qkmango.tms.domain.vo.UpdatePasswordVO;
 import cn.qkmango.tms.updateQuery.service.UpdateService;
 import cn.qkmango.tms.common.anno.Permission;
 import cn.qkmango.tms.domain.bind.PermissionType;
-import cn.qkmango.tms.web.map.ResponseMap;
-import cn.qkmango.tms.common.validate.group.update.updateRoom;
-import cn.qkmango.tms.common.validate.group.update.updateStudentScore;
+import cn.qkmango.tms.common.map.ResponseMap;
+import cn.qkmango.tms.common.validate.group.update.UpdateRoom;
+import cn.qkmango.tms.common.validate.group.update.UpdateStudentScore;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -23,9 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -88,17 +85,15 @@ public class UpdateController {
      */
     @Permission(PermissionType.teacher)
     @RequestMapping("updateStudentScore.do")
-    public Map<String, Object> updateStudentScore(@Validated(updateStudentScore.class) Elective elective, BindingResult result) throws UpdateException {
+    public Map<String, Object> updateStudentScore(@Validated(UpdateStudentScore.class) Elective elective,
+                                                  BindingResult result,
+                                                  Locale locale) throws UpdateException {
 
-        if (result.hasErrors()) {
-            throw new ParamVerifyError(result);
-        }
-
-        updateService.updateStudentScore(elective);
+        updateService.updateStudentScore(elective,locale);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setMessage("修改学生成绩成功");
+        map.setMessage(messageSource.getMessage("db.updateStudentScore.success",null,locale));
 
         return map;
     }
@@ -112,13 +107,13 @@ public class UpdateController {
      */
     @Permission(PermissionType.admin)
     @RequestMapping("updateBuilding.do")
-    public Map<String, Object> updateBuilding(Building building) throws UpdateException {
+    public Map<String, Object> updateBuilding(Building building, Locale locale) throws UpdateException {
 
-        updateService.updateBuilding(building);
+        updateService.updateBuilding(building, locale);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setMessage("修改教学楼信息成功");
+        map.setMessage(messageSource.getMessage("db.updateBuilding.success",null,locale));
 
         return map;
     }
@@ -132,11 +127,7 @@ public class UpdateController {
      */
     @Permission(PermissionType.admin)
     @RequestMapping("updateRoom.do")
-    public Map<String, Object> updateRoom(@Validated(updateRoom.class) Room room, BindingResult result, Locale locale) throws UpdateException {
-
-        if (result.hasErrors()) {
-            throw new ParamVerifyError(result);
-        }
+    public Map<String, Object> updateRoom(@Validated(UpdateRoom.class) Room room, BindingResult result, Locale locale) throws UpdateException {
 
         updateService.updateRoom(room,locale);
 
@@ -157,13 +148,13 @@ public class UpdateController {
      */
     @Permission(PermissionType.admin)
     @RequestMapping("updateYear.do")
-    public Map<String, Object> updateYear(Integer year,Integer newYear) throws UpdateException {
+    public Map<String, Object> updateYear(Integer year,Integer newYear,Locale locale) throws UpdateException {
 
-        updateService.updateYear(year,newYear);
+        updateService.updateYear(year,newYear,locale);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setMessage("修改年份信息成功");
+        map.setMessage(messageSource.getMessage("db.updateYear.success",null,locale));
 
         return map;
     }

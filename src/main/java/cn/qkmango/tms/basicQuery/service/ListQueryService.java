@@ -4,7 +4,6 @@ import cn.qkmango.tms.domain.*;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public interface ListQueryService {
@@ -25,5 +24,5 @@ public interface ListQueryService {
 
     List<Map> getStudentElectiveCourseList(HashMap<String, Object> params);
 
-    List<Map> getStudentTimetable(Integer studentId, Locale locale);
+    List<Map> getStudentTimetable(Integer studentId);
 }

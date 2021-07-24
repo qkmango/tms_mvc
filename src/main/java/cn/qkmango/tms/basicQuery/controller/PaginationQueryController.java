@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * @author qkmango
+ */
 @RestController
 @RequestMapping("/query/pagination")
 public class PaginationQueryController {

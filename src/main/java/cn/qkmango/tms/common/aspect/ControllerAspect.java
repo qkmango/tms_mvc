@@ -1,6 +1,6 @@
 package cn.qkmango.tms.common.aspect;
 
-import cn.qkmango.tms.common.exception.ParamVerifyError;
+import cn.qkmango.tms.common.exception.ParamVerifyException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,19 +10,17 @@ import org.springframework.validation.BindingResult;
 import java.util.ArrayList;
 
 /**
- * @className: 控制器方法参数校验切面
- * @Description:TODO
+ * @className: ControllerAspect
+ * @Description:控制器方法参数校验切面
  * @author: qkmango
  * @date: 2021-07-20 21:04
  * @version: 1.0
  */
 @Aspect
 @Component
-public class ControllerParamValidAspect {
-    @Around("execution(* cn.qkmango.tms.test.controller.*Controller.*(..))")
-    public Object myBefore2(ProceedingJoinPoint jp) throws Throwable {
-        System.out.println("切面————前");
-
+public class ControllerAspect {
+    @Around("execution(* (cn.qkmango.tms.insertQuery.controller.*Controller || cn.qkmango.tms.updateQuery.controller.*Controller).*(..))")
+    public Object controllerParamValidAspect(ProceedingJoinPoint jp) throws Throwable {
         Object[] args = jp.getArgs();
         ArrayList<BindingResult> bindingResultList = null;
 
@@ -39,12 +37,9 @@ public class ControllerParamValidAspect {
         }
 
         if (bindingResultList != null) {
-            throw new ParamVerifyError(bindingResultList);
+            throw new ParamVerifyException(bindingResultList);
         }
 
-        Object proceed = jp.proceed();
-
-        System.out.println("切面————后");
-        return proceed;
+        return jp.proceed();
     }
 }

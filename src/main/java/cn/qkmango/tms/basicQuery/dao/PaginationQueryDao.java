@@ -6,6 +6,9 @@ import cn.qkmango.tms.domain.pagination.StudentScorePagination;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author qkmango
+ */
 public interface PaginationQueryDao {
     int getCount();
     List<HashMap<String, Object>> getStudentScorePagination(StudentScorePagination pagination);

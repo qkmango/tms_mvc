@@ -2,10 +2,10 @@ package cn.qkmango.tms.basicQuery.controller;
 
 
 import cn.qkmango.tms.basicQuery.service.ListQueryService;
+import cn.qkmango.tms.common.anno.Permission;
 import cn.qkmango.tms.domain.*;
 import cn.qkmango.tms.domain.bind.PermissionType;
-import cn.qkmango.tms.common.anno.Permission;
-import cn.qkmango.tms.web.map.ResponseMap;
+import cn.qkmango.tms.common.map.ResponseMap;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
+
+/**
+ * @author qkmango
+ */
 @RestController
 @RequestMapping("/query")
 public class ListQueryController {
@@ -72,11 +75,11 @@ public class ListQueryController {
     @RequestMapping("/getSpecializedList.do")
     public Map<String, Object> getSpecializedList(Specialized specialized) {
 
-        List<Specialized> SpecializedList = listQueryService.getSpecializedList(specialized);
+        List<Specialized> specializedList = listQueryService.getSpecializedList(specialized);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setData(SpecializedList);
+        map.setData(specializedList);
 
         return map;
     }
@@ -96,11 +99,11 @@ public class ListQueryController {
     @RequestMapping("/getClazzList.do")
     public Map<String, Object> getClazzList(Clazz clazz) {
 
-        List<Clazz> ClazzList = listQueryService.getClazzList(clazz);
+        List<Clazz> clazzList = listQueryService.getClazzList(clazz);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setData(ClazzList);
+        map.setData(clazzList);
 
         return map;
     }
@@ -115,15 +118,14 @@ public class ListQueryController {
     @RequestMapping("/getCourseListByTeacherAndClazz.do")
     public Map<String, Object> getCourseListByTeacherAndClazz(Integer clazz, Integer teacher) {
 
-        HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("clazz", clazz);
-        paramsMap.put("teacher",teacher);
-        List<Course> CourseList = listQueryService.getCourseListByTeacherAndClazz(paramsMap);
+        HashMap<String, Integer> params = new HashMap<>(2);
+        params.put("clazz", clazz);
+        params.put("teacher",teacher);
+        List<Course> courseList = listQueryService.getCourseListByTeacherAndClazz(params);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        // map.setMessage("条件(TeacherAndClazz)获取学科列表成功");
-        map.setData(CourseList);
+        map.setData(courseList);
 
         return map;
     }
@@ -135,7 +137,6 @@ public class ListQueryController {
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        // map.setMessage("获取老师列表成功");
         map.setData(data);
 
         return map;
@@ -154,7 +155,6 @@ public class ListQueryController {
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        // map.setMessage("获取教学楼列表成功");
         map.setData(data);
 
         return map;
@@ -173,7 +173,6 @@ public class ListQueryController {
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        // map.setMessage("获取年份列表成功");
         map.setData(data);
 
         return map;
@@ -185,12 +184,12 @@ public class ListQueryController {
      * @return
      */
     @RequestMapping("/getStudentElectiveCourseList.do")
-    public Map<String, Object> getStudentElectiveCourseList(Boolean alreadyElective, HttpSession session, Locale locale) {
+    public Map<String, Object> getStudentElectiveCourseList(Boolean alreadyElective, HttpSession session) {
 
         User user = (User) session.getAttribute("user");
         Integer id = user.getId();
 
-        HashMap<String, Object> params = new HashMap<>();
+        HashMap<String, Object> params = new HashMap<>(2);
         params.put("id",id);
         params.put("alreadyElective",alreadyElective);
 
@@ -198,7 +197,6 @@ public class ListQueryController {
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setMessage(messageSource.getMessage("query.getStudentElectiveCourseList.success",null,locale));
         map.setData(data);
 
         return map;
@@ -208,19 +206,17 @@ public class ListQueryController {
     /**
      * 获取学生课表
      * @param session
-     * @param locale
      * @return
      */
     @RequestMapping("/getStudentTimetable.do")
-    public Map<String,Object> getStudentTimetable(HttpSession session, Locale locale) {
+    public Map<String,Object> getStudentTimetable(HttpSession session) {
         User user = (User) session.getAttribute("user");
         Integer studentId = user.getId();
 
-        List<Map> data = listQueryService.getStudentTimetable(studentId,locale);
+        List<Map> data = listQueryService.getStudentTimetable(studentId);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        // map.setMessage(messageSource.getMessage("query.getStudentElectiveCourseList.success",null,locale));
         map.setData(data);
 
         return map;
