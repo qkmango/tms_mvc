@@ -1,4 +1,4 @@
-package cn.qkmango.tms.common.anno;
+package cn.qkmango.tms.common.annotation;
 
 
 import cn.qkmango.tms.domain.bind.PermissionType;

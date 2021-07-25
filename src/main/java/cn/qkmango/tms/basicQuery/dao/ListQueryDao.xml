@@ -4,12 +4,12 @@
 
 <mapper namespace="cn.qkmango.tms.basicQuery.dao.ListQueryDao">
 
-    <select id="getFacultyList" resultType="cn.qkmango.tms.domain.Faculty">
+    <select id="getFacultyList" resultType="cn.qkmango.tms.domain.orm.Faculty">
         SELECT id, name
         FROM t_faculty
     </select>
 
-    <select id="getSpecializedList" resultType="cn.qkmango.tms.domain.Specialized">
+    <select id="getSpecializedList" resultType="cn.qkmango.tms.domain.orm.Specialized">
         SELECT
             id,name,faculty
         FROM
@@ -27,7 +27,7 @@
         </where>
     </select>
 
-    <select id="getClazzList" resultType="cn.qkmango.tms.domain.Clazz">
+    <select id="getClazzList" resultType="cn.qkmango.tms.domain.orm.Clazz">
         SELECT id,name,specialized,clazzYear
         FROM
             t_clazz
@@ -47,7 +47,7 @@
         </where>
     </select>
 
-    <select id="getCourseListByTeacherAndClazz" resultType="cn.qkmango.tms.domain.Course">
+    <select id="getCourseListByTeacherAndClazz" resultType="cn.qkmango.tms.domain.orm.Course">
         SELECT course.id, course.name
         FROM t_teacher teacher,
              t_course course,
@@ -67,7 +67,7 @@
     </select>
 
 
-    <select id="getTeacherList" resultType="cn.qkmango.tms.domain.Teacher">
+    <select id="getTeacherList" resultType="cn.qkmango.tms.domain.orm.Teacher">
         select id,name
         FROM t_teacher
         <where>
@@ -83,7 +83,7 @@
         </where>
     </select>
 
-    <select id="getBuildingList" resultType="cn.qkmango.tms.domain.Building">
+    <select id="getBuildingList" resultType="cn.qkmango.tms.domain.orm.Building">
         select id, number, name, buildingType
         from t_building
         <where>
@@ -111,7 +111,7 @@
         order by number asc
     </select>
 
-    <select id="getYearList" resultType="cn.qkmango.tms.domain.Year">
+    <select id="getYearList" resultType="cn.qkmango.tms.domain.orm.Year">
         select year,name from t_year
         <where>
             <if test="year != null and year != ''">
@@ -158,7 +158,7 @@
             </choose>
     </select>
 
-    <select id="getStudentTimetable" resultType="hashmap">
+    <select id="getStudentTimetable" resultType="cn.qkmango.tms.domain.model.OnceCourseInfo">
         SELECT course.id,
                course.name,
                teacher.name teacher,
@@ -177,12 +177,27 @@
              t_room room,
              t_teacher teacher
 
-        WHERE elective.student = #{studentId}
+        WHERE elective.student = #{id}
+          AND course.courseYear=#{year}
+          AND course.term=#{term}
           AND elective.course = course.id
           AND course.teacher = teacher.id
           AND course_info.course = course.id
           AND course_info.address = room.id
           AND room.building = building.id
+    </select>
+
+    <select id="getInfoOfTimeTable" resultType="cn.qkmango.tms.domain.model.TimeTable">
+        SELECT
+            student.name studentName,
+            clazz.name clazzName
+        FROM
+            t_student student,
+            t_clazz clazz
+        WHERE
+            student.id =#{studentId}
+          AND
+            student.clazz=clazz.id
     </select>
 
 </mapper>

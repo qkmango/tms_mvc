@@ -1,12 +1,10 @@
 package cn.qkmango.tms.updateQuery.dao;
 
-import cn.qkmango.tms.domain.Building;
-import cn.qkmango.tms.domain.Elective;
-import cn.qkmango.tms.domain.Room;
+import cn.qkmango.tms.domain.orm.Building;
+import cn.qkmango.tms.domain.orm.Elective;
+import cn.qkmango.tms.domain.orm.Room;
 import cn.qkmango.tms.domain.vo.UpdatePasswordVO;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.HashMap;
 
 public interface UpdateDao {
 

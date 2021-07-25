@@ -1,14 +1,20 @@
-package cn.qkmango.tms.domain;
+package cn.qkmango.tms.domain.orm;
+import cn.qkmango.tms.common.validate.group.Query.login;
 
 import cn.qkmango.tms.domain.bind.PermissionType;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class User {
+    @NotNull(message = "{valid.User.id.NotNull}",groups = login.class)
     protected Integer id;
-    @NotEmpty(message = "{User.password.NotEmpty}")
+
+    @NotNull(message = "{valid.User.password.NotNull}",groups = login.class)
     protected String password;
+
     protected String name;
+
+    @NotNull(message = "{valid.User.permissionType.NotNull}",groups = login.class)
     protected PermissionType permissionType;
 
     public User() {

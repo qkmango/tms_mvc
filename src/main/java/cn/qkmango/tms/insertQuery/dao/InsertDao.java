@@ -1,6 +1,6 @@
 package cn.qkmango.tms.insertQuery.dao;
 
-import cn.qkmango.tms.domain.*;
+import cn.qkmango.tms.domain.orm.*;
 
 import java.util.HashMap;
 import java.util.List;

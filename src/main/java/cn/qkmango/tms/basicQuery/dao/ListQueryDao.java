@@ -1,6 +1,9 @@
 package cn.qkmango.tms.basicQuery.dao;
 
-import cn.qkmango.tms.domain.*;
+import cn.qkmango.tms.domain.model.OnceCourseInfo;
+import cn.qkmango.tms.domain.model.TimeTable;
+import cn.qkmango.tms.domain.orm.*;
+import cn.qkmango.tms.domain.vo.GetStudentTimetableVO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,5 +32,12 @@ public interface ListQueryDao {
 
     List<Map> getStudentElectiveCourseList(HashMap<String, Object> params);
 
-    List<Map> getStudentTimetable(Integer studentId);
+    List<OnceCourseInfo> getStudentTimetable(GetStudentTimetableVO vo);
+
+    /**
+     * 获取信息，仅供课程表查询功能使用
+     * @param studentId
+     * @return
+     */
+    TimeTable getInfoOfTimeTable(Integer studentId);
 }

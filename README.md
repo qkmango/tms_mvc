@@ -168,7 +168,7 @@
 
 
 
-### `/update/updatePassword.do`
+### `/update/updatePasswordVO.do`
 
 > 所属前端页面：page/public/update-password.html
 

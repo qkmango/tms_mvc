@@ -1,19 +1,19 @@
 package cn.qkmango.tms.updateQuery.controller;
 
 
-import cn.qkmango.tms.domain.Building;
-import cn.qkmango.tms.domain.Elective;
-import cn.qkmango.tms.domain.Room;
-import cn.qkmango.tms.domain.User;
+import cn.qkmango.tms.domain.orm.Building;
+import cn.qkmango.tms.domain.orm.Elective;
+import cn.qkmango.tms.domain.orm.Room;
+import cn.qkmango.tms.domain.orm.User;
 import cn.qkmango.tms.common.exception.PermissionException;
 import cn.qkmango.tms.common.exception.UpdateException;
 import cn.qkmango.tms.domain.vo.UpdatePasswordVO;
 import cn.qkmango.tms.updateQuery.service.UpdateService;
-import cn.qkmango.tms.common.anno.Permission;
+import cn.qkmango.tms.common.annotation.Permission;
 import cn.qkmango.tms.domain.bind.PermissionType;
 import cn.qkmango.tms.common.map.ResponseMap;
-import cn.qkmango.tms.common.validate.group.update.UpdateRoom;
-import cn.qkmango.tms.common.validate.group.update.UpdateStudentScore;
+import cn.qkmango.tms.common.validate.group.Update;
+import cn.qkmango.tms.common.validate.group.Update.UpdateStudentScore;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -127,7 +127,7 @@ public class UpdateController {
      */
     @Permission(PermissionType.admin)
     @RequestMapping("updateRoom.do")
-    public Map<String, Object> updateRoom(@Validated(UpdateRoom.class) Room room, BindingResult result, Locale locale) throws UpdateException {
+    public Map<String, Object> updateRoom(@Validated(Update.class) Room room, BindingResult result, Locale locale) throws UpdateException {
 
         updateService.updateRoom(room,locale);
 

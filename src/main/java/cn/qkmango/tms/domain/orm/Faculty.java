@@ -1,21 +1,18 @@
-package cn.qkmango.tms.domain;
+package cn.qkmango.tms.domain.orm;
 
 
 /**
- * 专业实体类
+ * 院系实体类
  */
-public class Specialized {
-
+public class Faculty {
     private Integer id;
-    private Integer faculty;
     private String name;
 
-    public Specialized() {
+    public Faculty() {
     }
 
-    public Specialized(Integer id, Integer faculty, String name) {
+    public Faculty(Integer id, String name) {
         this.id = id;
-        this.faculty = faculty;
         this.name = name;
     }
 
@@ -25,14 +22,6 @@ public class Specialized {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(Integer faculty) {
-        this.faculty = faculty;
     }
 
     public String getName() {
@@ -45,9 +34,8 @@ public class Specialized {
 
     @Override
     public String toString() {
-        return "Specialized{" +
+        return "Faculty{" +
                 "id=" + id +
-                ", faculty=" + faculty +
                 ", name='" + name + '\'' +
                 '}';
     }

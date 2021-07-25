@@ -1,7 +1,7 @@
-package cn.qkmango.tms.domain;
+package cn.qkmango.tms.domain.orm;
 
-import cn.qkmango.tms.common.validate.group.insert.InsertRoom;
-import cn.qkmango.tms.common.validate.group.update.UpdateRoom;
+import cn.qkmango.tms.common.validate.group.Update.UpdateRoom;
+import cn.qkmango.tms.common.validate.group.Insert.InsertRoom;
 import cn.qkmango.tms.domain.bind.RoomType;
 import org.hibernate.validator.constraints.Range;
 

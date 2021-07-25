@@ -1,7 +1,7 @@
 package cn.qkmango.tms.insertQuery.service.impl;
 
-import cn.qkmango.tms.domain.*;
 import cn.qkmango.tms.common.exception.InsertException;
+import cn.qkmango.tms.domain.orm.*;
 import cn.qkmango.tms.insertQuery.dao.InsertDao;
 import cn.qkmango.tms.insertQuery.service.InsertService;
 import cn.qkmango.tms.domain.model.CourseInfoModel;
@@ -68,7 +68,7 @@ public class InsertServiceImpl implements InsertService {
             propagation = Propagation.REQUIRED,
             rollbackFor = Exception.class
     )
-    public void insertBuilding(Building building,Locale locale) throws InsertException {
+    public void insertBuilding(Building building, Locale locale) throws InsertException {
         int affectedRows = insertDao.insertBuilding(building);
         if (affectedRows != 1) {
             throw new InsertException(messageSource.getMessage("db.insertBuilding.failure",null,locale));
@@ -77,7 +77,7 @@ public class InsertServiceImpl implements InsertService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void insertRoom(Room room,Locale locale) throws InsertException {
+    public void insertRoom(Room room, Locale locale) throws InsertException {
         int affectedRows = insertDao.insertRoom(room);
         if (affectedRows != 1) {
             throw new InsertException(messageSource.getMessage("db.insertRoom.failure",null,locale));
@@ -86,7 +86,7 @@ public class InsertServiceImpl implements InsertService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void insertYear(Year year,Locale locale) throws InsertException {
+    public void insertYear(Year year, Locale locale) throws InsertException {
         int affectedRows = insertDao.insertYear(year);
         if (affectedRows != 1) {
             throw new InsertException(messageSource.getMessage("db.insertYear.failure",null,locale));

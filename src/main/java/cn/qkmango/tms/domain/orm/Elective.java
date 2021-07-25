@@ -1,6 +1,6 @@
-package cn.qkmango.tms.domain;
+package cn.qkmango.tms.domain.orm;
 
-import cn.qkmango.tms.common.validate.group.update.UpdateStudentScore;
+import cn.qkmango.tms.common.validate.group.Update.UpdateStudentScore;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;

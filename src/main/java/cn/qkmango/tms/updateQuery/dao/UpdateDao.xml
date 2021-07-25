@@ -27,7 +27,7 @@
         WHERE year = #{year}
     </update>
 
-    <update id="updatePassword">
+    <update id="updatePasswordVO">
         UPDATE
         <if test="permissionType == @cn.qkmango.tms.domain.bind.PermissionType@student">
             t_student

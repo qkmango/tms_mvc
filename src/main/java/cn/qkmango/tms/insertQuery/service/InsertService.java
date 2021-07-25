@@ -1,9 +1,9 @@
 package cn.qkmango.tms.insertQuery.service;
 
-import cn.qkmango.tms.domain.Building;
-import cn.qkmango.tms.domain.Course;
-import cn.qkmango.tms.domain.Room;
-import cn.qkmango.tms.domain.Year;
+import cn.qkmango.tms.domain.orm.Building;
+import cn.qkmango.tms.domain.orm.Course;
+import cn.qkmango.tms.domain.orm.Room;
+import cn.qkmango.tms.domain.orm.Year;
 import cn.qkmango.tms.common.exception.InsertException;
 import cn.qkmango.tms.domain.model.CourseInfoModel;
 

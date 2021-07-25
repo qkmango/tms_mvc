@@ -1,12 +1,15 @@
 package cn.qkmango.tms.system.controller;
 
 
-import cn.qkmango.tms.domain.User;
+import cn.qkmango.tms.domain.orm.User;
 import cn.qkmango.tms.common.exception.LoginException;
 import cn.qkmango.tms.common.exception.PermissionException;
 import cn.qkmango.tms.system.service.SystemService;
 import cn.qkmango.tms.common.map.ResponseMap;
+import cn.qkmango.tms.common.validate.group.Query.login;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,15 +38,15 @@ public class SystemController {
      * @throws LoginException
      */
     @RequestMapping(value = "/login.do",method = RequestMethod.POST)
-    public Map<String, Object> login(HttpServletRequest request, User user) throws LoginException, PermissionException {
+    public Map<String, Object> login(@Validated(login.class) User user, BindingResult result, HttpServletRequest request, Locale locale) throws LoginException, PermissionException {
 
-        User loginUser = service.login(user);
+        User loginUser = service.login(user,locale);
 
         request.getSession(true).setAttribute("user", loginUser);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
-        map.setMessage("登陆成功！");
+        map.setMessage(messageSource.getMessage("response.login.success",null,locale));
 
         return map;
     }

@@ -2,14 +2,15 @@ package cn.qkmango.tms.basicQuery.service.impl;
 
 import cn.qkmango.tms.basicQuery.dao.ListQueryDao;
 import cn.qkmango.tms.basicQuery.service.ListQueryService;
-import cn.qkmango.tms.domain.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import cn.qkmango.tms.domain.model.OnceCourseInfo;
+import cn.qkmango.tms.domain.model.TimeTable;
+import cn.qkmango.tms.domain.orm.*;
+import cn.qkmango.tms.domain.vo.GetStudentTimetableVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -80,9 +81,19 @@ public class ListQueryServiceImpl implements ListQueryService {
     }
 
     @Override
-    public List<Map> getStudentTimetable(Integer studentId) {
+    public TimeTable getStudentTimetable(GetStudentTimetableVO vo) {
 
-        List<Map> list = listQueryDao.getStudentTimetable(studentId);
-        return list;
+        List<OnceCourseInfo> list = listQueryDao.getStudentTimetable(vo);
+        TimeTable timeTable = listQueryDao.getInfoOfTimeTable(vo.getId());
+
+        timeTable.setList(list);
+        timeTable.setStudentId(vo.getId());
+        timeTable.setYear(vo.getYear());
+        timeTable.setTerm(vo.getTerm());
+        return timeTable;
     }
+
+
+
+
 }

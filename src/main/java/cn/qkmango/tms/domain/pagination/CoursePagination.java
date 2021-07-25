@@ -1,6 +1,6 @@
 package cn.qkmango.tms.domain.pagination;
 
-import cn.qkmango.tms.domain.Course;
+import cn.qkmango.tms.domain.orm.Course;
 
 public class CoursePagination extends Pagination {
 

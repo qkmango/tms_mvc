@@ -1,6 +1,6 @@
 package cn.qkmango.tms.domain.model;
 
-import cn.qkmango.tms.domain.CourseInfo;
+import cn.qkmango.tms.domain.orm.CourseInfo;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

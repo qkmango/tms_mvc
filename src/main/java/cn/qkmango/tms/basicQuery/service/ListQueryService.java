@@ -1,6 +1,9 @@
 package cn.qkmango.tms.basicQuery.service;
 
-import cn.qkmango.tms.domain.*;
+import cn.qkmango.tms.domain.model.TimeTable;
+import cn.qkmango.tms.domain.orm.*;
+import cn.qkmango.tms.domain.vo.GetStudentTimetableVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,5 +27,5 @@ public interface ListQueryService {
 
     List<Map> getStudentElectiveCourseList(HashMap<String, Object> params);
 
-    List<Map> getStudentTimetable(Integer studentId);
+    TimeTable getStudentTimetable(GetStudentTimetableVO vo);
 }

@@ -3,7 +3,7 @@
 
 <mapper namespace="cn.qkmango.tms.system.dao.SystemDao">
 
-    <select id="login" resultType="cn.qkmango.tms.domain.User">
+    <select id="login" resultType="cn.qkmango.tms.domain.orm.User">
         select id,name
         from
         <if test="permissionType == @cn.qkmango.tms.domain.bind.PermissionType@student">

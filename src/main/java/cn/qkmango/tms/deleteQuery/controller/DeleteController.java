@@ -2,11 +2,11 @@ package cn.qkmango.tms.deleteQuery.controller;
 
 
 import cn.qkmango.tms.deleteQuery.service.DeleteService;
-import cn.qkmango.tms.domain.User;
+import cn.qkmango.tms.domain.orm.User;
 import cn.qkmango.tms.domain.bind.PermissionType;
 import cn.qkmango.tms.common.exception.DeleteException;
 import cn.qkmango.tms.common.exception.InsertException;
-import cn.qkmango.tms.common.anno.Permission;
+import cn.qkmango.tms.common.annotation.Permission;
 import cn.qkmango.tms.common.map.ResponseMap;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.RequestMapping;

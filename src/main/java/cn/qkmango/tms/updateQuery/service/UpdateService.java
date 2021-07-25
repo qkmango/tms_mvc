@@ -1,13 +1,12 @@
 package cn.qkmango.tms.updateQuery.service;
 
-import cn.qkmango.tms.domain.Building;
-import cn.qkmango.tms.domain.Elective;
-import cn.qkmango.tms.domain.Room;
+import cn.qkmango.tms.domain.orm.Building;
+import cn.qkmango.tms.domain.orm.Elective;
+import cn.qkmango.tms.domain.orm.Room;
 import cn.qkmango.tms.common.exception.PermissionException;
 import cn.qkmango.tms.common.exception.UpdateException;
 import cn.qkmango.tms.domain.vo.UpdatePasswordVO;
 
-import java.util.HashMap;
 import java.util.Locale;
 
 public interface UpdateService {

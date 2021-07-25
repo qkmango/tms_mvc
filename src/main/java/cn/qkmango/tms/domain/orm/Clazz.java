@@ -1,4 +1,4 @@
-package cn.qkmango.tms.domain;
+package cn.qkmango.tms.domain.orm;
 
 public class Clazz {
 

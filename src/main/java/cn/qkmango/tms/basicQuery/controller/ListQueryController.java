@@ -2,11 +2,15 @@ package cn.qkmango.tms.basicQuery.controller;
 
 
 import cn.qkmango.tms.basicQuery.service.ListQueryService;
-import cn.qkmango.tms.common.anno.Permission;
-import cn.qkmango.tms.domain.*;
+import cn.qkmango.tms.common.annotation.Permission;
 import cn.qkmango.tms.domain.bind.PermissionType;
 import cn.qkmango.tms.common.map.ResponseMap;
+import cn.qkmango.tms.domain.model.TimeTable;
+import cn.qkmango.tms.domain.orm.*;
+import cn.qkmango.tms.domain.vo.GetStudentTimetableVO;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -209,18 +213,19 @@ public class ListQueryController {
      * @return
      */
     @RequestMapping("/getStudentTimetable.do")
-    public Map<String,Object> getStudentTimetable(HttpSession session) {
+    public Map<String,Object> getStudentTimetable(@Validated GetStudentTimetableVO vo, BindingResult result, HttpSession session) {
         User user = (User) session.getAttribute("user");
         Integer studentId = user.getId();
 
-        List<Map> data = listQueryService.getStudentTimetable(studentId);
+        vo.setId(studentId);
+
+        TimeTable data = listQueryService.getStudentTimetable(vo);
 
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
         map.setData(data);
 
         return map;
-
     }
 
 

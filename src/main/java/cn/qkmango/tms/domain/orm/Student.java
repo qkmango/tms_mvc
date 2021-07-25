@@ -1,4 +1,4 @@
-package cn.qkmango.tms.domain;
+package cn.qkmango.tms.domain.orm;
 
 
 import cn.qkmango.tms.domain.bind.PermissionType;

@@ -1,16 +1,16 @@
 package cn.qkmango.tms.insertQuery.controller;
 
 
-import cn.qkmango.tms.domain.*;
 import cn.qkmango.tms.domain.bind.PermissionType;
+import cn.qkmango.tms.domain.orm.*;
 import cn.qkmango.tms.domain.vo.InsertElectiveVO;
 import cn.qkmango.tms.common.exception.InsertException;
 import cn.qkmango.tms.common.exception.ParamVerifyException;
 import cn.qkmango.tms.insertQuery.service.InsertService;
-import cn.qkmango.tms.common.anno.Permission;
+import cn.qkmango.tms.common.annotation.Permission;
 import cn.qkmango.tms.common.map.ResponseMap;
 import cn.qkmango.tms.domain.model.CourseInfoModel;
-import cn.qkmango.tms.common.validate.group.insert.InsertRoom;
+import cn.qkmango.tms.common.validate.group.Insert.InsertRoom;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -82,7 +82,7 @@ public class InsertController {
      */
     @Permission(PermissionType.admin)
     @RequestMapping("/insertBuilding.do")
-    public Map<String, Object> insertBuilding(@Validated Building building,BindingResult result,Locale locale) throws InsertException {
+    public Map<String, Object> insertBuilding(@Validated Building building, BindingResult result, Locale locale) throws InsertException {
 
         service.insertBuilding(building,locale);
 
@@ -124,7 +124,7 @@ public class InsertController {
      */
     @Permission(PermissionType.admin)
     @RequestMapping("/insertYear.do")
-    public Map<String, Object> insertYear(@Validated Year year,BindingResult result,Locale locale) throws InsertException {
+    public Map<String, Object> insertYear(@Validated Year year, BindingResult result, Locale locale) throws InsertException {
         service.insertYear(year,locale);
 
         ResponseMap map = new ResponseMap();

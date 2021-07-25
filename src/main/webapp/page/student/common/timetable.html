@@ -47,7 +47,7 @@
 	<div class="layuimini-main">
 		<table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 		<script type="text/html" id="currentTableBar">
-			<a class="layui-btn layui-btn-sm layui-btn-normal showCourseInfoBtn" id="showCourseInfoBtn" lay-event="showCourseInfoBtn">信息信息</a>
+			<a class="layui-btn layui-btn-sm layui-btn-normal showCourseInfoBtn" id="showCourseInfoBtn" lay-event="showCourseInfoBtn">详细信息</a>
 			<div class="tableTitle">课程表</div>
         </script>
 	</div>
@@ -85,7 +85,7 @@
 			      "code": res.success?0:-1,
 			      "msg": res.message,
 			      "count": res.count,
-			      "data": format(res.data)
+			      "data": format(res.data.list)
 			    };
 			}
         });
