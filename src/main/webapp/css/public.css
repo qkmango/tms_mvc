@@ -68,3 +68,20 @@ body {
     -moz-border-radius: 2em;
     border-radius: 2em
 }
+
+:root {
+    --green_1:#2ebc4f;
+    --green_2:#6db33f;
+    --green_3:#1aaf5d;
+    --green_4:#42b983;
+    --green_5:#2ea44f;
+    --green_6:#2b9148;
+	--blue_1:rgb(41, 151, 255);
+	--blue_2:#0779E4;
+	--orange:#ff5500;
+	--bgcolor_moon:#090724;
+	--bgcolor_sun:#f6f8fa;
+	--footer:#545462;
+	
+	--theme_color:var(--green_4);
+}

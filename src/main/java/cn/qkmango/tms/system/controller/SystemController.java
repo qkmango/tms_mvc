@@ -1,12 +1,14 @@
 package cn.qkmango.tms.system.controller;
 
-
-import cn.qkmango.tms.domain.orm.User;
 import cn.qkmango.tms.common.exception.LoginException;
 import cn.qkmango.tms.common.exception.PermissionException;
-import cn.qkmango.tms.system.service.SystemService;
 import cn.qkmango.tms.common.map.ResponseMap;
 import cn.qkmango.tms.common.validate.group.Query.login;
+import cn.qkmango.tms.domain.orm.User;
+import cn.qkmango.tms.system.service.SystemService;
+import org.apache.catalina.Manager;
+import org.apache.catalina.connector.Request;
+import org.apache.catalina.connector.RequestFacade;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -30,6 +33,8 @@ public class SystemController {
 
     @Resource
     private ReloadableResourceBundleMessageSource messageSource;
+
+    private Manager sessionManager;
 
     /**
      * @param request
@@ -86,6 +91,31 @@ public class SystemController {
         map.put("message",messageSource.getMessage("response.setLocale.success",null,localeObj));
         return map;
 
+    }
+
+
+    /**
+     * 获取当前活动的 session 数量（当前登陆用户数）
+     * @param request
+     * @return
+     */
+    @RequestMapping("/getActiveSessionCount.do")
+    public String getActiveSessionCount(HttpServletRequest request) throws NoSuchFieldException, IllegalAccessException {
+
+        if (sessionManager == null) {
+            if (request instanceof RequestFacade) {
+                Field requestField = request.getClass().getDeclaredField("request");
+                requestField.setAccessible(true);
+                Request req = (Request) requestField.get(request);
+                org.apache.catalina.Context context = req.getContext();
+                sessionManager = context.getManager();
+            }
+        }
+
+        int active = sessionManager != null ? sessionManager.getActiveSessions() : 0;
+        String res = "{\"success\":true,\"active\":"+active+"}";
+
+        return res;
     }
 
 }

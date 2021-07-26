@@ -46,7 +46,7 @@ layui.use(['form', 'table'], function () {
 				return data.term?2:1;
 			}},
 			{field: 'elective',title: '选课表记录ID',hide:true},
-			{field: 'score', width: 80, title: '分数',edit:true,style:'background-color:#5FB878'}
+			{field: 'score', width: 80, title: '分数',edit:true,style:'background-color:var(--green_3);color:white;text-align:right;'}
 			// ,{title: '操作', minWidth: 100, toolbar: '#currentTableBar', align: "center"}
 		]],
 		limits: [20, 40, 60, 80, 100, 120],
@@ -69,7 +69,7 @@ layui.use(['form', 'table'], function () {
 		console.log(data);
 		
 		if(value>100 || value<0) {
-			cocoMessage.error('分数取值在0-100');
+			cocoMessage.warning('分数取值在0-100');
 			table.reload("dataGrid");
 			return;
 		}
