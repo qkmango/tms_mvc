@@ -1,3 +1,6 @@
+//是否正在执行ajax，防止过次点击执行
+var isAjax = false;
+
 $(function() {
 	var $inputs = $("input");
 	var id = $('#id')[0];
@@ -6,6 +9,7 @@ $(function() {
 	var $error_tips = $(".tip");
 	var id_errorTip = $error_tips[0];
 	var password_errorTip = $error_tips[1];
+	
 
 	id.onblur = chechid;
 	
@@ -34,7 +38,13 @@ $(function() {
 	//登陆按钮绑定监听时间 登陆
 	button.onclick = function() {
 		if(chechid() & checkPassword()) {
-			login()
+			if(isAjax) {
+				console.log('无效');
+				return;
+			}
+			console.log('有效');
+			isAjax = true;
+			login();
 		}
 	}
 	
@@ -58,8 +68,10 @@ function check(str) {
 }
 
 function login() {
+	console.log('ajax'+new Date())
 	$.ajax({
 		url:"system/login.do",
+		async:false,
 		data:{
 			id:$.trim($("#id").val()),
 			password:$.trim($("#password").val()),
@@ -72,12 +84,16 @@ function login() {
 				console.log("登陆成功");
 				window.location.href = "index.html";
 			} else{
-				cocoMessage.error(2000,data.message)
+				cocoMessage.error(2000,data.message,function() {
+					isAjax = false;
+				})
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log(jqXHR.status);
-			cocoMessage.error(2000,jqXHR.status+'')
+			cocoMessage.error(2000,jqXHR.status+'',function() {
+				isAjax = false;
+			});
 		}
 	})
 }
