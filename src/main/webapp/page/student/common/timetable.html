@@ -45,6 +45,36 @@
 <body>
 <div class="layuimini-container">
 	<div class="layuimini-main">
+
+		<fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" lay-filter='queryParams' id="queryParams">
+                    <div class="layui-form-item">
+						
+                        <div class="layui-inline">
+                        	<label class="layui-form-label">年度</label>
+                        	<div class="layui-input-inline">
+                        	    <input type="text" name="year" autocomplete="off" class="layui-input">
+                        	</div>
+                        </div>
+						<div class="layui-inline">
+							<label class="layui-form-label">学期</label>
+							<div class="layui-input-inline">
+							  <select name="term" id="term" lay-filter="term">
+								  <option value="false">第1学期</option>
+								  <option value="true">第2学期</option>
+							  </select>
+							</div>
+						</div>                        
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
 		<table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 		<script type="text/html" id="currentTableBar">
 			<a class="layui-btn layui-btn-sm layui-btn-normal showCourseInfoBtn" id="showCourseInfoBtn" lay-event="showCourseInfoBtn">详细信息</a>
@@ -58,10 +88,20 @@
 
 <script>
 	var $ = layui.$;
+
 	layui.use(['form', 'table'], function () {
         form = layui.form;
         table = layui.table;
-		
+		let date = new Date();
+		let year = date.getFullYear();
+		let term = (date.getMonth()+1)>2 && (date.getMonth()+1)<9 ? 'true':'false';
+		form.val("queryParams", {
+			"year": year,
+			"term": term
+		});
+
+		form.render('select','queryParams');
+
         table.render({
             elem: '#currentTableId',
             url: 'query/getStudentTimetable.do',
@@ -87,7 +127,20 @@
 			      "count": res.count,
 			      "data": format(res.data.list)
 			    };
+			},
+			where:{
+				year:$("input[name='year']").val(),
+				term:$("#term").val()
 			}
+		});
+
+		// 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            //执行搜索重载
+            table.reload('currentTableId', {
+                where: data.field
+            }, 'data');
+            return false;
         });
 
 	
@@ -107,7 +160,6 @@
 				isShow = !isShow;
 			}
 		});
-	
 	});
 	
 </script>
