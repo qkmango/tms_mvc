@@ -94,6 +94,11 @@ public class ListQueryServiceImpl implements ListQueryService {
     }
 
 
+    @Override
+    public HashMap<String, Object> getStudentBasicInfo(Integer id) {
 
+        HashMap<String, Object> basicInfo = listQueryDao.getStudentBasicInfo(id);
 
+        return basicInfo;
+    }
 }

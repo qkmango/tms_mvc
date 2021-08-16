@@ -40,4 +40,6 @@ public interface ListQueryDao {
      * @return
      */
     TimeTable getInfoOfTimeTable(Integer studentId);
+
+    HashMap<String, Object> getStudentBasicInfo(Integer id);
 }

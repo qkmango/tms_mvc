@@ -178,7 +178,7 @@ layui.use(['form', 'table'], function () {
 //获取院系列表并渲染
 function getFacultyList() {
 	$.ajax({
-		url:'query/getFacultyList.do',
+		url:'query/list/getFacultyList.do',
 		type:'get',
 		dataType:'json',
 		success:function(data) {
@@ -197,7 +197,7 @@ function getFacultyList() {
 function getSpecializedList(faculty) {
 	$.ajax({
 		// url:'data/specialized.json',
-		url:'query/getSpecializedList.do',
+		url:'query/list/getSpecializedList.do',
 		data:{
 			'faculty':faculty
 		},
@@ -219,7 +219,7 @@ function getSpecializedList(faculty) {
 function getClazzList(specialized,clazzYear) {
 	$.ajax({
 		// url:'data/specialized.json',
-		url:'query/getClazzList.do',
+		url:'query/list/getClazzList.do',
 		data:{
 			'specialized':specialized,
 			'clazzYear':clazzYear
@@ -241,7 +241,7 @@ function getClazzList(specialized,clazzYear) {
 // 获取指定专业的所有班级列表并渲染
 function getCourseListByTeacherAndClazz(teacher,clazz) {
 	$.ajax({
-		url:'query/getCourseListByTeacherAndClazz.do',
+		url:'query/list/getCourseListByTeacherAndClazz.do',
 		data:{
 			'teacher':teacher,
 			'clazz':clazz

@@ -24,9 +24,10 @@ import java.util.Map;
 
 /**
  * @author qkmango
+ * 仅提供列表查询，不提供分页
  */
 @RestController
-@RequestMapping("/query")
+@RequestMapping("/query/list")
 public class ListQueryController {
 
 
@@ -224,6 +225,29 @@ public class ListQueryController {
         ResponseMap map = new ResponseMap();
         map.setSuccess(true);
         map.setData(data);
+
+        return map;
+    }
+
+
+    /**
+     * 获取学生基本信息
+     * @param session
+     * @return
+     */
+    @RequestMapping("/getStudentBasicInfo.do")
+    public Map<String,Object> getStudentBasicInfo(HttpSession session) {
+        HashMap<String, Object> basicInfo = (HashMap<String, Object>) session.getAttribute("basicInfo");
+
+        if (basicInfo == null) {
+            User user = (User) session.getAttribute("user");
+            basicInfo = listQueryService.getStudentBasicInfo(user.getId());
+            session.setAttribute("basicInfo",basicInfo);
+        }
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+        map.setData(basicInfo);
 
         return map;
     }

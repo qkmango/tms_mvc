@@ -48,7 +48,7 @@
 
         table.render({
             elem: '#currentTableId',
-            url: 'query/getYearList.do',
+            url: 'query/list/getYearList.do',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print'],
             cols: [[
@@ -159,7 +159,7 @@
 	 */
 	function getBuildingList() {
 		$.ajax({
-			url:'query/getBuildingList.do',
+			url:'query/list/getBuildingList.do',
 			type:'get',
 			dataType:'json',
 			success:function(res) {

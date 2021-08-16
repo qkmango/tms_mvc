@@ -17,6 +17,9 @@ import java.util.Map;
 
 /**
  * @author qkmango
+ *
+ * 提供分页的查询和不分页的查询
+ *
  */
 @RestController
 @RequestMapping("/query/pagination")
