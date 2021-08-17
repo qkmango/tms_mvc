@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 50562
  Source Host           : localhost:3306
- Source Schema         : tsm
+ Source Schema         : tms
 
  Target Server Type    : MySQL
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 24/07/2021 17:03:38
+ Date: 17/08/2021 22:49:33
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,7 @@ CREATE TABLE `t_admin`  (
   `sex` bit(1) NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_admin
@@ -45,7 +45,7 @@ CREATE TABLE `t_building`  (
   `buildingType` enum('j','s','q') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '楼类型， pedagogical教学楼，experimental实验楼,other其他',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `UQ_number_buildingType`(`number`, `buildingType`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_building
@@ -73,7 +73,7 @@ CREATE TABLE `t_clazz`  (
   INDEX `FK_clazz_REF_year`(`clazzYear`) USING BTREE,
   CONSTRAINT `FK_clazz_REF_specialized` FOREIGN KEY (`specialized`) REFERENCES `t_specialized` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `FK_clazz_REF_year` FOREIGN KEY (`clazzYear`) REFERENCES `t_year` (`year`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_clazz
@@ -100,7 +100,7 @@ CREATE TABLE `t_course`  (
   CONSTRAINT `FK_course_REF_clazz` FOREIGN KEY (`clazz`) REFERENCES `t_clazz` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `FK_course_REF_teacher` FOREIGN KEY (`teacher`) REFERENCES `t_teacher` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `FK_course_REF_year` FOREIGN KEY (`courseYear`) REFERENCES `t_year` (`year`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_course
@@ -143,7 +143,7 @@ CREATE TABLE `t_course_info`  (
   INDEX `FK_course_info_REF_room`(`address`) USING BTREE,
   CONSTRAINT `FK_course_info_REF_course` FOREIGN KEY (`course`) REFERENCES `t_course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_course_info_REF_room` FOREIGN KEY (`address`) REFERENCES `t_room` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_course_info
@@ -173,12 +173,12 @@ CREATE TABLE `t_elective`  (
   INDEX `FK_elective_REF_course`(`course`) USING BTREE,
   CONSTRAINT `FK_elective_REF_course` FOREIGN KEY (`course`) REFERENCES `t_course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_elective_REF_student` FOREIGN KEY (`student`) REFERENCES `t_student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 348 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 348 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_elective
 -- ----------------------------
-INSERT INTO `t_elective` VALUES (178, 2, 1, NULL);
+INSERT INTO `t_elective` VALUES (178, 2, 1, 99);
 INSERT INTO `t_elective` VALUES (179, 3, 1, NULL);
 INSERT INTO `t_elective` VALUES (180, 4, 1, NULL);
 INSERT INTO `t_elective` VALUES (181, 5, 1, NULL);
@@ -207,7 +207,7 @@ INSERT INTO `t_elective` VALUES (203, 27, 1, NULL);
 INSERT INTO `t_elective` VALUES (204, 28, 1, NULL);
 INSERT INTO `t_elective` VALUES (205, 29, 1, NULL);
 INSERT INTO `t_elective` VALUES (206, 30, 1, NULL);
-INSERT INTO `t_elective` VALUES (208, 2, 5, 77);
+INSERT INTO `t_elective` VALUES (208, 2, 5, 99);
 INSERT INTO `t_elective` VALUES (209, 3, 5, NULL);
 INSERT INTO `t_elective` VALUES (210, 4, 5, NULL);
 INSERT INTO `t_elective` VALUES (211, 5, 5, NULL);
@@ -271,13 +271,7 @@ INSERT INTO `t_elective` VALUES (334, 1, 13, NULL);
 INSERT INTO `t_elective` VALUES (335, 1, 14, NULL);
 INSERT INTO `t_elective` VALUES (336, 1, 7, NULL);
 INSERT INTO `t_elective` VALUES (337, 1, 6, NULL);
-INSERT INTO `t_elective` VALUES (338, 1, 1, NULL);
-INSERT INTO `t_elective` VALUES (339, 1, 2, NULL);
-INSERT INTO `t_elective` VALUES (340, 1, 15, NULL);
-INSERT INTO `t_elective` VALUES (341, 1, 16, NULL);
-INSERT INTO `t_elective` VALUES (342, 1, 3, NULL);
-INSERT INTO `t_elective` VALUES (343, 1, 4, NULL);
-INSERT INTO `t_elective` VALUES (344, 1, 5, NULL);
+INSERT INTO `t_elective` VALUES (344, 1, 5, 100);
 INSERT INTO `t_elective` VALUES (345, 1, 10, NULL);
 INSERT INTO `t_elective` VALUES (346, 1, 11, NULL);
 INSERT INTO `t_elective` VALUES (347, 1, 17, NULL);
@@ -290,7 +284,7 @@ CREATE TABLE `t_faculty`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '院系名',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_faculty
@@ -312,14 +306,15 @@ CREATE TABLE `t_room`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `UI_number_building`(`building`, `number`) USING BTREE,
   CONSTRAINT `FK_room_REF_building` FOREIGN KEY (`building`) REFERENCES `t_building` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_room
 -- ----------------------------
 INSERT INTO `t_room` VALUES (1, 1, 402, '计算机网络实训基地', 50, 'sx');
-INSERT INTO `t_room` VALUES (2, 2, 308, '动漫设计', 0, 'bz');
+INSERT INTO `t_room` VALUES (2, 2, 308, '动漫设计', 60, 'bz');
 INSERT INTO `t_room` VALUES (3, 1, 401, '计算机组装与维护', 0, 'bz');
+INSERT INTO `t_room` VALUES (4, 7, 404, '土木', 55, 'bz');
 
 -- ----------------------------
 -- Table structure for t_specialized
@@ -332,7 +327,7 @@ CREATE TABLE `t_specialized`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FK_specialized_REF_faculty`(`faculty`) USING BTREE,
   CONSTRAINT `FK_specialized_REF_faculty` FOREIGN KEY (`faculty`) REFERENCES `t_faculty` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_specialized
@@ -357,7 +352,7 @@ CREATE TABLE `t_student`  (
   INDEX `FK_student_REF_specialized`(`specialized`) USING BTREE,
   CONSTRAINT `FK_student_REF_clazz` FOREIGN KEY (`clazz`) REFERENCES `t_clazz` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `FK_student_REF_specialized` FOREIGN KEY (`specialized`) REFERENCES `t_specialized` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_student
@@ -424,6 +419,22 @@ INSERT INTO `t_student` VALUES (59, '雪旭', b'1', '2000-11-15', '1', 2, 2);
 INSERT INTO `t_student` VALUES (60, '逮淑怡', b'0', '2000-12-23', '1', 2, 2);
 
 -- ----------------------------
+-- Table structure for t_system
+-- ----------------------------
+DROP TABLE IF EXISTS `t_system`;
+CREATE TABLE `t_system`  (
+  `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`key`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统表，包含当前学年，当前学期等系统信息' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_system
+-- ----------------------------
+INSERT INTO `t_system` VALUES ('currTerm', 'false');
+INSERT INTO `t_system` VALUES ('currYear', '2020');
+
+-- ----------------------------
 -- Table structure for t_teacher
 -- ----------------------------
 DROP TABLE IF EXISTS `t_teacher`;
@@ -437,7 +448,7 @@ CREATE TABLE `t_teacher`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FK_teacher_REF_faculty`(`faculty`) USING BTREE,
   CONSTRAINT `FK_teacher_REF_faculty` FOREIGN KEY (`faculty`) REFERENCES `t_faculty` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_teacher
@@ -459,7 +470,7 @@ CREATE TABLE `t_year`  (
   `year` int(4) UNSIGNED NOT NULL COMMENT '年度，如2019',
   `name` char(9) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '如2019-2020',
   PRIMARY KEY (`year`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_year
