@@ -2,6 +2,7 @@ package cn.qkmango.tms.basicQuery.dao;
 
 import org.apache.ibatis.annotations.MapKey;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,6 +13,5 @@ import java.util.Map;
  * @version: 1.0
  */
 public interface SystemQueryDao {
-    @MapKey("key")
-    Map getSystemBasicInfo();
+    List<Map<String, String>> getSystemBasicInfo();
 }

@@ -4,6 +4,7 @@ import cn.qkmango.tms.domain.model.OnceCourseInfo;
 import cn.qkmango.tms.domain.model.TimeTable;
 import cn.qkmango.tms.domain.orm.*;
 import cn.qkmango.tms.domain.vo.GetStudentTimetableVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,4 +43,8 @@ public interface ListQueryDao {
     TimeTable getInfoOfTimeTable(Integer studentId);
 
     HashMap<String, Object> getStudentBasicInfo(Integer id);
+
+    List<Map<String, Object>> getTeachEvaluateList(@Param("currYear") String currYear,
+                                                   @Param("currTerm") Boolean currTerm,
+                                                   @Param("id") Integer id);
 }

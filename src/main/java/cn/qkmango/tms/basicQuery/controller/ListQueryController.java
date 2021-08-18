@@ -2,6 +2,7 @@ package cn.qkmango.tms.basicQuery.controller;
 
 
 import cn.qkmango.tms.basicQuery.service.ListQueryService;
+import cn.qkmango.tms.basicQuery.service.SystemQueryService;
 import cn.qkmango.tms.common.annotation.Permission;
 import cn.qkmango.tms.domain.bind.PermissionType;
 import cn.qkmango.tms.common.map.ResponseMap;
@@ -17,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -33,6 +32,9 @@ public class ListQueryController {
 
     @Resource
     private ListQueryService listQueryService;
+
+    @Resource
+    private SystemQueryService systemQueryService;
 
     @Resource
     private ReloadableResourceBundleMessageSource messageSource;
@@ -252,6 +254,23 @@ public class ListQueryController {
         return map;
     }
 
+
+    @RequestMapping("/getTeachEvaluateList.do")
+    public Map<String, Object> getTeachEvaluateList(HttpSession session) {
+
+        User user = (User) session.getAttribute("user");
+        Integer id = user.getId();
+
+        List<Map<String, Object>> list = listQueryService.getTeachEvaluateList(id);
+
+        ResponseMap map = new ResponseMap();
+
+        map.setSuccess(true);
+        map.setData(list);
+
+        return map;
+
+    }
 
 
 }

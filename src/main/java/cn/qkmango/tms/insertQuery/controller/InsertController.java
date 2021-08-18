@@ -167,4 +167,24 @@ public class InsertController {
         return map;
     }
 
+
+    /**
+     * 添加教学评价
+     */
+    @Permission(PermissionType.student)
+    @RequestMapping("/insertTeachEvaluate.do")
+    public Map insertTeachEvaluate(@Validated TeachEvaluate teachEvaluate,BindingResult result,HttpSession session, Locale locale) throws InsertException {
+
+        User user = (User) session.getAttribute("user");
+        Integer id = user.getId();
+        teachEvaluate.setStudent(id);
+        service.insertTeachEvaluate(teachEvaluate,locale);
+
+        ResponseMap map = new ResponseMap();
+        map.setSuccess(true);
+
+        map.setMessage(messageSource.getMessage("db.insertTeachEvaluate.success",null,locale));
+        return map;
+    }
+
 }

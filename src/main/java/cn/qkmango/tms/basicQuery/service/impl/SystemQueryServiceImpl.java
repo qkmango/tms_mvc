@@ -5,6 +5,9 @@ import cn.qkmango.tms.basicQuery.service.SystemQueryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,8 +25,17 @@ public class SystemQueryServiceImpl implements SystemQueryService {
     private SystemQueryDao dao;
 
     @Override
-    public Map getSystemBasicInfo() {
-        Map map = dao.getSystemBasicInfo();
-        return map;
+    public Map<String, String> getSystemBasicInfo() {
+        List<Map<String, String>> list = dao.getSystemBasicInfo();
+
+        HashMap<String, String> resMap = new HashMap<>();
+
+        for (Map<String, String> map : list) {
+            String key = map.get("key");
+            String value = map.get("value");
+            resMap.put(key,value);
+        }
+
+        return resMap;
     }
 }

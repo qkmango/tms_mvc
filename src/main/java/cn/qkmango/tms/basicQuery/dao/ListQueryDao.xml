@@ -203,7 +203,7 @@
                student.birth,
                clazz.name       as clazz,
                specialized.name as specialized,
-               faculty.name as faculty
+               faculty.name     as faculty
         from t_student student,
              t_clazz clazz,
              t_specialized specialized,
@@ -213,5 +213,25 @@
           and clazz.specialized = specialized.id
           and specialized.faculty = faculty.id
     </select>
+
+    <select id="getTeachEvaluateList" resultType="map">
+        SELECT
+            elective.id AS elective,
+            course.NAME AS course,
+            teacher.NAME AS teacher,
+            course.courseYear,
+            course.term,
+            IF((elective.id in (SELECT elective FROM t_teach_evaluate WHERE student=#{id})),true,false) as haveDone
+        FROM
+            t_elective elective,
+            t_course course,
+            t_teacher teacher
+        WHERE elective.student = #{id}
+          AND course.courseYear = #{currYear}
+          AND course.term = #{currTerm}
+          AND course.teacher = teacher.id
+          AND elective.course = course.id
+    </select>
+
 
 </mapper>

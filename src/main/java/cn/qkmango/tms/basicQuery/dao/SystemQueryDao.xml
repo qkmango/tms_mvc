@@ -3,13 +3,7 @@
 
 <mapper namespace="cn.qkmango.tms.basicQuery.dao.SystemQueryDao">
 
-
-    <resultMap id="configMap" type="java.util.Map" >
-        <result column="key" property="key" jdbcType="VARCHAR" />
-        <result column="value" property="value" jdbcType="VARCHAR" />
-    </resultMap>
-
-    <select id="getSystemBasicInfo" resultMap="configMap">
+    <select id="getSystemBasicInfo" resultType="hashmap">
         select `key`,`value`
         from t_system
         where

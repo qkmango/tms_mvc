@@ -102,4 +102,12 @@ public class InsertServiceImpl implements InsertService {
         //     throw new InsertException(messageSource.getMessage("db.insertElective.failure",null,locale));
         // }
     }
+
+    @Override
+    public void insertTeachEvaluate(TeachEvaluate teachEvaluate, Locale locale) throws InsertException {
+        int affectedRows = insertDao.insertTeachEvaluate(teachEvaluate);
+        if (affectedRows != 1) {
+            throw new InsertException(messageSource.getMessage("db.insertTeachEvaluate.failure",null,locale));
+        }
+    }
 }

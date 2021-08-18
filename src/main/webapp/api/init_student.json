@@ -24,6 +24,16 @@
 			"icon": "fa fa-address-book",
 			"href": "page/student/common/timetable.html",
 			"target": "_self"
+		}, {
+			"title": "评价",
+			"icon": "fa fa-address-book",
+			"target": "_self",
+			"child": [{
+				"title": "教学评价",
+				"href": "page/student/evaluate/teach-evaluate.html",
+				"icon": "fa fa-tachometer",
+				"target": "_self"
+			}]
 		}
 	]
 }

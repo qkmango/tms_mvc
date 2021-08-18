@@ -27,15 +27,19 @@ public class SystemQueryController {
     @Resource
     private ReloadableResourceBundleMessageSource messageSource;
 
+
+    /**
+     * 获取系统基本信息
+     * @return
+     */
     @RequestMapping("/getSystemBasicInfo.do")
     public Map getSystemBasicInfo() {
 
-        Map map = service.getSystemBasicInfo();
-        System.out.println(map);
+        Map<String, String> resMap = service.getSystemBasicInfo();
 
         ResponseMap res = new ResponseMap();
         res.setSuccess(true);
-        res.setData(map);
+        res.setData(resMap);
 
         return res;
     }

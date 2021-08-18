@@ -1,9 +1,6 @@
 package cn.qkmango.tms.insertQuery.service;
 
-import cn.qkmango.tms.domain.orm.Building;
-import cn.qkmango.tms.domain.orm.Course;
-import cn.qkmango.tms.domain.orm.Room;
-import cn.qkmango.tms.domain.orm.Year;
+import cn.qkmango.tms.domain.orm.*;
 import cn.qkmango.tms.common.exception.InsertException;
 import cn.qkmango.tms.domain.model.CourseInfoModel;
 
@@ -20,4 +17,6 @@ public interface InsertService {
     void insertYear(Year Year,Locale locale) throws InsertException;
 
     void insertElective(HashMap<String, Object> param, Locale locale) throws InsertException;
+
+    void insertTeachEvaluate(TeachEvaluate teachEvaluate, Locale locale) throws InsertException;
 }

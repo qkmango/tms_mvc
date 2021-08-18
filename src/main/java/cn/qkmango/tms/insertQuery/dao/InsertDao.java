@@ -20,4 +20,6 @@ public interface InsertDao {
     int insertYear(Year id);
 
     int insertElective(HashMap<String, Object> param);
+
+    int insertTeachEvaluate(TeachEvaluate teachEvaluate);
 }

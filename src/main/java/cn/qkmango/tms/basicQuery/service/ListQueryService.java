@@ -30,4 +30,6 @@ public interface ListQueryService {
     TimeTable getStudentTimetable(GetStudentTimetableVO vo);
 
     HashMap<String, Object> getStudentBasicInfo(Integer id);
+
+    List<Map<String, Object>> getTeachEvaluateList(Integer id);
 }

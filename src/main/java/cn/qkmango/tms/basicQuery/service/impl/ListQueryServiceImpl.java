@@ -2,6 +2,7 @@ package cn.qkmango.tms.basicQuery.service.impl;
 
 import cn.qkmango.tms.basicQuery.dao.ListQueryDao;
 import cn.qkmango.tms.basicQuery.service.ListQueryService;
+import cn.qkmango.tms.basicQuery.service.SystemQueryService;
 import cn.qkmango.tms.domain.model.OnceCourseInfo;
 import cn.qkmango.tms.domain.model.TimeTable;
 import cn.qkmango.tms.domain.orm.*;
@@ -22,6 +23,9 @@ public class ListQueryServiceImpl implements ListQueryService {
 
     @Resource
     private ListQueryDao listQueryDao;
+
+    @Resource
+    private SystemQueryService systemQueryService;
 
     @Override
     public List<Faculty> getFacultyList() {
@@ -100,5 +104,18 @@ public class ListQueryServiceImpl implements ListQueryService {
         HashMap<String, Object> basicInfo = listQueryDao.getStudentBasicInfo(id);
 
         return basicInfo;
+    }
+
+    @Override
+    public List<Map<String, Object>> getTeachEvaluateList(Integer id) {
+
+        Map<String, String> resMap = systemQueryService.getSystemBasicInfo();
+
+        String currYear = resMap.get("currYear");
+        Boolean currTerm = resMap.get("currTerm").equals("true")?true:false;
+
+        List<Map<String, Object>> resList = listQueryDao.getTeachEvaluateList(currYear, currTerm, id);
+
+        return resList;
     }
 }

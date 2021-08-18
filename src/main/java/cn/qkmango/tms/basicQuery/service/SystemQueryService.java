@@ -10,5 +10,5 @@ import java.util.Map;
  * @version: 1.0
  */
 public interface SystemQueryService {
-    Map getSystemBasicInfo();
+    Map<String, String> getSystemBasicInfo();
 }

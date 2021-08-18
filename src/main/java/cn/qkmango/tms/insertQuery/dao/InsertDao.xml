@@ -45,5 +45,36 @@
         </foreach>
     </insert>
 
+    <insert id="insertTeachEvaluate">
+        insert into t_teach_evaluate(
+            elective,
+            student,
+            attitude,
+            prepare,
+            content,
+            method,
+            thinking,
+            talk,
+            tool,
+            coaching,
+            composite,
+            remark
+        )
+        values (
+            #{elective},
+            #{student},
+            #{attitude},
+            #{prepare},
+            #{content},
+            #{method},
+            #{thinking},
+            #{talk},
+            #{tool},
+            #{coaching},
+            #{composite},
+            #{remark}
+        )
+    </insert>
+
 
 </mapper>

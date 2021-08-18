@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 17/08/2021 22:49:33
+ Date: 18/08/2021 15:21:32
 */
 
 SET NAMES utf8mb4;
@@ -424,7 +424,7 @@ INSERT INTO `t_student` VALUES (60, '逮淑怡', b'0', '2000-12-23', '1', 2, 2);
 DROP TABLE IF EXISTS `t_system`;
 CREATE TABLE `t_system`  (
   `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`key`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统表，包含当前学年，当前学期等系统信息' ROW_FORMAT = Compact;
 
@@ -433,6 +433,34 @@ CREATE TABLE `t_system`  (
 -- ----------------------------
 INSERT INTO `t_system` VALUES ('currTerm', 'false');
 INSERT INTO `t_system` VALUES ('currYear', '2020');
+
+-- ----------------------------
+-- Table structure for t_teach_evaluate
+-- ----------------------------
+DROP TABLE IF EXISTS `t_teach_evaluate`;
+CREATE TABLE `t_teach_evaluate`  (
+  `elective` int(11) UNSIGNED NOT NULL COMMENT '选课表ID',
+  `student` int(11) UNSIGNED NOT NULL COMMENT '学生ID',
+  `attitude` tinyint(3) UNSIGNED NOT NULL COMMENT '教材态度',
+  `prepare` tinyint(3) UNSIGNED NOT NULL COMMENT '教学准备',
+  `content` tinyint(3) UNSIGNED NOT NULL COMMENT '教学内容',
+  `method` tinyint(4) UNSIGNED NOT NULL COMMENT '教学方法',
+  `thinking` tinyint(3) UNSIGNED NOT NULL COMMENT '教学思路',
+  `talk` tinyint(3) UNSIGNED NOT NULL COMMENT '教学语言',
+  `tool` tinyint(3) UNSIGNED NOT NULL COMMENT '教学工具',
+  `coaching` tinyint(3) UNSIGNED NOT NULL COMMENT '作业与辅导',
+  `composite` tinyint(3) UNSIGNED NOT NULL COMMENT '综合评价',
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '评语',
+  PRIMARY KEY (`elective`) USING BTREE,
+  INDEX `FK_teach_evaluate_REF_student`(`student`) USING BTREE,
+  CONSTRAINT `FK_teach_evaluate_REF_elective` FOREIGN KEY (`elective`) REFERENCES `t_elective` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of t_teach_evaluate
+-- ----------------------------
+INSERT INTO `t_teach_evaluate` VALUES (345, 1, 2, 1, 4, 3, 2, 2, 3, 1, 5, '哈哈哈哈');
+INSERT INTO `t_teach_evaluate` VALUES (346, 1, 3, 5, 4, 2, 3, 2, 4, 4, 4, '啊啊啊啊');
 
 -- ----------------------------
 -- Table structure for t_teacher
