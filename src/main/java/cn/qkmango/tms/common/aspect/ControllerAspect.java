@@ -30,7 +30,7 @@ public class ControllerAspect {
                 BindingResult result = (BindingResult) arg;
                 if (result.hasErrors()) {
                     if (bindingResultList == null) {
-                        bindingResultList = new ArrayList<>();
+                        bindingResultList = new ArrayList<>(args.length);
                     }
                     bindingResultList.add(result);
                 }

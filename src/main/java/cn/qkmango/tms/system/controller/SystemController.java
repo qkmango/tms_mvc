@@ -58,7 +58,7 @@ public class SystemController {
 
 
     @RequestMapping(value = "/logout.do",method = RequestMethod.POST)
-    public Map<String, Object> logout(HttpServletRequest request, User user) {
+    public Map<String, Object> logout(HttpServletRequest request) {
         request.getSession().invalidate();
 
         HashMap<String, Object> map = new HashMap<>(2);

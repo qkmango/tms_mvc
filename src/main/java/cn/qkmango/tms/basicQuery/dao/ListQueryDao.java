@@ -45,6 +45,6 @@ public interface ListQueryDao {
     HashMap<String, Object> getStudentBasicInfo(Integer id);
 
     List<Map<String, Object>> getTeachEvaluateList(@Param("currYear") String currYear,
-                                                   @Param("currTerm") Boolean currTerm,
+                                                   @Param("currTerm") String currTerm,
                                                    @Param("id") Integer id);
 }

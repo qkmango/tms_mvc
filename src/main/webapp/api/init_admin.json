@@ -42,6 +42,12 @@
 			"href": "page/menu.html",
 			"icon": "fa fa-window-maximize",
 			"target": "_self"
+		},
+		{
+			"title": "系统管理",
+			"href": "page/admin/system/system.html",
+			"icon": "fa fa-tachometer",
+			"target": "_self"
 		}
 	]
 }

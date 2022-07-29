@@ -1,6 +1,8 @@
 package cn.qkmango.tms.basicQuery.service;
 
-import java.util.Map;
+import cn.qkmango.tms.domain.orm.SystemKeyValue;
+
+import java.util.List;
 
 /**
  * @className: SystemQueryService
@@ -10,5 +12,7 @@ import java.util.Map;
  * @version: 1.0
  */
 public interface SystemQueryService {
-    Map<String, String> getSystemBasicInfo();
+    List<SystemKeyValue> getSystemCurrYearAndTerm();
+
+    List<SystemKeyValue> getSystemKeyValueList();
 }

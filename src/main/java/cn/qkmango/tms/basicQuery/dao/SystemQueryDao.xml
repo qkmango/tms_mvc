@@ -3,11 +3,16 @@
 
 <mapper namespace="cn.qkmango.tms.basicQuery.dao.SystemQueryDao">
 
-    <select id="getSystemBasicInfo" resultType="hashmap">
+    <select id="getSystemCurrYearAndTerm" resultType="cn.qkmango.tms.domain.orm.SystemKeyValue">
         select `key`,`value`
         from t_system
         where
         `key` in ('currYear','currTerm')
+    </select>
+
+    <select id="getSystemKeyValueList" resultType="cn.qkmango.tms.domain.orm.SystemKeyValue">
+        select `key`,`value`
+        from t_system
     </select>
 
 </mapper>

@@ -1,9 +1,8 @@
 package cn.qkmango.tms.basicQuery.dao;
 
-import org.apache.ibatis.annotations.MapKey;
+import cn.qkmango.tms.domain.orm.SystemKeyValue;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @className: SystemQueryDao
@@ -13,5 +12,7 @@ import java.util.Map;
  * @version: 1.0
  */
 public interface SystemQueryDao {
-    List<Map<String, String>> getSystemBasicInfo();
+    List<SystemKeyValue> getSystemCurrYearAndTerm();
+
+    List<SystemKeyValue> getSystemKeyValueList();
 }

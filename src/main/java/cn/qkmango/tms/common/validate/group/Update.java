@@ -10,4 +10,5 @@ package cn.qkmango.tms.common.validate.group;
 public interface Update {
     interface UpdateRoom{}
     interface UpdateStudentScore {}
+    interface UpdateSystemKeyValue {}
 }

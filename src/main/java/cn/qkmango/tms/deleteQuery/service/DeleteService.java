@@ -13,4 +13,5 @@ public interface DeleteService {
     void deleteYear(Integer year,Locale locale) throws DeleteException;
 
     void deleteElective(HashMap<String, Object> param, Locale locale) throws DeleteException;
+
 }

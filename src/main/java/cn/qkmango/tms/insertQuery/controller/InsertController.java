@@ -5,7 +5,6 @@ import cn.qkmango.tms.domain.bind.PermissionType;
 import cn.qkmango.tms.domain.orm.*;
 import cn.qkmango.tms.domain.vo.InsertElectiveVO;
 import cn.qkmango.tms.common.exception.InsertException;
-import cn.qkmango.tms.common.exception.ParamVerifyException;
 import cn.qkmango.tms.insertQuery.service.InsertService;
 import cn.qkmango.tms.common.annotation.Permission;
 import cn.qkmango.tms.common.map.ResponseMap;
@@ -59,9 +58,9 @@ public class InsertController {
                                             @Validated CourseInfoModel courseInfoModel, BindingResult courseInfoModelResult,
                                             Locale locale) throws InsertException {
 
-        if (courseResult.hasErrors()|| courseInfoModelResult.hasErrors()) {
-            throw new ParamVerifyException(courseResult, courseInfoModelResult);
-        }
+        // if (courseResult.hasErrors()|| courseInfoModelResult.hasErrors()) {
+        //     throw new ParamVerifyException(courseResult, courseInfoModelResult);
+        // }
         service.insertCourse(course,courseInfoModel,locale);
 
         ResponseMap map = new ResponseMap();

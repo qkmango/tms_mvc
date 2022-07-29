@@ -9,4 +9,5 @@ package cn.qkmango.tms.common.validate.group;
  */
 public interface Insert {
     interface InsertRoom {}
+    interface InsertSystemKeyValue {}
 }

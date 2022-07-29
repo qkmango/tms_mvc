@@ -140,24 +140,24 @@
 
 <script src="js/lay-config.js?v=2.0.0" charset="utf-8"></script>
 <script type="text/javascript">
-	
+
 </script>
 <script>
-	
-	
+
+
     // var cocoMessage;
     //cocoMessage全局配置参数
     cocoMessage.config({
         duration:2000,
     });
-	
+
     layui.use(['jquery', 'layer', 'miniAdmin','miniTongji'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             miniAdmin = layui.miniAdmin,
             miniTongji = layui.miniTongji;
             // var cocoMessage = layui.cocoMessage;
-			
+
             //兼容开发模式直接运行网页
             let url = 'query/list/test.do';
             let method = 'post';
@@ -176,7 +176,7 @@
 						window.location.href = 'page/login/';
 						return;
 					}
-					
+
 					GLOBAL.user = data.user;
 					$('#name').text(data.user.name);
 					let iniUrl = '';
@@ -186,7 +186,7 @@
 						case "admin":iniUrl = 'api/init_admin.json';break;
 						default:iniUrl = 'api/init_student.json';break;
 					}
-					
+
 					miniAdmin.render({
 						iniUrl: iniUrl,    // 初始化接口
 						clearUrl: "api/clear.json", // 缓存清理接口
@@ -201,8 +201,8 @@
 				}
 			})
 
-        
-        
+
+
 
         // 百度统计代码，只统计指定域名
         miniTongji.render({

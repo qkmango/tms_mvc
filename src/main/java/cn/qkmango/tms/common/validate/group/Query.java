@@ -9,4 +9,5 @@ package cn.qkmango.tms.common.validate.group;
  */
 public interface Query {
     interface login{}
+    interface QuerySystemKeyValue{}
 }

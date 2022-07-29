@@ -2,13 +2,11 @@ package cn.qkmango.tms.basicQuery.service.impl;
 
 import cn.qkmango.tms.basicQuery.dao.SystemQueryDao;
 import cn.qkmango.tms.basicQuery.service.SystemQueryService;
+import cn.qkmango.tms.domain.orm.SystemKeyValue;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @className: SystemQueryServiceImpl
@@ -25,17 +23,23 @@ public class SystemQueryServiceImpl implements SystemQueryService {
     private SystemQueryDao dao;
 
     @Override
-    public Map<String, String> getSystemBasicInfo() {
-        List<Map<String, String>> list = dao.getSystemBasicInfo();
+    public List<SystemKeyValue> getSystemCurrYearAndTerm() {
+        List<SystemKeyValue> list = dao.getSystemCurrYearAndTerm();
 
-        HashMap<String, String> resMap = new HashMap<>();
+        // HashMap<String, String> resMap = new HashMap<>();
 
-        for (Map<String, String> map : list) {
-            String key = map.get("key");
-            String value = map.get("value");
-            resMap.put(key,value);
-        }
+        // for (Map<String, String> map : list) {
+        //     String key = map.get("key");
+        //     String value = map.get("value");
+        //     resMap.put(key,value);
+        // }
 
-        return resMap;
+        return list;
+    }
+
+    @Override
+    public List<SystemKeyValue> getSystemKeyValueList() {
+        List infoList  = dao.getSystemKeyValueList();
+        return infoList;
     }
 }

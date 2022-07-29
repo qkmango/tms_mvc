@@ -20,4 +20,10 @@
         delete from t_elective where student=#{studentId} and course=#{courseId}
     </delete>
 
+<!--    <delete id="deleteSystemKeyValue">-->
+<!--        delete-->
+<!--        from t_system-->
+<!--        where `key` = #{key}-->
+<!--    </delete>-->
+
 </mapper>

@@ -10,4 +10,6 @@ public interface DeleteDao {
     int deleteYear(Integer year);
 
     int deleteElective(HashMap<String, Object> param);
+
+    // int deleteSystemKeyValue(String key);
 }

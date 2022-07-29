@@ -20,13 +20,10 @@ public class CourseInfoModel {
     }
 
     public CourseInfoModel(List<CourseInfo> courseInfos) {
-        super();
         this.courseInfos = courseInfos;
     }
 
-    public CourseInfoModel() {
-        super();
-    }
+    public CourseInfoModel() {}
 
     public int size() {
         return courseInfos.size();

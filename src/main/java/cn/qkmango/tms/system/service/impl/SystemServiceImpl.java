@@ -17,7 +17,7 @@ public class SystemServiceImpl implements SystemService {
 
 
     @Resource
-    private SystemDao systemDao;
+    private SystemDao dao;
 
     @Resource
     private ReloadableResourceBundleMessageSource messageSource;
@@ -25,7 +25,7 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public User login(User user, Locale locale) throws LoginException, PermissionException {
 
-        User loginUser = systemDao.login(user);
+        User loginUser = dao.login(user);
 
         if (loginUser == null) {
             throw new LoginException(messageSource.getMessage("response.login.failure",null,locale));

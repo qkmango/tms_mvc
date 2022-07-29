@@ -109,12 +109,29 @@ public class ListQueryServiceImpl implements ListQueryService {
     @Override
     public List<Map<String, Object>> getTeachEvaluateList(Integer id) {
 
-        Map<String, String> resMap = systemQueryService.getSystemBasicInfo();
+        List<SystemKeyValue> list = systemQueryService.getSystemCurrYearAndTerm();
 
-        String currYear = resMap.get("currYear");
-        Boolean currTerm = resMap.get("currTerm").equals("true")?true:false;
+        String currYear = "2020";
+        String currTerm = "true";
 
-        List<Map<String, Object>> resList = listQueryDao.getTeachEvaluateList(currYear, currTerm, id);
+
+        for (SystemKeyValue systemKeyValue : list) {
+            String key = systemKeyValue.getKey();
+            String value = systemKeyValue.getValue();
+
+            if ("currYear".equals(key)) {
+                currYear = value;
+            } else {
+                currTerm = value;
+            }
+        }
+
+
+
+        // String currYear = resMap.get("currYear");
+        // Boolean currTerm = resMap.get("currTerm").equals("true");
+
+        List<Map<String, Object>> resList = listQueryDao.getTeachEvaluateList(currYear,currTerm, id);
 
         return resList;
     }
