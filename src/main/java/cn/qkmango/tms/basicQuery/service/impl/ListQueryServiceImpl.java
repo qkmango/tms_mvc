@@ -126,11 +126,6 @@ public class ListQueryServiceImpl implements ListQueryService {
             }
         }
 
-
-
-        // String currYear = resMap.get("currYear");
-        // Boolean currTerm = resMap.get("currTerm").equals("true");
-
         List<Map<String, Object>> resList = listQueryDao.getTeachEvaluateList(currYear,currTerm, id);
 
         return resList;

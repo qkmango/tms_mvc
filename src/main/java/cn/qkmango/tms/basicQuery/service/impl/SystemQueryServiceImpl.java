@@ -25,15 +25,6 @@ public class SystemQueryServiceImpl implements SystemQueryService {
     @Override
     public List<SystemKeyValue> getSystemCurrYearAndTerm() {
         List<SystemKeyValue> list = dao.getSystemCurrYearAndTerm();
-
-        // HashMap<String, String> resMap = new HashMap<>();
-
-        // for (Map<String, String> map : list) {
-        //     String key = map.get("key");
-        //     String value = map.get("value");
-        //     resMap.put(key,value);
-        // }
-
         return list;
     }
 

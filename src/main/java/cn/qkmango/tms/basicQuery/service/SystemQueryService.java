@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @className: SystemQueryService
- * @Description:TODO
+ * @Description: 系统查询服务
  * @author: qkmango
  * @date: 2021-08-17 21:47
  * @version: 1.0

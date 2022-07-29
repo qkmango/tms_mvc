@@ -5,6 +5,9 @@ import cn.qkmango.tms.domain.pagination.StudentScorePagination;
 
 import java.util.HashMap;
 
+/**
+ * 分页查询服务接口
+ */
 public interface PaginationQueryService {
 
     HashMap<String,Object> getStudentScorePagination(StudentScorePagination pagination);
