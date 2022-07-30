@@ -255,6 +255,11 @@ public class ListQueryController {
     }
 
 
+    /**
+     * 获得教学评价列表
+     * @param session
+     * @return
+     */
     @RequestMapping("/getTeachEvaluateList.do")
     public Map<String, Object> getTeachEvaluateList(HttpSession session) {
 
