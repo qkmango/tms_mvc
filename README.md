@@ -1,4 +1,4 @@
-> 使用SpringMVC框架开发，现已迁移到 Springboot 框架<br/>
+> 使用SpringMVC框架开发，现已迁移到 Springboot 框架，此仓库不再更新<br/>
 > 👉Gitee [tms](https://gitee.com/qkmango/tms)<br/>
 > 👉Github[tms](https://github.com/qkmango/tms)
 
