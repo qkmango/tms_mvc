@@ -1,3 +1,5 @@
+> 使用SpringMVC框架开发，现已迁移到 Springboot 框架 👉[tms](https://gitee.com/qkmango/tms)
+
 # tms
 
 > 教务管理系统
